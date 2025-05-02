@@ -8,20 +8,47 @@ interface RouteProps {
 }
 
 export const Route: React.FC<RouteProps> = ({ departure, arrival, onClick }) => {
+  const curveLevel = 1.5;
   const distance = Math.sqrt(
     Math.pow(arrival.position.x - departure.position.x, 2) +
     Math.pow(arrival.position.y - departure.position.y, 2)
   );
 
-  // Создаем невидимую область для клика
-  const clickAreaWidth = 28; // ширина кликабельной области
-  const clickAreaPoints = [
-    // Точки для создания параллелограмма вокруг линии
-    { x: departure.position.x, y: departure.position.y - clickAreaWidth / 2 },
-    { x: departure.position.x, y: departure.position.y + clickAreaWidth / 2 },
-    { x: arrival.position.x, y: arrival.position.y + clickAreaWidth / 2 },
-    { x: arrival.position.x, y: arrival.position.y - clickAreaWidth / 2 },
-  ];
+  // Вычисляем контрольную точку для дуги
+  const maxDistance = 1000; // максимальное расстояние для нормализации
+  const normalizedDistance = Math.min(distance / maxDistance, 1);
+  const maxArcHeight = 300; // максимальная высота дуги
+  const arcHeight = Math.min(Math.pow(normalizedDistance, 2) * maxArcHeight * curveLevel, maxArcHeight * curveLevel);
+
+  // Вычисляем середину между аэропортами
+  const midX = (departure.position.x + arrival.position.x) / 2;
+  const midY = (departure.position.y + arrival.position.y) / 2;
+
+  // Вычисляем перпендикулярный вектор для создания симметричной кривой
+  const dx = arrival.position.x - departure.position.x;
+  const dy = arrival.position.y - departure.position.y;
+  const length = Math.sqrt(dx * dx + dy * dy);
+  const perpX = -dy / length;
+  const perpY = dx / length;
+
+  // Создаем контрольную точку, смещенную перпендикулярно от середины
+  const controlX = midX + perpX * arcHeight;
+  const controlY = midY + perpY * arcHeight;
+
+  // Создаем путь для дуги
+  const arcPath = `M ${departure.position.x} ${departure.position.y}
+                   Q ${controlX} ${controlY}
+                     ${arrival.position.x} ${arrival.position.y}`;
+
+  // Создаем кликабельную область вокруг дуги
+  const clickAreaWidth = 28;
+  const clickAreaPath = `M ${departure.position.x} ${departure.position.y - clickAreaWidth / 2}
+                        Q ${controlX} ${controlY - clickAreaWidth / 2}
+                          ${arrival.position.x} ${arrival.position.y - clickAreaWidth / 2}
+                        L ${arrival.position.x} ${arrival.position.y + clickAreaWidth / 2}
+                        Q ${controlX} ${controlY + clickAreaWidth / 2}
+                          ${departure.position.x} ${departure.position.y + clickAreaWidth / 2}
+                        Z`;
 
   return (
     <g
@@ -30,34 +57,20 @@ export const Route: React.FC<RouteProps> = ({ departure, arrival, onClick }) => 
     >
       {/* Невидимая область для клика */}
       <path
-        d={`M ${clickAreaPoints.map(p => `${p.x},${p.y}`).join(' L ')} Z`}
+        d={clickAreaPath}
         fill="transparent"
         stroke="none"
       />
 
-      {/* Видимая линия маршрута */}
-      <line
-        x1={departure.position.x}
-        y1={departure.position.y}
-        x2={arrival.position.x}
-        y2={arrival.position.y}
+      {/* Видимая дуга маршрута */}
+      <path
+        d={arcPath}
+        fill="none"
         stroke="#94a3b8"
         strokeWidth="1"
         strokeDasharray="4"
         className="hover:stroke-blue-400 transition-colors"
       />
-
-      {/* Расстояние */}
-      <text
-        x={(departure.position.x + arrival.position.x) / 2 + 20}
-        y={(departure.position.y + arrival.position.y) / 2}
-        fontSize="10"
-        fill="#64748b"
-        textAnchor="middle"
-        className="pointer-events-none"
-      >
-        {Math.round(distance)} км
-      </text>
     </g>
   );
 };

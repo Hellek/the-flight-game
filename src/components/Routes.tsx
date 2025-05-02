@@ -1,10 +1,10 @@
 import React from 'react';
-import { Airport as AirportType } from '../types/types';
+import type { Airport } from '../types/types';
 import { Route } from './Route';
 
 interface RoutesProps {
-  airports: AirportType[];
-  onRouteClick?: (departure: AirportType, arrival: AirportType) => void;
+  airports: Airport[];
+  onRouteClick?: (departure: Airport, arrival: Airport) => void;
 }
 
 export const Routes: React.FC<RoutesProps> = ({ airports, onRouteClick }) => {
