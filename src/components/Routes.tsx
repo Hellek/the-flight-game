@@ -5,9 +5,17 @@ import { Route } from './Route';
 interface RoutesProps {
   airports: Airport[];
   onRouteClick?: (departure: Airport, arrival: Airport) => void;
+  selectedRoute?: {
+    departure: Airport;
+    arrival: Airport;
+  } | null;
 }
 
-export const Routes: React.FC<RoutesProps> = ({ airports, onRouteClick }) => {
+export const Routes: React.FC<RoutesProps> = ({
+  airports,
+  onRouteClick,
+  selectedRoute
+}) => {
   return (
     <>
       {airports.map((airport1, index) => {
@@ -17,6 +25,10 @@ export const Routes: React.FC<RoutesProps> = ({ airports, onRouteClick }) => {
             departure={airport1}
             arrival={airport2}
             onClick={onRouteClick}
+            isSelected={
+              selectedRoute?.departure.id === airport1.id &&
+              selectedRoute?.arrival.id === airport2.id
+            }
           />
         ));
       })}

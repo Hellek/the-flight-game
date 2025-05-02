@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Airport as AirportType } from '../types/types';
 
 interface RouteProps {
   departure: AirportType;
   arrival: AirportType;
   onClick?: (departure: AirportType, arrival: AirportType) => void;
+  isSelected?: boolean;
 }
 
-export const Route: React.FC<RouteProps> = ({ departure, arrival, onClick }) => {
+export const Route: React.FC<RouteProps> = ({
+  departure,
+  arrival,
+  onClick,
+  isSelected = false
+}) => {
+  const [isHovered, setIsHovered] = useState(false);
   const curveLevel = 1.5;
   const distance = Math.sqrt(
     Math.pow(arrival.position.x - departure.position.x, 2) +
@@ -50,9 +57,17 @@ export const Route: React.FC<RouteProps> = ({ departure, arrival, onClick }) => 
                           ${departure.position.x} ${departure.position.y + clickAreaWidth / 2}
                         Z`;
 
+  const getStrokeColor = () => {
+    if (isSelected) return "#3b82f6";
+    if (isHovered) return "#60a5fa";
+    return "#94a3b8";
+  };
+
   return (
     <g
       onClick={() => onClick?.(departure, arrival)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       className="cursor-pointer"
     >
       {/* Невидимая область для клика */}
@@ -66,10 +81,10 @@ export const Route: React.FC<RouteProps> = ({ departure, arrival, onClick }) => 
       <path
         d={arcPath}
         fill="none"
-        stroke="#94a3b8"
-        strokeWidth="1"
+        stroke={getStrokeColor()}
+        strokeWidth={isSelected ? "2" : "1"}
         strokeDasharray="4"
-        className="hover:stroke-blue-400 transition-colors"
+        className="transition-all duration-200"
       />
     </g>
   );

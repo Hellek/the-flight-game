@@ -56,6 +56,7 @@ export const World: React.FC<WorldProps> = ({ world = generateTestWorld() }) => 
         <Routes
           airports={world.airports}
           onRouteClick={handleRouteClick}
+          selectedRoute={selectedEntity?.type === 'route' ? selectedEntity.data : null}
         />
 
         {/* Аэропорты */}
