@@ -63,6 +63,7 @@ export const World: React.FC<WorldProps> = ({ world = generateTestWorld() }) => 
         <Airports
           airports={world.airports}
           onAirportClick={handleAirportClick}
+          selectedAirport={selectedEntity?.type === 'airport' ? selectedEntity.data : null}
         />
       </svg>
 

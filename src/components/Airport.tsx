@@ -4,11 +4,26 @@ import { Airport as AirportType } from '../types/types';
 interface AirportProps {
   airport: AirportType;
   onClick?: (airport: AirportType) => void;
+  isSelected?: boolean;
 }
 
-export const Airport: React.FC<AirportProps> = ({ airport, onClick }) => {
+export const Airport: React.FC<AirportProps> = ({
+  airport,
+  onClick,
+  isSelected = false
+}) => {
   const handleClick = () => {
     onClick?.(airport);
+  };
+
+  const getAirportColor = () => {
+    if (isSelected) return "#1d4ed8"; // Более темный синий для выбранного
+    return "#2563eb"; // Обычный синий
+  };
+
+  const getAirportStroke = () => {
+    if (isSelected) return "#1e3a8a"; // Более темный синий для обводки выбранного
+    return "#1e40af"; // Обычный синий для обводки
   };
 
   return (
@@ -19,29 +34,24 @@ export const Airport: React.FC<AirportProps> = ({ airport, onClick }) => {
       {/* Иконка аэропорта */}
       <circle
         r="8"
-        fill="#2563eb"
-        stroke="#1e40af"
-        strokeWidth="2"
-        className="hover:fill-blue-600 transition-colors"
+        fill={getAirportColor()}
+        stroke={getAirportStroke()}
+        strokeWidth={isSelected ? "3" : "2"}
+        className="transition-all duration-200 hover:fill-blue-600"
         onClick={handleClick}
       />
 
       {/* Название аэропорта */}
-      <g onClick={handleClick}>
-        <rect
-          x="8"
-          y="-8"
-          width="100"
-          height="20"
-          fill="transparent"
-          className="hover:fill-blue-50 transition-colors rounded"
-        />
+      <g
+        onClick={handleClick}
+        className="group"
+      >
         <text
           x="12"
           y="4"
           fontSize="12"
-          fill="#1e293b"
-          className="hover:fill-blue-800 transition-colors"
+          fill={isSelected ? "#1e3a8a" : "#1e293b"}
+          className="transition-colors duration-200 group-hover:fill-blue-800"
         >
           {airport.name}
         </text>

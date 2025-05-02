@@ -5,9 +5,14 @@ import { Airport } from './Airport';
 interface AirportsProps {
   airports: AirportType[];
   onAirportClick?: (airport: AirportType) => void;
+  selectedAirport?: AirportType | null;
 }
 
-export const Airports: React.FC<AirportsProps> = ({ airports, onAirportClick }) => {
+export const Airports: React.FC<AirportsProps> = ({
+  airports,
+  onAirportClick,
+  selectedAirport
+}) => {
   return (
     <>
       {airports.map((airport) => (
@@ -15,6 +20,7 @@ export const Airports: React.FC<AirportsProps> = ({ airports, onAirportClick }) 
           key={airport.id}
           airport={airport}
           onClick={onAirportClick}
+          isSelected={selectedAirport?.id === airport.id}
         />
       ))}
     </>
