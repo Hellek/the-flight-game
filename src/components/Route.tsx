@@ -13,12 +13,29 @@ export const Route: React.FC<RouteProps> = ({ departure, arrival, onClick }) => 
     Math.pow(arrival.position.y - departure.position.y, 2)
   );
 
+  // Создаем невидимую область для клика
+  const clickAreaWidth = 28; // ширина кликабельной области
+  const clickAreaPoints = [
+    // Точки для создания параллелограмма вокруг линии
+    { x: departure.position.x, y: departure.position.y - clickAreaWidth / 2 },
+    { x: departure.position.x, y: departure.position.y + clickAreaWidth / 2 },
+    { x: arrival.position.x, y: arrival.position.y + clickAreaWidth / 2 },
+    { x: arrival.position.x, y: arrival.position.y - clickAreaWidth / 2 },
+  ];
+
   return (
     <g
       onClick={() => onClick?.(departure, arrival)}
       className="cursor-pointer"
     >
-      {/* Линия маршрута */}
+      {/* Невидимая область для клика */}
+      <path
+        d={`M ${clickAreaPoints.map(p => `${p.x},${p.y}`).join(' L ')} Z`}
+        fill="transparent"
+        stroke="none"
+      />
+
+      {/* Видимая линия маршрута */}
       <line
         x1={departure.position.x}
         y1={departure.position.y}
