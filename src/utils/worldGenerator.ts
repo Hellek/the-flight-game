@@ -1,17 +1,17 @@
-import { World, Airport } from '../types/types';
+import { World, Airport, Route } from '../types/types';
 
 // Список реальных аэропортов для генерации
 const AIRPORTS_DATA = [
-  { name: 'Шереметьево', id: 'SVO' },
-  { name: 'Домодедово', id: 'DME' },
-  { name: 'Внуково', id: 'VKO' },
-  { name: 'Пулково', id: 'LED' },
-  { name: 'Толмачёво', id: 'OVB' },
-  { name: 'Кольцово', id: 'SVX' },
-  { name: 'Хабаровск', id: 'KHV' },
-  { name: 'Владивосток', id: 'VVO' },
-  { name: 'Казань', id: 'KZN' },
-  { name: 'Сочи', id: 'AER' },
+  { name: 'Шереметьево', id: 'SVO', city: 'Москва' },
+  { name: 'Домодедово', id: 'DME', city: 'Москва' },
+  { name: 'Внуково', id: 'VKO', city: 'Москва' },
+  { name: 'Пулково', id: 'LED', city: 'Санкт-Петербург' },
+  { name: 'Толмачёво', id: 'OVB', city: 'Новосибирск' },
+  { name: 'Кольцово', id: 'SVX', city: 'Екатеринбург' },
+  { name: 'Хабаровск', id: 'KHV', city: 'Хабаровск' },
+  { name: 'Владивосток', id: 'VVO', city: 'Владивосток' },
+  { name: 'Казань', id: 'KZN', city: 'Казань' },
+  { name: 'Сочи', id: 'AER', city: 'Сочи' },
 ];
 
 /**
@@ -60,6 +60,7 @@ export const generateWorld = (
 ): World => {
   const world: World = {
     airports: [],
+    routes: [],
     size: { width, height },
     scale,
   };
@@ -80,7 +81,12 @@ export const generateWorld = (
       attempts++;
     } while (
       isAirportTooClose(
-        { id: airportData.id, name: airportData.name, position },
+        {
+          id: airportData.id,
+          name: airportData.name,
+          city: airportData.city,
+          position
+        },
         world.airports,
         minDistanceBetweenAirports
       ) &&
@@ -91,6 +97,7 @@ export const generateWorld = (
       world.airports.push({
         id: airportData.id,
         name: airportData.name,
+        city: airportData.city,
         position,
       });
     }
@@ -103,28 +110,74 @@ export const generateWorld = (
  * Генерирует тестовый мир с фиксированным расположением аэропортов
  */
 export const generateTestWorld = (): World => {
+  const airports: Airport[] = [
+    {
+      id: 'airport-1',
+      name: 'Шереметьево',
+      city: 'Москва',
+      position: { x: 200, y: 200 }
+    },
+    {
+      id: 'airport-2',
+      name: 'Пулково',
+      city: 'Санкт-Петербург',
+      position: { x: 150, y: 150 }
+    },
+    {
+      id: 'airport-3',
+      name: 'Толмачёво',
+      city: 'Новосибирск',
+      position: { x: 500, y: 300 }
+    },
+    {
+      id: 'airport-4',
+      name: 'Кольцово',
+      city: 'Екатеринбург',
+      position: { x: 400, y: 250 }
+    },
+    {
+      id: 'airport-5',
+      name: 'Хабаровск',
+      city: 'Хабаровск',
+      position: { x: 800, y: 200 }
+    }
+  ];
+
+  const routes: Route[] = [
+    {
+      id: 'route-1',
+      departureId: 'airport-1',
+      arrivalId: 'airport-2'
+    },
+    {
+      id: 'route-2',
+      departureId: 'airport-1',
+      arrivalId: 'airport-3'
+    },
+    {
+      id: 'route-3',
+      departureId: 'airport-2',
+      arrivalId: 'airport-4'
+    },
+    {
+      id: 'route-4',
+      departureId: 'airport-3',
+      arrivalId: 'airport-5'
+    },
+    {
+      id: 'route-5',
+      departureId: 'airport-4',
+      arrivalId: 'airport-5'
+    }
+  ];
+
   return {
-    airports: [
-      {
-        id: 'SVO',
-        name: 'Шереметьево',
-        position: { x: 100, y: 100 },
-      },
-      {
-        id: 'DME',
-        name: 'Домодедово',
-        position: { x: 300, y: 300 },
-      },
-      {
-        id: 'VKO',
-        name: 'Внуково',
-        position: { x: 500, y: 500 },
-      },
-    ],
+    airports,
+    routes,
     size: {
       width: 1000,
-      height: 1000,
+      height: 800
     },
-    scale: 10,
+    scale: 100 // 100 километров на единицу координат
   };
 };

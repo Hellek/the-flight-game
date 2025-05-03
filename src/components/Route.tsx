@@ -1,91 +1,53 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { observer } from 'mobx-react-lite';
 import { Airport as AirportType } from '../types/types';
+import { rootStore } from '../stores/RootStore';
 
 interface RouteProps {
   departure: AirportType;
   arrival: AirportType;
-  onClick?: (departure: AirportType, arrival: AirportType) => void;
-  isSelected?: boolean;
 }
 
-export const Route: React.FC<RouteProps> = ({
-  departure,
-  arrival,
-  onClick,
-  isSelected = false
-}) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const curveLevel = 1.5;
+export const Route: React.FC<RouteProps> = observer(({ departure, arrival }) => {
+  const { selectedEntity } = rootStore.selectionStore;
+  const isSelected = selectedEntity?.type === 'route' &&
+    selectedEntity.data.departure.id === departure.id &&
+    selectedEntity.data.arrival.id === arrival.id;
+
+  const handleClick = () => {
+    rootStore.selectionStore.selectRoute(departure, arrival);
+  };
+
   const distance = Math.sqrt(
     Math.pow(arrival.position.x - departure.position.x, 2) +
     Math.pow(arrival.position.y - departure.position.y, 2)
   );
 
-  // Вычисляем контрольную точку для дуги
-  const maxDistance = 1000; // максимальное расстояние для нормализации
+  const maxDistance = 1000;
   const normalizedDistance = Math.min(distance / maxDistance, 1);
-  const maxArcHeight = 300; // максимальная высота дуги
-  const arcHeight = Math.min(Math.pow(normalizedDistance, 2) * maxArcHeight * curveLevel, maxArcHeight * curveLevel);
+  const arcHeight = Math.min(Math.pow(normalizedDistance, 2) * 300, 300);
 
-  // Вычисляем середину между аэропортами
   const midX = (departure.position.x + arrival.position.x) / 2;
-  const midY = (departure.position.y + arrival.position.y) / 2;
+  const midY = (departure.position.y + arrival.position.y) / 2 - arcHeight;
 
-  // Вычисляем перпендикулярный вектор для создания симметричной кривой
-  const dx = arrival.position.x - departure.position.x;
-  const dy = arrival.position.y - departure.position.y;
-  const length = Math.sqrt(dx * dx + dy * dy);
-  const perpX = -dy / length;
-  const perpY = dx / length;
-
-  // Создаем контрольную точку, смещенную перпендикулярно от середины
-  const controlX = midX + perpX * arcHeight;
-  const controlY = midY + perpY * arcHeight;
-
-  // Создаем путь для дуги
-  const arcPath = `M ${departure.position.x} ${departure.position.y}
-                   Q ${controlX} ${controlY}
-                     ${arrival.position.x} ${arrival.position.y}`;
-
-  // Создаем кликабельную область вокруг дуги
-  const clickAreaWidth = 28;
-  const clickAreaPath = `M ${departure.position.x} ${departure.position.y - clickAreaWidth / 2}
-                        Q ${controlX} ${controlY - clickAreaWidth / 2}
-                          ${arrival.position.x} ${arrival.position.y - clickAreaWidth / 2}
-                        L ${arrival.position.x} ${arrival.position.y + clickAreaWidth / 2}
-                        Q ${controlX} ${controlY + clickAreaWidth / 2}
-                          ${departure.position.x} ${departure.position.y + clickAreaWidth / 2}
-                        Z`;
-
-  const getStrokeColor = () => {
-    if (isSelected) return "#3b82f6";
-    if (isHovered) return "#60a5fa";
-    return "#94a3b8";
-  };
+  const path = `M ${departure.position.x} ${departure.position.y} Q ${midX} ${midY} ${arrival.position.x} ${arrival.position.y}`;
 
   return (
-    <g
-      onClick={() => onClick?.(departure, arrival)}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className="cursor-pointer"
-    >
-      {/* Невидимая область для клика */}
+    <g onClick={handleClick} className="cursor-pointer">
       <path
-        d={clickAreaPath}
-        fill="transparent"
-        stroke="none"
-      />
-
-      {/* Видимая дуга маршрута */}
-      <path
-        d={arcPath}
+        d={path}
         fill="none"
-        stroke={getStrokeColor()}
-        strokeWidth={isSelected ? "2" : "1"}
-        strokeDasharray="4"
-        className="transition-all duration-200"
+        stroke={isSelected ? "#3b82f6" : "#94a3b8"}
+        strokeWidth={isSelected ? 3 : 2}
+        className="transition-all duration-200 hover:stroke-blue-500"
+      />
+      <path
+        d={path}
+        fill="none"
+        stroke="transparent"
+        strokeWidth={20}
+        className="hover:stroke-blue-200/20"
       />
     </g>
   );
-};
+});

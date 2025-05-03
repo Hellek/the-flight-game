@@ -1,37 +1,25 @@
 import React from 'react';
-import type { Airport } from '../types/types';
+import { observer } from 'mobx-react-lite';
 import { Route } from './Route';
+import { rootStore } from '../stores/RootStore';
 
-interface RoutesProps {
-  airports: Airport[];
-  onRouteClick?: (departure: Airport, arrival: Airport) => void;
-  selectedRoute?: {
-    departure: Airport;
-    arrival: Airport;
-  } | null;
-}
-
-export const Routes: React.FC<RoutesProps> = ({
-  airports,
-  onRouteClick,
-  selectedRoute
-}) => {
+export const Routes: React.FC = observer(() => {
   return (
     <>
-      {airports.map((airport1, index) => {
-        return airports.slice(index + 1).map((airport2) => (
+      {rootStore.routeStore.routes.map((route) => {
+        const departure = rootStore.airportStore.getAirportById(route.departureId);
+        const arrival = rootStore.airportStore.getAirportById(route.arrivalId);
+
+        if (!departure || !arrival) return null;
+
+        return (
           <Route
-            key={`${airport1.id}-${airport2.id}`}
-            departure={airport1}
-            arrival={airport2}
-            onClick={onRouteClick}
-            isSelected={
-              selectedRoute?.departure.id === airport1.id &&
-              selectedRoute?.arrival.id === airport2.id
-            }
+            key={route.id}
+            departure={departure}
+            arrival={arrival}
           />
-        ));
+        );
       })}
     </>
   );
-};
+});

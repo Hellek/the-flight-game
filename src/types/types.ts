@@ -6,26 +6,28 @@ interface Aircraft {
   speed: number;
 }
 
+export interface Position {
+  x: number;
+  y: number;
+}
+
 export interface Airport {
   id: string;
   name: string;
-  position: {
-    x: number; // координата X в игровом мире
-    y: number; // координата Y в игровом мире
-  };
+  city: string;
+  position: Position;
 }
 
 // Типы для маршрута
-interface Route {
+export interface Route {
   id: string;
-  departureAirport: Airport;
-  arrivalAirport: Airport;
-  distance: number; // в километрах
-  estimatedTime: number; // в минутах
+  departureId: string;
+  arrivalId: string;
 }
 
 export interface World {
   airports: Airport[];
+  routes: Route[];
   size: {
     width: number;  // ширина игрового мира
     height: number; // высота игрового мира

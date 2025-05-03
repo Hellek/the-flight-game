@@ -18,12 +18,12 @@ export const WorldBackground: React.FC<WorldBackgroundProps> = ({ width, height 
       {/* Сетка */}
       <pattern
         id="grid"
-        width="100"
-        height="100"
+        width="50"
+        height="50"
         patternUnits="userSpaceOnUse"
       >
         <path
-          d="M 100 0 L 0 0 0 100"
+          d="M 50 0 L 0 0 0 50"
           fill="none"
           stroke="#e2e8f0"
           strokeWidth="1"

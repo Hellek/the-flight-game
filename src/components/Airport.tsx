@@ -1,61 +1,68 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { observer } from 'mobx-react-lite';
 import { Airport as AirportType } from '../types/types';
+import { rootStore } from '../stores/RootStore';
 
 interface AirportProps {
   airport: AirportType;
-  onClick?: (airport: AirportType) => void;
-  isSelected?: boolean;
 }
 
-export const Airport: React.FC<AirportProps> = ({
-  airport,
-  onClick,
-  isSelected = false
-}) => {
+export const Airport: React.FC<AirportProps> = observer(({ airport }) => {
+  const { selectedEntity } = rootStore.selectionStore;
+  const isSelected = selectedEntity?.type === 'airport' && selectedEntity.data.id === airport.id;
+  const [isHovered, setIsHovered] = useState(false);
+
   const handleClick = () => {
-    onClick?.(airport);
+    rootStore.selectionStore.selectAirport(airport);
   };
 
-  const getAirportColor = () => {
-    if (isSelected) return "#1d4ed8"; // Более темный синий для выбранного
-    return "#2563eb"; // Обычный синий
+  const handleMouseEnter = () => {
+    setIsHovered(true);
   };
 
-  const getAirportStroke = () => {
-    if (isSelected) return "#1e3a8a"; // Более темный синий для обводки выбранного
-    return "#1e40af"; // Обычный синий для обводки
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
+  const getCircleStyle = () => {
+    if (isSelected) return 'fill-blue-700';
+    if (isHovered) return 'fill-blue-500';
+    return 'fill-slate-400';
+  };
+
+  const getTextStyle = () => {
+    if (isSelected) return 'fill-blue-700';
+    if (isHovered) return 'fill-blue-500';
+    return 'fill-slate-600';
   };
 
   return (
     <g
-      transform={`translate(${airport.position.x}, ${airport.position.y})`}
+      onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       className="cursor-pointer"
     >
-      {/* Иконка аэропорта */}
       <circle
-        r="8"
-        fill={getAirportColor()}
-        stroke={getAirportStroke()}
-        strokeWidth={isSelected ? "3" : "2"}
-        className="transition-all duration-200 hover:fill-blue-600"
-        onClick={handleClick}
+        cx={airport.position.x}
+        cy={airport.position.y}
+        r={6}
+        className={`${getCircleStyle()}`}
       />
-
-      {/* Название аэропорта */}
-      <g
-        onClick={handleClick}
-        className="group"
+      <text
+        x={airport.position.x + 10}
+        y={airport.position.y + 5}
+        className={`text-sm font-medium ${getTextStyle()}`}
       >
-        <text
-          x="12"
-          y="4"
-          fontSize="12"
-          fill={isSelected ? "#1e3a8a" : "#1e293b"}
-          className="transition-colors duration-200 group-hover:fill-blue-800"
-        >
-          {airport.name}
-        </text>
-      </g>
+        {airport.city}
+      </text>
+      <text
+        x={airport.position.x + 10}
+        y={airport.position.y + 20}
+        className={`text-xs ${getTextStyle()}`}
+      >
+        {airport.name}
+      </text>
     </g>
   );
-};
+});

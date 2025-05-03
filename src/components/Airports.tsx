@@ -1,28 +1,17 @@
 import React from 'react';
-import { Airport as AirportType } from '../types/types';
+import { observer } from 'mobx-react-lite';
 import { Airport } from './Airport';
+import { rootStore } from '../stores/RootStore';
 
-interface AirportsProps {
-  airports: AirportType[];
-  onAirportClick?: (airport: AirportType) => void;
-  selectedAirport?: AirportType | null;
-}
-
-export const Airports: React.FC<AirportsProps> = ({
-  airports,
-  onAirportClick,
-  selectedAirport
-}) => {
+export const Airports: React.FC = observer(() => {
   return (
     <>
-      {airports.map((airport) => (
+      {rootStore.airportStore.airports.map((airport) => (
         <Airport
           key={airport.id}
           airport={airport}
-          onClick={onAirportClick}
-          isSelected={selectedAirport?.id === airport.id}
         />
       ))}
     </>
   );
-};
+});

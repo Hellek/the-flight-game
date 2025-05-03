@@ -1,12 +1,10 @@
 import React from 'react';
 import { World } from './World';
+import { generateTestWorld } from '../utils/worldGenerator';
 
 export const Game: React.FC = () => {
+  const world = generateTestWorld()
   return (
-    <div className="w-full h-screen">
-      <div className="w-full h-full">
-        <World />
-      </div>
-    </div>
+    <World world={world} />
   );
 };
