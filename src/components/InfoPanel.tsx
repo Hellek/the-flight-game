@@ -21,10 +21,7 @@ export const InfoPanel: React.FC = observer(() => {
         {selectedEntity.type === 'airport' ? (
           <AirportInfo airport={selectedEntity.data} />
         ) : (
-          <RouteInfo
-            departure={selectedEntity.data.departure}
-            arrival={selectedEntity.data.arrival}
-          />
+          <RouteInfo route={selectedEntity.data} />
         )}
       </div>
     </div>

@@ -1,9 +1,11 @@
-type AircraftSize = 1 | 2 | 3 | 4 | 5
+export type AircraftSize = 1 | 2 | 3 | 4 | 5;
 
-interface Aircraft {
+export interface Aircraft {
   id: string;
   type: AircraftSize;
   speed: number;
+  routeId: string;
+  position: Position;
 }
 
 export interface Position {

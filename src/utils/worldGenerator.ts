@@ -133,7 +133,7 @@ export const generateTestWorld = (): World => {
       id: 'airport-4',
       name: 'Кольцово',
       city: 'Екатеринбург',
-      position: { x: 400, y: 250 }
+      position: { x: 450, y: 200 }
     },
     {
       id: 'airport-5',

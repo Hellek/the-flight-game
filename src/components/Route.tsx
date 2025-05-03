@@ -1,21 +1,20 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { Airport as AirportType } from '../types/types';
+import { Route as RouteType } from '../types/types';
 import { rootStore } from '../stores/RootStore';
 
-interface RouteProps {
-  departure: AirportType;
-  arrival: AirportType;
-}
+export const Route: React.FC<{ route: RouteType }> = observer(({ route }) => {
+  const departure = rootStore.airportStore.getAirportById(route.departureId);
+  const arrival = rootStore.airportStore.getAirportById(route.arrivalId);
 
-export const Route: React.FC<RouteProps> = observer(({ departure, arrival }) => {
+  if (!departure || !arrival) return null;
+
   const { selectedEntity } = rootStore.selectionStore;
-  const isSelected = selectedEntity?.type === 'route' &&
-    selectedEntity.data.departure.id === departure.id &&
-    selectedEntity.data.arrival.id === arrival.id;
+
+  const isSelected = selectedEntity?.type === 'route' && selectedEntity.data.id === route.id;
 
   const handleClick = () => {
-    rootStore.selectionStore.selectRoute(departure, arrival);
+    rootStore.selectionStore.selectRoute(route);
   };
 
   const distance = Math.sqrt(

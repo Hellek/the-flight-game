@@ -7,16 +7,10 @@ export const Routes: React.FC = observer(() => {
   return (
     <>
       {rootStore.routeStore.routes.map((route) => {
-        const departure = rootStore.airportStore.getAirportById(route.departureId);
-        const arrival = rootStore.airportStore.getAirportById(route.arrivalId);
-
-        if (!departure || !arrival) return null;
-
         return (
           <Route
             key={route.id}
-            departure={departure}
-            arrival={arrival}
+            route={route}
           />
         );
       })}

@@ -1,15 +1,12 @@
 import { makeAutoObservable } from 'mobx';
-import { Airport } from '../types/types';
+import { Airport, Route } from '../types/types';
 
 type SelectedEntity = {
   type: 'airport';
   data: Airport;
 } | {
   type: 'route';
-  data: {
-    departure: Airport;
-    arrival: Airport;
-  };
+  data: Route;
 } | null;
 
 export class SelectionStore {
@@ -30,13 +27,14 @@ export class SelectionStore {
     };
   }
 
-  selectRoute(departure: Airport, arrival: Airport) {
+  selectRoute(route: Route | null) {
+    if (!route) {
+      this.selectedEntity = null;
+      return;
+    }
     this.selectedEntity = {
       type: 'route',
-      data: {
-        departure,
-        arrival
-      }
+      data: route
     };
   }
 
