@@ -1,5 +1,6 @@
 import { makeAutoObservable, makeObservable, observable, runInAction } from 'mobx';
 import { Aircraft, AircraftSize, Position, Route } from '../types/types';
+import { calculateArcPosition } from '../utils/arcUtils';
 
 export class AircraftStore {
   aircrafts: Aircraft[] = [];
@@ -49,41 +50,16 @@ export class AircraftStore {
         }
 
         // Рассчитываем текущую позицию на маршруте
-        const currentPosition = this.calculateAircraftPosition(
+        aircraft.position = calculateArcPosition(
           aircraft.route.departureAirport.position,
           aircraft.route.arrivalAirport.position,
           aircraft.progress
         );
-
-        aircraft.position = currentPosition;
       });
 
       requestAnimationFrame(moveAircraft);
     };
 
     requestAnimationFrame(moveAircraft);
-  }
-
-  private calculateAircraftPosition(
-    start: Position,
-    end: Position,
-    progress: number
-  ): Position {
-    // Рассчитываем базовую позицию на прямой
-    const x = start.x + (end.x - start.x) * progress;
-    const y = start.y + (end.y - start.y) * progress;
-
-    // Добавляем дугу для более реалистичного движения
-    const distance = Math.sqrt(
-      Math.pow(end.x - start.x, 2) + Math.pow(end.y - start.y, 2)
-    );
-    const arcHeight = distance * 0.2; // Высота дуги
-    const arcProgress = Math.sin(progress * Math.PI);
-    const arcOffset = arcHeight * arcProgress;
-
-    return {
-      x,
-      y: y - arcOffset,
-    };
   }
 }
