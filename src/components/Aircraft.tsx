@@ -11,35 +11,35 @@ interface AircraftProps {
 const getAircraftSize = (type: AircraftSize) => {
   switch (type) {
     case 1:
-      return { width: 16, height: 16, strokeWidth: 1.5 };
+      return { width: 16, height: 16 };
     case 2:
-      return { width: 20, height: 20, strokeWidth: 1.5 };
+      return { width: 20, height: 20 };
     case 3:
-      return { width: 24, height: 24, strokeWidth: 2 };
+      return { width: 24, height: 24 };
     case 4:
-      return { width: 28, height: 28, strokeWidth: 2 };
+      return { width: 28, height: 28 };
     case 5:
-      return { width: 32, height: 32, strokeWidth: 2.5 };
+      return { width: 32, height: 32 };
   }
 };
 
 const getAircraftColor = (type: AircraftSize) => {
   switch (type) {
     case 1:
-      return 'text-blue-300';
-    case 2:
       return 'text-blue-400';
-    case 3:
+    case 2:
       return 'text-blue-500';
-    case 4:
+    case 3:
       return 'text-blue-600';
-    case 5:
+    case 4:
       return 'text-blue-700';
+    case 5:
+      return 'text-blue-800';
   }
 };
 
 export const Aircraft: React.FC<AircraftProps> = observer(({ aircraft }) => {
-  const { width, height, strokeWidth } = getAircraftSize(aircraft.type);
+  const { width, height } = getAircraftSize(aircraft.type);
   const colorClass = getAircraftColor(aircraft.type);
 
   // Рассчитываем угол поворота самолёта
@@ -76,7 +76,8 @@ export const Aircraft: React.FC<AircraftProps> = observer(({ aircraft }) => {
       <Plane
         width={width}
         height={height}
-        strokeWidth={strokeWidth}
+        fill='currentColor'
+        strokeWidth={1}
         x={-width / 2}
         y={-height / 2}
       />
