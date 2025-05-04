@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { Plane } from 'lucide-react';
 import { Aircraft as AircraftType, AircraftSize } from '../types/types';
+import { calculateArcPosition } from '../utils/arcUtils';
 
 interface AircraftProps {
   aircraft: AircraftType;
@@ -41,16 +42,43 @@ export const Aircraft: React.FC<AircraftProps> = observer(({ aircraft }) => {
   const { width, height, strokeWidth } = getAircraftSize(aircraft.type);
   const colorClass = getAircraftColor(aircraft.type);
 
+  // Рассчитываем угол поворота самолёта
+  const calculateRotation = () => {
+    const { departureAirport, arrivalAirport } = aircraft.route;
+
+    // Рассчитываем текущую позицию
+    const currentPos = aircraft.position;
+
+    // Рассчитываем следующую позицию (немного впереди текущей)
+    const nextProgress = aircraft.progress + (aircraft.direction === 'forward' ? 0.01 : -0.01);
+    const nextPos = calculateArcPosition(
+      departureAirport.position,
+      arrivalAirport.position,
+      nextProgress
+    );
+
+    // Рассчитываем угол между текущей и следующей позицией
+    const dx = nextPos.x - currentPos.x;
+    const dy = nextPos.y - currentPos.y;
+    const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+
+    // Корректируем угол с учётом начальной ориентации иконки (+45 градусов)
+    return angle + 45;
+  };
+
+  const rotation = calculateRotation();
+
   return (
     <g
-      transform={`translate(${aircraft.position.x - width / 2}, ${aircraft.position.y - height / 2})`}
+      transform={`translate(${aircraft.position.x}, ${aircraft.position.y}) rotate(${rotation})`}
       className={colorClass}
     >
       <Plane
         width={width}
         height={height}
         strokeWidth={strokeWidth}
-        className="transform -rotate-45"
+        x={-width / 2}
+        y={-height / 2}
       />
     </g>
   );
