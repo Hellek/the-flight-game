@@ -16,8 +16,4 @@ export class AirportStore {
   selectAirport(airport: Airport | null) {
     this.selectedAirport = airport;
   }
-
-  getAirportById(id: string) {
-    return this.airports.find(airport => airport.id === id);
-  }
 }

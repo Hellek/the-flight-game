@@ -10,32 +10,27 @@ interface RouteInfoProps {
 }
 
 export const RouteInfo: React.FC<RouteInfoProps> = observer(({ route }) => {
-  const departure = rootStore.airportStore.getAirportById(route.departureId);
-  const arrival = rootStore.airportStore.getAirportById(route.arrivalId);
-
-  if (!departure || !arrival) return null;
+  const { departureAirport, arrivalAirport, aircrafts } = route;
 
   const distance = Math.sqrt(
-    Math.pow(arrival.position.x - departure.position.x, 2) +
-    Math.pow(arrival.position.y - departure.position.y, 2)
+    Math.pow(arrivalAirport.position.x - departureAirport.position.x, 2) +
+    Math.pow(arrivalAirport.position.y - departureAirport.position.y, 2)
   );
 
   const world = rootStore.worldStore.world;
   const distanceInKm = Math.round(distance * (world?.scale || 100));
 
-  const aircrafts = rootStore.aircraftStore.getAircraftsByRouteId(route.id);
-
   return (
     <div className="space-y-4">
       <InfoSection title="Отправление">
         <div>
-          {departure.name}
+          {departureAirport.name}
         </div>
       </InfoSection>
 
       <InfoSection title="Прибытие">
         <div>
-          {arrival.name}
+          {arrivalAirport.name}
         </div>
       </InfoSection>
 
@@ -65,7 +60,7 @@ export const RouteInfo: React.FC<RouteInfoProps> = observer(({ route }) => {
       </div>
 
       <div className="pt-2 border-t border-slate-200">
-        <CreateAircraft routeId={route.id} />
+        <CreateAircraft route={route} />
       </div>
     </div>
   );

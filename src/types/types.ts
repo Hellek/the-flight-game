@@ -4,8 +4,10 @@ export interface Aircraft {
   id: string;
   type: AircraftSize;
   speed: number;
-  routeId: string;
+  route: Route;
   position: Position;
+  progress: number; // Прогресс движения по маршруту (0-1)
+  direction: 'forward' | 'backward'; // Направление движения
 }
 
 export interface Position {
@@ -23,8 +25,9 @@ export interface Airport {
 // Типы для маршрута
 export interface Route {
   id: string;
-  departureId: string;
-  arrivalId: string;
+  departureAirport: Airport;
+  arrivalAirport: Airport;
+  aircrafts: Aircraft[];
 }
 
 export interface World {

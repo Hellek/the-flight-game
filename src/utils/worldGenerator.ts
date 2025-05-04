@@ -146,28 +146,33 @@ export const generateTestWorld = (): World => {
   const routes: Route[] = [
     {
       id: 'route-1',
-      departureId: 'airport-1',
-      arrivalId: 'airport-2'
+      departureAirport: airports[0],
+      arrivalAirport: airports[1],
+      aircrafts: [],
     },
     {
       id: 'route-2',
-      departureId: 'airport-1',
-      arrivalId: 'airport-3'
+      departureAirport: airports[1],
+      arrivalAirport: airports[2],
+      aircrafts: [],
     },
     {
       id: 'route-3',
-      departureId: 'airport-2',
-      arrivalId: 'airport-4'
+      departureAirport: airports[2],
+      arrivalAirport: airports[0],
+      aircrafts: [],
     },
     {
       id: 'route-4',
-      departureId: 'airport-3',
-      arrivalId: 'airport-5'
+      departureAirport: airports[3],
+      arrivalAirport: airports[4],
+      aircrafts: [],
     },
     {
       id: 'route-5',
-      departureId: 'airport-4',
-      arrivalId: 'airport-5'
+      departureAirport: airports[4],
+      arrivalAirport: airports[0],
+      aircrafts: [],
     }
   ];
 

@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
-import { observer } from 'mobx-react-lite';
 import { Airports } from './Airports';
 import { Routes } from './Routes';
+import { Aircrafts } from './Aircrafts';
 import { InfoPanel } from './InfoPanel';
 import { WorldBackground } from './WorldBackground';
 import { rootStore } from '../stores/RootStore';
 import { World as WorldType } from '../types/types';
 
-export const World: React.FC<{ world: WorldType }> = observer(({ world }) => {
+export const World: React.FC<{ world: WorldType }> = ({ world }) => {
   useEffect(() => {
     rootStore.worldStore.setWorld(world);
     rootStore.airportStore.setAirports(world.airports);
@@ -24,9 +24,10 @@ export const World: React.FC<{ world: WorldType }> = observer(({ world }) => {
         <WorldBackground width={world.size.width} height={world.size.height} />
         <Routes />
         <Airports />
+        <Aircrafts />
       </svg>
 
       <InfoPanel />
     </div>
   );
-});
+};

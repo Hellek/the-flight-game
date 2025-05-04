@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { AircraftSize } from '../../types/types';
+import { AircraftSize, Route } from '../../types/types';
 import { rootStore } from '../../stores/RootStore';
 
 interface CreateAircraftProps {
-  routeId: string;
+  route: Route;
 }
 
-export const CreateAircraft: React.FC<CreateAircraftProps> = observer(({ routeId }) => {
+export const CreateAircraft: React.FC<CreateAircraftProps> = observer(({ route }) => {
   const [selectedType, setSelectedType] = useState<AircraftSize>(1);
 
   const handleCreate = () => {
-    rootStore.aircraftStore.createAircraft(routeId, selectedType);
+    rootStore.aircraftStore.createAircraft(route, selectedType);
   };
 
   return (
