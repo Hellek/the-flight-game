@@ -1,180 +1,57 @@
 import { World, Airport, Route } from '../types/types';
-
-// Список реальных аэропортов для генерации
-const AIRPORTS_DATA = [
-  { name: 'Шереметьево', id: 'SVO', city: 'Москва' },
-  { name: 'Домодедово', id: 'DME', city: 'Москва' },
-  { name: 'Внуково', id: 'VKO', city: 'Москва' },
-  { name: 'Пулково', id: 'LED', city: 'Санкт-Петербург' },
-  { name: 'Толмачёво', id: 'OVB', city: 'Новосибирск' },
-  { name: 'Кольцово', id: 'SVX', city: 'Екатеринбург' },
-  { name: 'Хабаровск', id: 'KHV', city: 'Хабаровск' },
-  { name: 'Владивосток', id: 'VVO', city: 'Владивосток' },
-  { name: 'Казань', id: 'KZN', city: 'Казань' },
-  { name: 'Сочи', id: 'AER', city: 'Сочи' },
-];
+import { airportsRussia } from '../data/airports';
 
 /**
- * Генерирует случайное число в заданном диапазоне
+ * Генерирует игровой мир с реальными аэропортами России
  */
-const getRandomNumber = (min: number, max: number): number => {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
-/**
- * Генерирует случайные координаты для аэропорта
- */
-const generateAirportPosition = (worldSize: { width: number; height: number }): { x: number; y: number } => {
-  return {
-    x: getRandomNumber(0, worldSize.width),
-    y: getRandomNumber(0, worldSize.height),
-  };
-};
-
-/**
- * Проверяет, не слишком ли близко расположены аэропорты друг к другу
- */
-const isAirportTooClose = (
-  newAirport: Airport,
-  existingAirports: Airport[],
-  minDistance: number
-): boolean => {
-  return existingAirports.some((airport) => {
-    const dx = airport.position.x - newAirport.position.x;
-    const dy = airport.position.y - newAirport.position.y;
-    const distance = Math.sqrt(dx * dx + dy * dy);
-    return distance < minDistance;
-  });
-};
-
-/**
- * Генерирует новый игровой мир
- */
-export const generateWorld = (
-  width: number = 1000,
-  height: number = 1000,
-  scale: number = 10,
-  minAirports: number = 5,
-  maxAirports: number = 10,
-  minDistanceBetweenAirports: number = 100
-): World => {
-  const world: World = {
-    airports: [],
-    routes: [],
-    size: { width, height },
-    scale,
+export const generateWorld = (): World => {
+  // Фиксированные границы карты для России
+  const MAP_BOUNDS = {
+    minLat: 35,  // Южная граница
+    maxLat: 75,  // Северная граница
+    minLon: 15,  // Западная граница
+    maxLon: 200  // Восточная граница
   };
 
-  // Определяем количество аэропортов
-  const airportCount = getRandomNumber(minAirports, maxAirports);
+  // Создаем аэропорты из всех доступных данных
+  const airports: Airport[] = airportsRussia
+    // Фильтруем аэропорты, которые находятся в пределах карты
+    .filter(airport =>
+      airport.latitude >= MAP_BOUNDS.minLat &&
+      airport.latitude <= MAP_BOUNDS.maxLat &&
+      airport.longitude >= MAP_BOUNDS.minLon &&
+      airport.longitude <= MAP_BOUNDS.maxLon
+    )
+    .map(airport => ({
+      id: airport.iata,
+      name: airport.iata,
+      city: airport.city,
+      position: {
+        // Нормализуем координаты в пределах заданных границ
+        x: ((airport.longitude - MAP_BOUNDS.minLon) / (MAP_BOUNDS.maxLon - MAP_BOUNDS.minLon)) * 1000,
+        // Инвертируем Y координату, чтобы север был вверху
+        y: (1 - (airport.latitude - MAP_BOUNDS.minLat) / (MAP_BOUNDS.maxLat - MAP_BOUNDS.minLat)) * 800
+      }
+    }));
 
-  // Создаем аэропорты
-  for (let i = 0; i < airportCount; i++) {
-    const airportData = AIRPORTS_DATA[i % AIRPORTS_DATA.length];
-    let position;
-    let attempts = 0;
-    const maxAttempts = 100;
+  // Создаем маршруты между всеми аэропортами
+  const routes: Route[] = [];
+  // Некоторые маршруты для тестирования
+  const testRoutes = [['NSK', 'BTK'], ['GDX', 'DYR'], ['PES', 'MMK']]
+  for (let i = 0; i < testRoutes.length; i++) {
+    const [departure, arrival] = testRoutes[i];
+    const departureAirport = airports.find(airport => airport.id === departure);
+    const arrivalAirport = airports.find(airport => airport.id === arrival);
 
-    // Пытаемся найти подходящее место для аэропорта
-    do {
-      position = generateAirportPosition(world.size);
-      attempts++;
-    } while (
-      isAirportTooClose(
-        {
-          id: airportData.id,
-          name: airportData.name,
-          city: airportData.city,
-          position
-        },
-        world.airports,
-        minDistanceBetweenAirports
-      ) &&
-      attempts < maxAttempts
-    );
-
-    if (attempts < maxAttempts) {
-      world.airports.push({
-        id: airportData.id,
-        name: airportData.name,
-        city: airportData.city,
-        position,
+    if (departureAirport && arrivalAirport) {
+      routes.push({
+        id: `route-${departureAirport.id}-${arrivalAirport.id}`,
+        departureAirport: departureAirport,
+        arrivalAirport: arrivalAirport,
+        aircrafts: [],
       });
     }
   }
-
-  return world;
-};
-
-/**
- * Генерирует тестовый мир с фиксированным расположением аэропортов
- */
-export const generateTestWorld = (): World => {
-  const airports: Airport[] = [
-    {
-      id: 'airport-1',
-      name: 'Шереметьево',
-      city: 'Москва',
-      position: { x: 200, y: 200 }
-    },
-    {
-      id: 'airport-2',
-      name: 'Пулково',
-      city: 'Санкт-Петербург',
-      position: { x: 150, y: 150 }
-    },
-    {
-      id: 'airport-3',
-      name: 'Толмачёво',
-      city: 'Новосибирск',
-      position: { x: 500, y: 300 }
-    },
-    {
-      id: 'airport-4',
-      name: 'Кольцово',
-      city: 'Екатеринбург',
-      position: { x: 450, y: 200 }
-    },
-    {
-      id: 'airport-5',
-      name: 'Хабаровск',
-      city: 'Хабаровск',
-      position: { x: 800, y: 200 }
-    }
-  ];
-
-  const routes: Route[] = [
-    {
-      id: 'route-1',
-      departureAirport: airports[0],
-      arrivalAirport: airports[1],
-      aircrafts: [],
-    },
-    {
-      id: 'route-2',
-      departureAirport: airports[1],
-      arrivalAirport: airports[2],
-      aircrafts: [],
-    },
-    {
-      id: 'route-3',
-      departureAirport: airports[2],
-      arrivalAirport: airports[0],
-      aircrafts: [],
-    },
-    {
-      id: 'route-4',
-      departureAirport: airports[3],
-      arrivalAirport: airports[4],
-      aircrafts: [],
-    },
-    {
-      id: 'route-5',
-      departureAirport: airports[4],
-      arrivalAirport: airports[0],
-      aircrafts: [],
-    }
-  ];
 
   return {
     airports,
@@ -183,6 +60,6 @@ export const generateTestWorld = (): World => {
       width: 1000,
       height: 800
     },
-    scale: 100 // 100 километров на единицу координат
+    scale: 1 // Масштаб теперь не используется, так как координаты уже нормализованы
   };
 };

@@ -1,9 +1,9 @@
 import React from 'react';
 import { World } from './World';
-import { generateTestWorld } from '../utils/worldGenerator';
+import { generateWorld } from '../utils/worldGenerator';
 
 export const Game: React.FC = () => {
-  const world = generateTestWorld()
+  const world = generateWorld()
   return (
     <World world={world} />
   );

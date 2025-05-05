@@ -22,15 +22,9 @@ export const RouteInfo: React.FC<RouteInfoProps> = observer(({ route }) => {
 
   return (
     <div className="space-y-4">
-      <InfoSection title="Отправление">
+      <InfoSection title="Между">
         <div>
-          {departureAirport.name}
-        </div>
-      </InfoSection>
-
-      <InfoSection title="Прибытие">
-        <div>
-          {arrivalAirport.name}
+          {departureAirport.city} - {arrivalAirport.city}
         </div>
       </InfoSection>
 
