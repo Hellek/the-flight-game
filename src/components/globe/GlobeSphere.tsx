@@ -3,6 +3,7 @@ import { Sphere } from '@react-three/drei';
 import * as THREE from 'three';
 import { createGlobeTexture } from './GlobeTexture';
 import { eurasiaCoordinates } from '../../data/terrains';
+import { GlobeCities } from './GlobeCities';
 
 const globeMaterial = {
   waterColor: '#007beb',
@@ -26,16 +27,19 @@ export const GlobeSphere: React.FC = () => {
   const degree10 = Math.PI / 18;
 
   return (
-    <Sphere
-      ref={sphereRef}
-      args={[1, 64, 64]}
-      rotation={[Math.PI / 4, Math.PI + degree10 * 3, 0]}
-    >
-      <meshPhongMaterial
-        map={texture}
-        side={THREE.DoubleSide}
-        transparent={false}
-      />
-    </Sphere>
+    <group>
+      <Sphere
+        ref={sphereRef}
+        args={[1, 64, 64]}
+        rotation={[Math.PI / 4, Math.PI + degree10 * 3, 0]}
+      >
+        <meshPhongMaterial
+          map={texture}
+          side={THREE.DoubleSide}
+          transparent={false}
+        />
+      </Sphere>
+      <GlobeCities />
+    </group>
   );
 };
