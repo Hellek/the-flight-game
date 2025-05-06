@@ -7,7 +7,7 @@ import { GlobeCities } from './GlobeCities';
 
 const globeMaterial = {
   waterColor: '#007beb',
-  continentColor: '#ffffff',
+  continentColor: '#f8fafc',
 };
 
 export const GlobeSphere: React.FC = () => {

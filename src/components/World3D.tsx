@@ -13,7 +13,7 @@ export const World3D: React.FC = () => {
           fov: 45,
         }}
       >
-        <ambientLight />
+        <ambientLight intensity={3} />
         <GlobeSphere />
         <OrbitControls
           enableDamping
