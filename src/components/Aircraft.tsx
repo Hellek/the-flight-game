@@ -14,9 +14,9 @@ interface AircraftProps {
 
 export const Aircraft: React.FC<AircraftProps> = observer(({ aircraft, route }) => {
   const meshRef = useRef<THREE.Mesh>(null)
-  const { selectedEntity } = rootStore.selectionStore
+  const { selectedEntity } = rootStore.selection
   const [isHovered, setIsHovered] = React.useState(false)
-  const currentPoint = rootStore.aircraftStore.getAircraftPosition(aircraft, route)
+  const currentPoint = rootStore.aircraft.getAircraftPosition(aircraft, route)
 
   const isSelected = selectedEntity?.type === 'aircraft' &&
     selectedEntity.data.id === aircraft.id
@@ -28,7 +28,7 @@ export const Aircraft: React.FC<AircraftProps> = observer(({ aircraft, route }) 
       position={[currentPoint.x, currentPoint.y, currentPoint.z]}
       onClick={e => {
         e.stopPropagation()
-        rootStore.selectionStore.selectAircraft(aircraft)
+        rootStore.selection.selectAircraft(aircraft)
       }}
       onPointerOver={e => {
         e.stopPropagation()

@@ -9,8 +9,8 @@ import { getArcPoints, positionToVector } from '../utils'
 import { Aircrafts } from './Aircrafts'
 
 export const GlobeRoutes: React.FC = observer(() => {
-  const routes = rootStore.worldStore.world?.routes || []
-  const { selectedEntity } = rootStore.selectionStore
+  const { routes } = rootStore.route
+  const { selectedEntity } = rootStore.selection
   const [hoveredRoute, setHoveredRoute] = useState<string | null>(null)
 
   return (
@@ -36,7 +36,7 @@ export const GlobeRoutes: React.FC = observer(() => {
               lineWidth={ROUTE.WIDTH}
               onClick={e => {
                 e.stopPropagation()
-                rootStore.selectionStore.selectRoute(route)
+                rootStore.selection.selectRoute(route)
               }}
               onPointerOver={e => {
                 e.stopPropagation()

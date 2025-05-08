@@ -13,7 +13,7 @@ export const CreateAircraft: React.FC<CreateAircraftProps> = observer(({ route }
   const [selectedType, setSelectedType] = useState<AircraftSize>(AircraftSize.small)
 
   const handleCreate = () => {
-    rootStore.aircraftStore.createAircraft(route, selectedType)
+    rootStore.aircraft.createAircraft(route, selectedType)
     setSelectedType(AircraftSize.small)
   }
 

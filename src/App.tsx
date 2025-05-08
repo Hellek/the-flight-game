@@ -1,8 +1,10 @@
 import { Game } from './components/Game'
+import { Header } from './components/Header'
 
 const App = () => {
   return (
-    <div className="min-h-screen select-none">
+    <div className="h-screen select-none flex flex-col">
+      <Header />
       <Game />
     </div>
   )

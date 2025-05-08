@@ -1,24 +1,24 @@
-import { World } from '../types'
+import { WorldInitials } from '../types'
 import { generateWorld } from '../utils'
 import { AircraftStore } from './AircraftStore'
 import { CityStore } from './CityStore'
+import { FinanceStore } from './FinanceStore'
 import { RouteStore } from './RouteStore'
 import { SelectionStore } from './SelectionStore'
-import { WorldStore } from './WorldStore'
 
 export class RootStore {
-  cityStore: CityStore
-  routeStore: RouteStore
-  selectionStore: SelectionStore
-  worldStore: WorldStore
-  aircraftStore: AircraftStore
+  city: CityStore
+  route: RouteStore
+  selection: SelectionStore
+  aircraft: AircraftStore
+  finance: FinanceStore
 
-  constructor(world: World) {
-    this.worldStore = new WorldStore(world)
-    this.cityStore = new CityStore(world.cities)
-    this.routeStore = new RouteStore(world.routes)
-    this.aircraftStore = new AircraftStore()
-    this.selectionStore = new SelectionStore()
+  constructor(world: WorldInitials) {
+    this.city = new CityStore(world.cities)
+    this.route = new RouteStore(world.routes)
+    this.selection = new SelectionStore()
+    this.aircraft = new AircraftStore()
+    this.finance = new FinanceStore()
   }
 }
 

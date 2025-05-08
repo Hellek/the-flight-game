@@ -55,8 +55,7 @@ export interface Route {
   distance: number;
 }
 
-// Мир
-export interface World {
+export interface WorldInitials {
   cities: City[];
   routes: Route[];
 }

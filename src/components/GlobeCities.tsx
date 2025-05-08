@@ -7,8 +7,8 @@ import { CITY, GLOBE_ROTATION } from '../constants'
 import { rootStore } from '../stores'
 
 export const GlobeCities: React.FC = observer(() => {
-  const { selectedEntity } = rootStore.selectionStore
-  const { cities } = rootStore.worldStore.world
+  const { selectedEntity } = rootStore.selection
+  const { cities } = rootStore.city
   const [hoveredCity, setHoveredCity] = useState<string | null>(null)
 
   return (
@@ -26,7 +26,7 @@ export const GlobeCities: React.FC = observer(() => {
             position={[city.position.x, city.position.y, city.position.z]}
             onClick={e => {
               e.stopPropagation()
-              rootStore.selectionStore.selectCity(city)
+              rootStore.selection.selectCity(city)
             }}
             onPointerOver={e => {
               e.stopPropagation()
