@@ -1,5 +1,26 @@
-export type AircraftSize = 1 | 2 | 3 | 4 | 5;
+// Географические координаты
+export interface Coordinates {
+  lon: number;
+  lat: number;
+}
 
+// Положение
+export interface Position {
+  x: number;
+  y: number;
+  z: number;
+}
+
+// Размер самолета
+export enum AircraftSize {
+  small = 'small',
+  medium = 'medium',
+  large = 'large',
+  xlarge = 'xlarge',
+  xxlarge = 'xxlarge',
+}
+
+// Самолет
 export interface Aircraft {
   id: string;
   type: AircraftSize;
@@ -10,34 +31,32 @@ export interface Aircraft {
   direction: 'forward' | 'backward'; // Направление движения
 }
 
-export interface Position {
-  x: number;
-  y: number;
+// Географические координаты города
+export interface CityGeo {
+  name: string;
+  iata: string;
+  lon: Coordinates['lon'];
+  lat: Coordinates['lat'];
 }
 
-export interface Airport {
-  id: string;
+// Город в игровом мире
+export interface City {
   name: string;
-  city: string;
   iata: string;
   position: Position;
 }
 
-// Типы для маршрута
+// Маршрут
 export interface Route {
   id: string;
-  departureAirport: Airport;
-  arrivalAirport: Airport;
+  departureCity: City;
+  arrivalCity: City;
   aircrafts: Aircraft[];
+  distance: number;
 }
 
+// Мир
 export interface World {
-  airports: Airport[];
+  cities: City[];
   routes: Route[];
-  size: {
-    width: number;  // ширина игрового мира
-    height: number; // высота игрового мира
-  };
-  // Масштаб для перевода игровых координат в реальные километры
-  scale: number; // километров на единицу координат
 }

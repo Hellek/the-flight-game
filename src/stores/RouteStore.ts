@@ -1,29 +1,17 @@
-import { makeAutoObservable } from 'mobx';
-import { Route } from '../types/types';
+import { makeAutoObservable } from 'mobx'
+
+import { Route } from '../types'
 
 export class RouteStore {
-  routes: Route[] = [];
-  selectedRoute: Route | null = null;
+  routes: Route[] = []
+  selectedRoute: Route | null = null
 
-  constructor() {
-    makeAutoObservable(this);
-  }
-
-  setRoutes(routes: Route[]) {
-    this.routes = routes;
+  constructor(routes: Route[]) {
+    this.routes = routes
+    makeAutoObservable(this)
   }
 
   selectRoute(route: Route | null) {
-    this.selectedRoute = route;
-  }
-
-  getRouteById(id: string) {
-    return this.routes.find(route => route.id === id);
-  }
-
-  getRoutesByAirportId(airportId: string) {
-    return this.routes.filter(route =>
-      route.departureId === airportId || route.arrivalId === airportId
-    );
+    this.selectedRoute = route
   }
 }

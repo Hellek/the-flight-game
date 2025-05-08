@@ -1,14 +1,12 @@
-import { makeAutoObservable } from 'mobx';
-import { World } from '../types/types';
+import { makeAutoObservable } from 'mobx'
+
+import { World } from '../types'
 
 export class WorldStore {
-  world: World | null = null;
+  world: World
 
-  constructor() {
-    makeAutoObservable(this);
-  }
-
-  setWorld(world: World) {
-    this.world = world;
+  constructor(world: World) {
+    this.world = world
+    makeAutoObservable(this)
   }
 }

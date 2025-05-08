@@ -1,35 +1,38 @@
-import React, { useState } from 'react';
-import { observer } from 'mobx-react-lite';
-import { AircraftSize, Route } from '../../types/types';
-import { rootStore } from '../../stores/RootStore';
+import React, { useState } from 'react'
+import { observer } from 'mobx-react-lite'
+
+import { rootStore } from '../../stores'
+import { AircraftSize, Route } from '../../types'
+import { getAircraftSizeName } from '../../utils'
 
 interface CreateAircraftProps {
-  route: Route;
+  route: Route
 }
 
 export const CreateAircraft: React.FC<CreateAircraftProps> = observer(({ route }) => {
-  const [selectedType, setSelectedType] = useState<AircraftSize>(1);
+  const [selectedType, setSelectedType] = useState<AircraftSize>(AircraftSize.small)
 
   const handleCreate = () => {
-    rootStore.aircraftStore.createAircraft(route, selectedType);
-  };
+    rootStore.aircraftStore.createAircraft(route, selectedType)
+    setSelectedType(AircraftSize.small)
+  }
 
   return (
     <div className="space-y-4">
       <div className="space-y-2">
         <label className="block text-sm font-medium text-slate-700">
-          Тип самолета
+          Купить самолет
         </label>
         <select
           value={selectedType}
-          onChange={(e) => setSelectedType(Number(e.target.value) as AircraftSize)}
+          onChange={e => setSelectedType(e.target.value as AircraftSize)}
           className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
         >
-          <option value={1}>Маленький (1)</option>
-          <option value={2}>Средний (2)</option>
-          <option value={3}>Большой (3)</option>
-          <option value={4}>Очень большой (4)</option>
-          <option value={5}>Гигантский (5)</option>
+          {Object.values(AircraftSize).map(size => (
+            <option key={size} value={size}>
+              {getAircraftSizeName(size)}
+            </option>
+          ))}
         </select>
       </div>
 
@@ -40,5 +43,5 @@ export const CreateAircraft: React.FC<CreateAircraftProps> = observer(({ route }
         Создать самолет
       </button>
     </div>
-  );
-});
+  )
+})

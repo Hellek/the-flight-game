@@ -1,44 +1,62 @@
-import { makeAutoObservable } from 'mobx';
-import { Airport, Route } from '../types/types';
+import { makeAutoObservable } from 'mobx'
+
+import { Aircraft, City, Route } from '../types'
 
 type SelectedEntity = {
-  type: 'airport';
-  data: Airport;
+  type: 'city';
+  data: City;
 } | {
   type: 'route';
   data: Route;
-} | null;
+} | {
+  type: 'aircraft';
+  data: Aircraft;
+} | null
 
 export class SelectionStore {
-  selectedEntity: SelectedEntity = null;
+  selectedEntity: SelectedEntity = null
 
   constructor() {
-    makeAutoObservable(this);
+    makeAutoObservable(this)
   }
 
-  selectAirport(airport: Airport | null) {
-    if (!airport) {
-      this.selectedEntity = null;
-      return;
+  selectCity(city: City | null) {
+    if (!city) {
+      this.selectedEntity = null
+      return
     }
+
     this.selectedEntity = {
-      type: 'airport',
-      data: airport
-    };
+      type: 'city',
+      data: city,
+    }
   }
 
   selectRoute(route: Route | null) {
     if (!route) {
-      this.selectedEntity = null;
-      return;
+      this.selectedEntity = null
+      return
     }
+
     this.selectedEntity = {
       type: 'route',
-      data: route
-    };
+      data: route,
+    }
+  }
+
+  selectAircraft(aircraft: Aircraft | null) {
+    if (!aircraft) {
+      this.selectedEntity = null
+      return
+    }
+
+    this.selectedEntity = {
+      type: 'aircraft',
+      data: aircraft,
+    }
   }
 
   clearSelection() {
-    this.selectedEntity = null;
+    this.selectedEntity = null
   }
 }

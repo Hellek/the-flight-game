@@ -1,33 +1,33 @@
-import React, { useEffect } from 'react';
-import { Airports } from './Airports';
-import { Routes } from './Routes';
-import { Aircrafts } from './Aircrafts';
-import { InfoPanel } from './InfoPanel';
-import { WorldBackground } from './WorldBackground';
-import { rootStore } from '../stores/RootStore';
-import { World as WorldType } from '../types/types';
+import React from 'react'
+import * as THREE from 'three'
 
-export const World: React.FC<{ world: WorldType }> = ({ world }) => {
-  useEffect(() => {
-    rootStore.worldStore.setWorld(world);
-    rootStore.airportStore.setAirports(world.airports);
-    rootStore.routeStore.setRoutes(world.routes);
-  }, []);
+import { OrbitControls } from '@react-three/drei'
+import { Canvas } from '@react-three/fiber'
+import { GlobeSphere } from './GlobeSphere'
+import { InfoPanel } from './InfoPanel'
 
+export const World: React.FC = () => {
   return (
-    <div className="relative w-full h-screen bg-slate-50">
-      <svg
-        className="w-full h-full"
-        viewBox={`0 0 ${world.size.width} ${world.size.height}`}
-        preserveAspectRatio="xMidYMid meet"
+    <div className="w-full h-screen">
+      <Canvas
+        camera={{
+          position: [0, 0, 3],
+          fov: 45,
+        }}
       >
-        <WorldBackground width={world.size.width} height={world.size.height} />
-        <Routes />
-        <Airports />
-        <Aircrafts />
-      </svg>
-
+        <ambientLight intensity={3} />
+        <GlobeSphere />
+        <OrbitControls
+          enableDamping
+          dampingFactor={0.05}
+          minDistance={1.1}
+          maxDistance={3}
+          rotateSpeed={0.5}
+          target={new THREE.Vector3(0, 0, 0)}
+          makeDefault
+        />
+      </Canvas>
       <InfoPanel />
     </div>
-  );
-};
+  )
+}

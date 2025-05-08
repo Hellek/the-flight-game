@@ -1,0 +1,58 @@
+import React, { useState } from 'react'
+import { observer } from 'mobx-react-lite'
+
+import { Line } from '@react-three/drei'
+import { itemColor, itemColorHovered, itemColorSelected } from '../constants'
+import { GLOBE_ROTATION, ROUTE } from '../constants'
+import { rootStore } from '../stores'
+import { getArcPoints, positionToVector } from '../utils'
+import { Aircrafts } from './Aircrafts'
+
+export const GlobeRoutes: React.FC = observer(() => {
+  const routes = rootStore.worldStore.world?.routes || []
+  const { selectedEntity } = rootStore.selectionStore
+  const [hoveredRoute, setHoveredRoute] = useState<string | null>(null)
+
+  return (
+    <group rotation={[GLOBE_ROTATION.X, GLOBE_ROTATION.Y, GLOBE_ROTATION.Z]}>
+      {routes.map(route => {
+        const points = getArcPoints(
+          positionToVector(route.departureCity.position),
+          positionToVector(route.arrivalCity.position),
+          ROUTE.SEGMENTS,
+          ROUTE.ARC_HEIGHT,
+        )
+
+        const isSelected = selectedEntity?.type === 'route' &&
+          selectedEntity.data.id === route.id
+
+        const isHovered = hoveredRoute === route.id
+
+        return (
+          <group key={route.id}>
+            <Line
+              points={points}
+              color={isSelected ? itemColorSelected : isHovered ? itemColorHovered : itemColor}
+              lineWidth={ROUTE.WIDTH}
+              onClick={e => {
+                e.stopPropagation()
+                rootStore.selectionStore.selectRoute(route)
+              }}
+              onPointerOver={e => {
+                e.stopPropagation()
+                document.body.style.cursor = 'pointer'
+                setHoveredRoute(route.id)
+              }}
+              onPointerOut={e => {
+                e.stopPropagation()
+                document.body.style.cursor = 'auto'
+                setHoveredRoute(null)
+              }}
+            />
+            <Aircrafts route={route} />
+          </group>
+        )
+      })}
+    </group>
+  )
+})

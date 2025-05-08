@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 interface InfoSectionProps {
   title: string;
@@ -15,4 +15,4 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ title, children }) => 
       {children}
     </div>
   </div>
-);
+)

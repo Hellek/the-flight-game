@@ -1,23 +1,25 @@
-import { AirportStore } from './AirportStore';
-import { RouteStore } from './RouteStore';
-import { SelectionStore } from './SelectionStore';
-import { WorldStore } from './WorldStore';
-import { AircraftStore } from './AircraftStore';
+import { World } from '../types'
+import { generateWorld } from '../utils'
+import { AircraftStore } from './AircraftStore'
+import { CityStore } from './CityStore'
+import { RouteStore } from './RouteStore'
+import { SelectionStore } from './SelectionStore'
+import { WorldStore } from './WorldStore'
 
 export class RootStore {
-  airportStore: AirportStore;
-  routeStore: RouteStore;
-  selectionStore: SelectionStore;
-  worldStore: WorldStore;
-  aircraftStore: AircraftStore;
+  cityStore: CityStore
+  routeStore: RouteStore
+  selectionStore: SelectionStore
+  worldStore: WorldStore
+  aircraftStore: AircraftStore
 
-  constructor() {
-    this.airportStore = new AirportStore();
-    this.routeStore = new RouteStore();
-    this.selectionStore = new SelectionStore();
-    this.worldStore = new WorldStore();
-    this.aircraftStore = new AircraftStore();
+  constructor(world: World) {
+    this.worldStore = new WorldStore(world)
+    this.cityStore = new CityStore(world.cities)
+    this.routeStore = new RouteStore(world.routes)
+    this.aircraftStore = new AircraftStore()
+    this.selectionStore = new SelectionStore()
   }
 }
 
-export const rootStore = new RootStore();
+export const rootStore = new RootStore(generateWorld())

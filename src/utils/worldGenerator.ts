@@ -1,65 +1,67 @@
-import { World, Airport, Route } from '../types/types';
-import { airportsRussia } from '../data/airports';
+import { citiesRussia } from '../data'
+import { City, Route, World } from '../types'
+import { calculateDistance } from './geometry'
+
+/**
+ * Преобразует географические координаты в 3D координаты на сфере
+ */
+const convertToSphereCoordinates = (lat: number, lon: number) => {
+  const phi = (90 - lat) * (Math.PI / 180)
+  const theta = (lon + 180) * (Math.PI / 180)
+
+  return {
+    x: -Math.sin(phi) * Math.cos(theta),
+    y: Math.cos(phi),
+    z: Math.sin(phi) * Math.sin(theta),
+  }
+}
+
+const getPredefinedRoutes = (cities: City[]): Route[] => {
+  const routes: Route[] = []
+
+  // Создаем маршруты между городами
+  const predefinedRoutes = [
+    { departureCity: 'KZN', arrivalCity: 'BAX' },
+    { departureCity: 'KZN', arrivalCity: 'LED' },
+    { departureCity: 'VVO', arrivalCity: 'OVB' },
+  ]
+
+  for (const route of predefinedRoutes) {
+    const departureCity = cities.find(city => city.iata === route.departureCity)
+    const arrivalCity = cities.find(city => city.iata === route.arrivalCity)
+
+    if (departureCity && arrivalCity) {
+      routes.push({
+        id: `${departureCity.iata}-${arrivalCity.iata}`,
+        departureCity,
+        arrivalCity,
+        aircrafts: [],
+        distance: calculateDistance(departureCity.position, arrivalCity.position),
+      })
+    }
+  }
+
+  return routes
+}
 
 /**
  * Генерирует игровой мир с реальными аэропортами России
  */
 export const generateWorld = (): World => {
-  // Фиксированные границы карты для России
-  const MAP_BOUNDS = {
-    minLat: 35,  // Южная граница
-    maxLat: 75,  // Северная граница
-    minLon: 15,  // Западная граница
-    maxLon: 200  // Восточная граница
-  };
-
-  // Создаем аэропорты из всех доступных данных
-  const airports: Airport[] = airportsRussia
-    // Фильтруем аэропорты, которые находятся в пределах карты
-    .filter(airport =>
-      airport.latitude >= MAP_BOUNDS.minLat &&
-      airport.latitude <= MAP_BOUNDS.maxLat &&
-      airport.longitude >= MAP_BOUNDS.minLon &&
-      airport.longitude <= MAP_BOUNDS.maxLon
-    )
-    .map(airport => ({
-      id: airport.iata,
-      name: airport.iata,
-      city: airport.city,
-      position: {
-        // Нормализуем координаты в пределах заданных границ
-        x: ((airport.longitude - MAP_BOUNDS.minLon) / (MAP_BOUNDS.maxLon - MAP_BOUNDS.minLon)) * 1000,
-        // Инвертируем Y координату, чтобы север был вверху
-        y: (1 - (airport.latitude - MAP_BOUNDS.minLat) / (MAP_BOUNDS.maxLat - MAP_BOUNDS.minLat)) * 800
-      }
-    }));
-
-  // Создаем маршруты между всеми аэропортами
-  const routes: Route[] = [];
-  // Некоторые маршруты для тестирования
-  const testRoutes = [['NSK', 'BTK'], ['GDX', 'DYR'], ['PES', 'MMK']]
-  for (let i = 0; i < testRoutes.length; i++) {
-    const [departure, arrival] = testRoutes[i];
-    const departureAirport = airports.find(airport => airport.id === departure);
-    const arrivalAirport = airports.find(airport => airport.id === arrival);
-
-    if (departureAirport && arrivalAirport) {
-      routes.push({
-        id: `route-${departureAirport.id}-${arrivalAirport.id}`,
-        departureAirport: departureAirport,
-        arrivalAirport: arrivalAirport,
-        aircrafts: [],
-      });
+  // Создаем города из всех доступных данных
+  const cities: City[] = citiesRussia.map(city => {
+    return {
+      iata: city.iata,
+      name: city.name,
+      position: convertToSphereCoordinates(city.lat, city.lon),
     }
-  }
+  })
+
+  // Создаем маршруты между городами
+  const routes: Route[] = getPredefinedRoutes(cities)
 
   return {
-    airports,
+    cities,
     routes,
-    size: {
-      width: 1000,
-      height: 800
-    },
-    scale: 1 // Масштаб теперь не используется, так как координаты уже нормализованы
-  };
-};
+  }
+}

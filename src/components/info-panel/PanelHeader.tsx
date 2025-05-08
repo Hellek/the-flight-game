@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 interface PanelHeaderProps {
   title: string;
@@ -29,4 +29,4 @@ export const PanelHeader: React.FC<PanelHeaderProps> = ({ title, onClose }) => (
       </svg>
     </button>
   </div>
-);
+)

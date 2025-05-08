@@ -1,17 +1,23 @@
-import React from 'react';
-import { observer } from 'mobx-react-lite';
-import { Aircraft } from './Aircraft';
-import { rootStore } from '../stores/RootStore';
+import React from 'react'
+import { observer } from 'mobx-react-lite'
 
-export const Aircrafts: React.FC = observer(() => {
+import { type Route } from '../types'
+import { Aircraft } from './Aircraft'
+
+interface AircraftsProps {
+  route: Route;
+}
+
+export const Aircrafts: React.FC<AircraftsProps> = observer(({ route }) => {
   return (
     <>
-      {rootStore.aircraftStore.aircrafts.map((aircraft) => (
+      {route.aircrafts.map(aircraft => (
         <Aircraft
           key={aircraft.id}
           aircraft={aircraft}
+          route={route}
         />
       ))}
     </>
-  );
-});
+  )
+})
