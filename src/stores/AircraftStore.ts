@@ -19,7 +19,7 @@ export class AircraftStore {
       route,
       position: { ...route.departureCity.position },
       progress: 0,
-      speed: 0.5, // Скорость движения (0-1)
+      speed: 0.1, // Скорость движения (0-1)
       direction: 'forward' as const, // Начинаем движение от departure к arrival
     }, {
       position: observable,
