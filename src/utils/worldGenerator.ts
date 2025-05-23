@@ -23,7 +23,11 @@ const getPredefinedRoutes = (cities: City[]): Route[] => {
   const predefinedRoutes = [
     { departureCity: 'KZN', arrivalCity: 'BAX' },
     { departureCity: 'KZN', arrivalCity: 'LED' },
+    { departureCity: 'KZN', arrivalCity: 'ESL' },
+    { departureCity: 'MCX', arrivalCity: 'DYR' },
+    { departureCity: 'MCX', arrivalCity: 'PKC' },
     { departureCity: 'VVO', arrivalCity: 'OVB' },
+    { departureCity: 'VOZ', arrivalCity: 'LPK' },
   ]
 
   for (const route of predefinedRoutes) {
