@@ -5,6 +5,7 @@ import { CityStore } from './CityStore'
 import { FinanceStore } from './FinanceStore'
 import { RouteStore } from './RouteStore'
 import { SelectionStore } from './SelectionStore'
+import { ViewSettingsStore } from './ViewSettingsStore'
 
 export class RootStore {
   city: CityStore
@@ -12,6 +13,7 @@ export class RootStore {
   selection: SelectionStore
   aircraft: AircraftStore
   finance: FinanceStore
+  viewSettings: ViewSettingsStore
 
   constructor(world: WorldInitials) {
     this.city = new CityStore(world.cities)
@@ -19,6 +21,7 @@ export class RootStore {
     this.selection = new SelectionStore()
     this.aircraft = new AircraftStore()
     this.finance = new FinanceStore()
+    this.viewSettings = new ViewSettingsStore()
   }
 }
 
