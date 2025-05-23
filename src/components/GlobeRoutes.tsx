@@ -6,7 +6,6 @@ import { itemColor, itemColorHovered, itemColorSelected } from '../constants'
 import { GLOBE_ROTATION, ROUTE } from '../constants'
 import { rootStore } from '../stores'
 import { getArcPoints, positionToVector } from '../utils'
-import { Aircrafts } from './Aircrafts'
 
 export const GlobeRoutes: React.FC = observer(() => {
   const { routes } = rootStore.route
@@ -20,7 +19,6 @@ export const GlobeRoutes: React.FC = observer(() => {
           positionToVector(route.departureCity.position),
           positionToVector(route.arrivalCity.position),
           ROUTE.SEGMENTS,
-          ROUTE.ARC_HEIGHT,
         )
 
         const isSelected = selectedEntity?.type === 'route' &&
@@ -29,28 +27,26 @@ export const GlobeRoutes: React.FC = observer(() => {
         const isHovered = hoveredRoute === route.id
 
         return (
-          <group key={route.id}>
-            <Line
-              points={points}
-              color={isSelected ? itemColorSelected : isHovered ? itemColorHovered : itemColor}
-              lineWidth={ROUTE.WIDTH}
-              onClick={e => {
-                e.stopPropagation()
-                rootStore.selection.selectRoute(route)
-              }}
-              onPointerOver={e => {
-                e.stopPropagation()
-                document.body.style.cursor = 'pointer'
-                setHoveredRoute(route.id)
-              }}
-              onPointerOut={e => {
-                e.stopPropagation()
-                document.body.style.cursor = 'auto'
-                setHoveredRoute(null)
-              }}
-            />
-            <Aircrafts route={route} />
-          </group>
+          <Line
+            key={route.id}
+            points={points}
+            color={isSelected ? itemColorSelected : isHovered ? itemColorHovered : itemColor}
+            lineWidth={ROUTE.WIDTH}
+            onClick={e => {
+              e.stopPropagation()
+              rootStore.selection.selectRoute(route)
+            }}
+            onPointerOver={e => {
+              e.stopPropagation()
+              document.body.style.cursor = 'pointer'
+              setHoveredRoute(route.id)
+            }}
+            onPointerOut={e => {
+              e.stopPropagation()
+              document.body.style.cursor = 'auto'
+              setHoveredRoute(null)
+            }}
+          />
         )
       })}
     </group>

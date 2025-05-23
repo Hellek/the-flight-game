@@ -6,9 +6,12 @@ import { continentColor, waterColor } from '../constants'
 import { eurasiaCoordinates } from '../data'
 import { GlobeCities } from './GlobeCities'
 import { GlobeRoutes } from './GlobeRoutes'
+import { GlobeAircrafts } from './GlobeAircrafts'
 import { createGlobeTexture } from './GlobeTexture'
+import { rootStore } from '../stores'
+import { observer } from 'mobx-react-lite'
 
-export const GlobeSphere: React.FC = () => {
+export const GlobeSphere: React.FC = observer(() => {
   const sphereRef = useRef<THREE.Mesh>(null)
   const textureQuality = 2
 
@@ -38,7 +41,8 @@ export const GlobeSphere: React.FC = () => {
         />
       </Sphere>
       <GlobeCities />
-      <GlobeRoutes />
+      {rootStore.viewSettings.showRoutes && <GlobeRoutes />}
+      <GlobeAircrafts />
     </group>
   )
-}
+})
