@@ -1,4 +1,4 @@
-import { Shape, ExtrudeGeometry } from 'three'
+import { ExtrudeGeometry, Shape } from 'three'
 
 interface WingsProps {
   color?: string
@@ -24,7 +24,7 @@ const wingExtrudeSettings = {
   bevelEnabled: true,
   bevelThickness: 0.05,
   bevelSize: 0.05,
-  bevelSegments: 3
+  bevelSegments: 3,
 }
 
 const wingGeometry = new ExtrudeGeometry(createWingShape(), wingExtrudeSettings)
@@ -50,5 +50,5 @@ export function Wings({ color }: WingsProps) {
         {color && <meshBasicMaterial color={color} />}
       </mesh>
     </group>
-  );
+  )
 }

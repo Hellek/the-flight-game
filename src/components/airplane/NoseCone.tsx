@@ -10,5 +10,5 @@ export function NoseCone({ color }: NoseConeProps) {
         {color && <meshBasicMaterial color={color} />}
       </mesh>
     </group>
-  );
+  )
 }

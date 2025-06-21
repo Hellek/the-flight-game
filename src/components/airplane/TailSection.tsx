@@ -1,4 +1,4 @@
-import { Shape, ExtrudeGeometry } from 'three'
+import { ExtrudeGeometry, Shape } from 'three'
 
 interface TailSectionProps {
   color?: string
@@ -21,12 +21,12 @@ const horizontalStabilizerSettings = {
   bevelEnabled: true,
   bevelThickness: 0.02,
   bevelSize: 0.02,
-  bevelSegments: 3
+  bevelSegments: 3,
 }
 
 const horizontalStabilizerGeometry = new ExtrudeGeometry(
   createHorizontalStabilizerShape(),
-  horizontalStabilizerSettings
+  horizontalStabilizerSettings,
 )
 
 export function TailSection({ color }: TailSectionProps) {

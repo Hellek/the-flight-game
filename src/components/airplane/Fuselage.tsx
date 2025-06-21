@@ -8,5 +8,5 @@ export function Fuselage({ color }: FuselageProps) {
       <cylinderGeometry args={[0.3, 0.4, 5.8, 32]} />
       {color && <meshBasicMaterial color={color} />}
     </mesh>
-  );
+  )
 }

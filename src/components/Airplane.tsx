@@ -1,10 +1,11 @@
-import { NoseCone } from './airplane/NoseCone'
-import { Fuselage } from './airplane/Fuselage'
-import { Wings } from './airplane/Wings'
-import { TailSection } from './airplane/TailSection'
-import { type ThreeEvent } from '@react-three/fiber'
-import { type Mesh } from 'three'
 import { forwardRef } from 'react'
+import { type Mesh } from 'three'
+
+import { type ThreeEvent } from '@react-three/fiber'
+import { Fuselage } from './airplane/Fuselage'
+import { NoseCone } from './airplane/NoseCone'
+import { TailSection } from './airplane/TailSection'
+import { Wings } from './airplane/Wings'
 
 interface AirplaneProps {
   position?: [number, number, number]
