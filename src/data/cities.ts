@@ -20,7 +20,7 @@ export const citiesRussia: CityGeo[] = [
   { iata: 'RGK', name: 'Горно-Алтайск', lon: 85.9569, lat: 51.9583 },
   { iata: 'GRV', name: 'Грозный', lon: 45.7031, lat: 43.3101 },
   { iata: 'SVX', name: 'Екатеринбург', lon: 60.1941, lat: 56.7327 },
-  { iata: 'IWA', name: 'Иваново', lon: 47.8667, lat: 56.8283 },
+  { iata: 'IWA', name: 'Иваново', lon: 40.9322, lat: 56.9425 },
   { iata: 'IKT', name: 'Иркутск', lon: 104.389, lat: 52.2681 },
   { iata: 'JOK', name: 'Йошкар-Ола', lon: 47.8667, lat: 56.8283 },
   { iata: 'KZN', name: 'Казань', lon: 49.1078, lat: 55.7969 },
