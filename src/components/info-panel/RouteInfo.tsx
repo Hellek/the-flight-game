@@ -2,7 +2,7 @@ import React from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { type Route } from '../../types'
-import { calculateDistance } from '../../utils'
+import { rootStore } from '../../stores'
 import { CreateAircraft } from './CreateAircraft'
 import { RouteAircrafts } from './RouteAircrafts'
 
@@ -12,7 +12,7 @@ interface RouteInfoProps {
 
 export const RouteInfo: React.FC<RouteInfoProps> = observer(({ route }) => {
   const { departureCity, arrivalCity } = route
-  const distanceInKm = Math.round(calculateDistance(departureCity.position, arrivalCity.position))
+  const distanceInKm = Math.round(rootStore.route.getDirectDistance(route))
 
   return (
     <>

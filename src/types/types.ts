@@ -26,7 +26,6 @@ export interface Aircraft {
   type: AircraftSize;
   speed: number;
   route: Route;
-  position: Position;
   progress: number; // Прогресс движения по маршруту (0-1)
   direction: 'forward' | 'backward'; // Направление движения
 }

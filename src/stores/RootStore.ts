@@ -19,7 +19,7 @@ export class RootStore {
     this.city = new CityStore(world.cities)
     this.route = new RouteStore(world.routes)
     this.selection = new SelectionStore()
-    this.aircraft = new AircraftStore()
+    this.aircraft = new AircraftStore(this.route)
     this.finance = new FinanceStore()
     this.viewSettings = new ViewSettingsStore()
   }

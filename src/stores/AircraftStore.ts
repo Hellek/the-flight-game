@@ -1,15 +1,33 @@
 import { makeAutoObservable, makeObservable, observable, runInAction } from 'mobx'
 import * as THREE from 'three'
 
-import { ROUTE } from '../constants'
 import { Aircraft, AircraftSize, Route } from '../types'
-import { getArcPoints, positionToVector } from '../utils'
+import { RouteStore } from './RouteStore'
+import { AIRCRAFT } from '../constants/globe'
 
 export class AircraftStore {
   aircrafts: Aircraft[] = []
+  private routeStore: RouteStore
+  private lastUpdateTime: number = 0
+  private animationId: number | null = null
 
-  constructor() {
+  constructor(routeStore: RouteStore) {
+    this.routeStore = routeStore
     makeAutoObservable(this)
+  }
+
+  private getAircraftSpeedMultiplier(type: AircraftSize): number {
+    // Разные скорости для разных типов самолётов
+    // TODO: добавить реальные скорости самолётов
+    const speedMultipliers = {
+      small: 1.0,    // Базовая скорость
+      medium: 1.05,   // На 5% быстрее
+      large: 1.08,    // На 8% быстрее
+      xlarge: 1.1,   // На 10% быстрее
+      xxlarge: 1.12,  // На 12% быстрее
+    }
+
+    return speedMultipliers[type] || 1.0
   }
 
   createAircraft(route: Route, type: AircraftSize) {
@@ -17,12 +35,10 @@ export class AircraftStore {
       id: crypto.randomUUID(),
       type,
       route,
-      position: { ...route.departureCity.position },
       progress: 0,
-      speed: 0.1, // Скорость движения (0-1)
-      direction: 'forward' as const, // Начинаем движение от departure к arrival
+      speed: AIRCRAFT.SPEED * this.getAircraftSpeedMultiplier(type), // Финальная скорость с учётом типа самолёта
+      direction: 'forward' as const,
     }, {
-      position: observable,
       progress: observable,
       speed: observable,
       direction: observable,
@@ -30,48 +46,49 @@ export class AircraftStore {
 
     this.aircrafts.push(aircraft)
     route.aircrafts.push(aircraft)
-    this.startMovement(aircraft)
+
+    // Запускаем анимацию, если это первый самолёт
+    if (this.aircrafts.length === 1) {
+      this.startAnimation()
+    }
   }
 
-  private startMovement(aircraft: Aircraft) {
-    const moveAircraft = () => {
+  private startAnimation() {
+    const animate = (timestamp: number) => {
+      if (!this.lastUpdateTime) this.lastUpdateTime = timestamp
+      const deltaTime = (timestamp - this.lastUpdateTime) / 1000 // в секундах
+      this.lastUpdateTime = timestamp
+
       runInAction(() => {
-        const speedStep = aircraft.speed / 100
+        // Обновляем все самолёты
+        this.aircrafts.forEach(aircraft => {
+          // Вычисляем скорость, пропорциональную реальному расстоянию маршрута
+          const speedStep = (aircraft.speed / aircraft.route.distance) * deltaTime * 1000
 
-        // Увеличиваем или уменьшаем прогресс в зависимости от направления
-        if (aircraft.direction === 'forward') {
-          aircraft.progress += speedStep
-          // Проверяем, не превысили ли мы конечную точку
-          if (aircraft.progress >= 1) {
-            aircraft.progress = 1
-            aircraft.direction = 'backward'
+          if (aircraft.direction === 'forward') {
+            aircraft.progress = Math.min(1, aircraft.progress + speedStep)
+            if (aircraft.progress >= 1) {
+              aircraft.progress = 1
+              aircraft.direction = 'backward'
+            }
+          } else {
+            aircraft.progress = Math.max(0, aircraft.progress - speedStep)
+            if (aircraft.progress <= 0) {
+              aircraft.progress = 0
+              aircraft.direction = 'forward'
+            }
           }
-        } else {
-          aircraft.progress -= speedStep
-          // Проверяем, не достигли ли мы начальной точки
-          if (aircraft.progress <= 0) {
-            aircraft.progress = 0
-            aircraft.direction = 'forward'
-          }
-        }
-
-        // Обновляем позицию самолета
-        aircraft.position = this.getAircraftPosition(aircraft, aircraft.route)
+        })
       })
 
-      requestAnimationFrame(moveAircraft)
+      this.animationId = requestAnimationFrame(animate)
     }
 
-    requestAnimationFrame(moveAircraft)
+    this.animationId = requestAnimationFrame(animate)
   }
 
   getAircraftPosition(aircraft: Aircraft, route: Route) {
-    const points = getArcPoints(
-      positionToVector(route.departureCity.position),
-      positionToVector(route.arrivalCity.position),
-      ROUTE.SEGMENTS,
-      ROUTE.ARC_HEIGHT,
-    )
+    const points = this.routeStore.getRoutePoints(route)
 
     // Обработка крайних точек
     if (aircraft.progress <= 0) return points[0]
@@ -88,5 +105,40 @@ export class AircraftStore {
 
     // Интерполируем между точками сегмента
     return new THREE.Vector3().lerpVectors(startPoint, endPoint, segmentProgress)
+  }
+
+  getAircraftRotation(aircraft: Aircraft, route: Route): [number, number, number] {
+    const currentPoint = this.getAircraftPosition(aircraft, route)
+    const nextPoint = this.getNextPoint(aircraft, route)
+
+    // Создаем временный объект для вычисления поворота
+    const tempObject = new THREE.Object3D()
+    tempObject.position.copy(currentPoint)
+
+    // Устанавливаем направление на следующую точку
+    tempObject.lookAt(nextPoint)
+
+    // Получаем углы поворота
+    const targetRotation = new THREE.Euler()
+    targetRotation.copy(tempObject.rotation)
+
+    // Учитываем направление движения (вперёд/назад)
+    if (aircraft.direction === 'backward') {
+      targetRotation.y += Math.PI // Разворачиваем на 180 градусов
+    }
+
+    return [targetRotation.x, targetRotation.y, targetRotation.z]
+  }
+
+  private getNextPoint(aircraft: Aircraft, route: Route): THREE.Vector3 {
+    const routePoints = this.routeStore.getRoutePoints(route)
+
+    // Вычисляем следующую точку для определения направления
+    const nextPointIndex = Math.min(
+      Math.floor(aircraft.progress * (routePoints.length - 1)) + 1,
+      routePoints.length - 1,
+    )
+
+    return routePoints[nextPointIndex]
   }
 }

@@ -5,7 +5,6 @@ import { Line } from '@react-three/drei'
 import { itemColor, itemColorHovered, itemColorSelected } from '../constants'
 import { GLOBE_ROTATION, ROUTE } from '../constants'
 import { rootStore } from '../stores'
-import { getArcPoints, positionToVector } from '../utils'
 
 export const GlobeRoutes: React.FC = observer(() => {
   const { routes } = rootStore.route
@@ -15,11 +14,7 @@ export const GlobeRoutes: React.FC = observer(() => {
   return (
     <group rotation={[GLOBE_ROTATION.X, GLOBE_ROTATION.Y, GLOBE_ROTATION.Z]}>
       {routes.map(route => {
-        const points = getArcPoints(
-          positionToVector(route.departureCity.position),
-          positionToVector(route.arrivalCity.position),
-          ROUTE.SEGMENTS,
-        )
+        const points = rootStore.route.getRoutePoints(route)
 
         const isSelected = selectedEntity?.type === 'route' &&
           selectedEntity.data.id === route.id
