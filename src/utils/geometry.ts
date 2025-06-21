@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 
+import { ROUTE } from '../constants'
 import { Position } from '../types'
 
 export const positionToVector = (position: Position): THREE.Vector3 => {
@@ -32,24 +33,44 @@ export const calculateDistance = (pos1: Position, pos2: Position): number => {
 export const getArcPoints = (
   start: THREE.Vector3,
   end: THREE.Vector3,
-  segments: number = 20,
-  arcHeight: number = 0.3,
+  segments: number = ROUTE.SEGMENTS,
 ): THREE.Vector3[] => {
   const points: THREE.Vector3[] = []
-  const arcCurvenessCoefficient = 0.25
 
-  // Находим центр дуги
-  const center = new THREE.Vector3().addVectors(start, end).multiplyScalar(0.5)
+  // Вычисляем расстояние между точками
+  const distance = start.distanceTo(end)
 
+  // Вычисляем высоту дуги в зависимости от расстояния
+  const getArcHeight = (): number => {
+    const { ARC_MAX_HEIGHT, ARC_MIN_HEIGHT, ARC_MIN_DISTANCE } = ROUTE
+
+    // Если расстояние меньше минимального, используем пропорциональную высоту
+    if (distance < ARC_MIN_DISTANCE) {
+      // Линейная интерполяция между минимальной и максимальной высотой
+      return ARC_MIN_HEIGHT + (distance / ARC_MIN_DISTANCE) * (ARC_MAX_HEIGHT - ARC_MIN_HEIGHT)
+    }
+
+    // Для больших расстояний используем максимальную высоту
+    return ARC_MAX_HEIGHT
+  }
+
+  const arcHeight = getArcHeight()
+
+  // Создаем точки маршрута
   for (let i = 0; i <= segments; i++) {
-    const t = i / segments
+    const progress = i / segments
 
-    // Интерполируем между начальной и конечной точками
-    const point = new THREE.Vector3().lerpVectors(start, end, t)
+    // Базовое положение точки на сфере
+    const point = new THREE.Vector3().lerpVectors(start, end, progress)
 
-    // Добавляем высоту дуги
-    const height = Math.sin(t * Math.PI) * arcHeight * arcCurvenessCoefficient
-    point.add(center.clone().multiplyScalar(height))
+    // Нормализуем вектор, чтобы получить точку на поверхности сферы
+    point.normalize()
+
+    // Вычисляем высоту дуги используя синусоиду
+    const height = Math.sin(progress * Math.PI) * arcHeight
+
+    // Двигаем точку по нормали к поверхности сферы
+    point.multiplyScalar(1 + height)
 
     points.push(point)
   }

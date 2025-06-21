@@ -8,9 +8,10 @@ export const GLOBE_ROTATION = {
 // Параметры маршрутов
 export const ROUTE = {
   WIDTH: 5,
-  ARC_HEIGHT: 0.3,
   SEGMENTS: 20,
-  ARC_CURVENESS_COEFFICIENT: 0.25,
+  ARC_MAX_HEIGHT: 0.05, // Максимальная высота дуги маршрута (8-9 км)
+  ARC_MIN_DISTANCE: 2, // Минимальное расстояние для максимальной высоты дуги
+  ARC_MIN_HEIGHT: 0.005, // Минимальная высота дуги для близких точек
 }
 
 // Параметры городов
