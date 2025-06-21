@@ -1,15 +1,15 @@
 import React, { useMemo, useRef } from 'react'
+import { observer } from 'mobx-react-lite'
 import * as THREE from 'three'
 
 import { Sphere } from '@react-three/drei'
 import { continentColor, waterColor } from '../constants'
 import { eurasiaCoordinates } from '../data'
+import { rootStore } from '../stores'
+import { GlobeAircrafts } from './GlobeAircrafts'
 import { GlobeCities } from './GlobeCities'
 import { GlobeRoutes } from './GlobeRoutes'
-import { GlobeAircrafts } from './GlobeAircrafts'
 import { createGlobeTexture } from './GlobeTexture'
-import { rootStore } from '../stores'
-import { observer } from 'mobx-react-lite'
 
 export const GlobeSphere: React.FC = observer(() => {
   const sphereRef = useRef<THREE.Mesh>(null)

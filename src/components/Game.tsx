@@ -1,8 +1,9 @@
 import React from 'react'
+
 import { Canvas } from '@react-three/fiber'
+import { GameControls } from './GameControls'
 import { GlobeSphere } from './GlobeSphere'
 import { InfoPanel } from './InfoPanel'
-import { GameControls } from './GameControls'
 
 export const Game: React.FC = () => {
   return (

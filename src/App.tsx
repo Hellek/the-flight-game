@@ -1,6 +1,7 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+
 import { Header } from './components/Header'
-import { GamePage, AircraftsPage } from './pages'
+import { AircraftsPage, GamePage } from './pages'
 
 const App = () => {
   return (

@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { Airplane } from '../Airplane'
 
 // Интерфейс для модели самолета

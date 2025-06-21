@@ -1,14 +1,15 @@
 import React, { useRef } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { OrbitControls, Environment } from '@react-three/drei'
 import * as THREE from 'three'
+
+import { Environment, OrbitControls } from '@react-three/drei'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { AircraftViewerModel } from './aircraftsList'
 
 // Компонент для вращения самолета
 const RotatingAircraft: React.FC<{ model: AircraftViewerModel }> = ({ model: AircraftComponent }) => {
   const meshRef = useRef<THREE.Mesh>(null)
 
-  useFrame((state) => {
+  useFrame(state => {
     if (meshRef.current) {
       // Медленное вращение вокруг оси Y
       meshRef.current.rotation.y = state.clock.elapsedTime * 0.1
@@ -19,7 +20,7 @@ const RotatingAircraft: React.FC<{ model: AircraftViewerModel }> = ({ model: Air
     ref: meshRef,
     position: [0, 0, 0],
     scale: 2,
-    color: "#4F46E5"
+    color: '#4F46E5',
   })
 }
 
