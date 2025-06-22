@@ -53,6 +53,25 @@ export class AircraftStore {
     }
   }
 
+  removeAircraft(aircraftId: string) {
+    const index = this.aircrafts.findIndex(a => a.id === aircraftId)
+    if (index !== -1) {
+      const aircraft = this.aircrafts[index]
+      // Удаляем из маршрута
+      const routeIndex = aircraft.route.aircrafts.findIndex(a => a.id === aircraftId)
+      if (routeIndex !== -1) {
+        aircraft.route.aircrafts.splice(routeIndex, 1)
+      }
+      // Удаляем из списка самолётов
+      this.aircrafts.splice(index, 1)
+
+      // Останавливаем анимацию, если самолётов не осталось
+      if (this.aircrafts.length === 0) {
+        this.stopAnimation()
+      }
+    }
+  }
+
   private startAnimation() {
     const animate = (timestamp: number) => {
       if (!this.lastUpdateTime) this.lastUpdateTime = timestamp
@@ -85,6 +104,13 @@ export class AircraftStore {
     }
 
     this.animationId = requestAnimationFrame(animate)
+  }
+
+  private stopAnimation() {
+    if (this.animationId !== null) {
+      cancelAnimationFrame(this.animationId)
+      this.animationId = null
+    }
   }
 
   getAircraftPosition(aircraft: Aircraft, route: Route) {
