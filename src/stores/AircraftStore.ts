@@ -81,8 +81,8 @@ export class AircraftStore {
       runInAction(() => {
         // Обновляем все самолёты
         this.aircrafts.forEach(aircraft => {
-          // Вычисляем скорость, пропорциональную реальному расстоянию маршрута
-          const speedStep = (aircraft.speed / aircraft.route.distance) * deltaTime * 1000
+          // Вычисляем скорость движения (прогресс в секунду)
+          const speedStep = aircraft.speed * deltaTime
 
           if (aircraft.direction === 'forward') {
             aircraft.progress = Math.min(1, aircraft.progress + speedStep)
