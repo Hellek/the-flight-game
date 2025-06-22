@@ -1,4 +1,4 @@
-import { citiesRussia } from '../data'
+import { federalRussiaAirports } from '../data'
 import { City, Route, WorldInitials } from '../types'
 import { calculateDistance } from './geometry'
 
@@ -53,7 +53,7 @@ const getPredefinedRoutes = (cities: City[]): Route[] => {
  */
 export const generateWorld = (): WorldInitials => {
   // Создаем города из всех доступных данных
-  const cities: City[] = citiesRussia.map(city => {
+  const cities: City[] = federalRussiaAirports.map(city => {
     return {
       iata: city.iata,
       name: city.name,
