@@ -1,9 +1,9 @@
 import { makeAutoObservable, makeObservable, observable, runInAction } from 'mobx'
 import * as THREE from 'three'
 
-import { Aircraft, AircraftSize, Route } from '../types'
+import { Aircraft, AircraftSize, Route, AircraftDirection } from '../types'
 import { RouteStore } from './RouteStore'
-import { AIRCRAFT } from '../constants/globe'
+import { AircraftSpeed, TIME_ACCELERATION_FACTOR } from '../constants'
 
 export class AircraftStore {
   aircrafts: Aircraft[] = []
@@ -16,28 +16,14 @@ export class AircraftStore {
     makeAutoObservable(this)
   }
 
-  private getAircraftSpeedMultiplier(type: AircraftSize): number {
-    // Разные скорости для разных типов самолётов
-    // TODO: добавить реальные скорости самолётов
-    const speedMultipliers = {
-      small: 1.0,    // Базовая скорость
-      medium: 1.05,   // На 5% быстрее
-      large: 1.08,    // На 8% быстрее
-      xlarge: 1.1,   // На 10% быстрее
-      xxlarge: 1.12,  // На 12% быстрее
-    }
-
-    return speedMultipliers[type] || 1.0
-  }
-
   createAircraft(route: Route, type: AircraftSize) {
     const aircraft = makeObservable({
       id: crypto.randomUUID(),
       type,
       route,
       progress: 0,
-      speed: AIRCRAFT.SPEED * this.getAircraftSpeedMultiplier(type), // Финальная скорость с учётом типа самолёта
-      direction: 'forward' as const,
+      speed: AircraftSpeed[type],
+      direction: AircraftDirection.forward,
     }, {
       progress: observable,
       speed: observable,
@@ -81,20 +67,24 @@ export class AircraftStore {
       runInAction(() => {
         // Обновляем все самолёты
         this.aircrafts.forEach(aircraft => {
-          // Вычисляем скорость движения (прогресс в секунду)
-          const speedStep = aircraft.speed * deltaTime
+          // Вычисляем пройденное расстояние в км с учётом ускорения времени
+          const distanceTraveled = (aircraft.speed * deltaTime * TIME_ACCELERATION_FACTOR) / 3600 // км/ч -> км/сек с ускорением
 
-          if (aircraft.direction === 'forward') {
-            aircraft.progress = Math.min(1, aircraft.progress + speedStep)
+          // Вычисляем прогресс на основе пройденного расстояния
+          const routeDistance = aircraft.route.distance // общее расстояние маршрута в км
+          const progressStep = distanceTraveled / routeDistance
+
+          if (aircraft.direction === AircraftDirection.forward) {
+            aircraft.progress = Math.min(1, aircraft.progress + progressStep)
             if (aircraft.progress >= 1) {
               aircraft.progress = 1
-              aircraft.direction = 'backward'
+              aircraft.direction = AircraftDirection.backward
             }
           } else {
-            aircraft.progress = Math.max(0, aircraft.progress - speedStep)
+            aircraft.progress = Math.max(0, aircraft.progress - progressStep)
             if (aircraft.progress <= 0) {
               aircraft.progress = 0
-              aircraft.direction = 'forward'
+              aircraft.direction = AircraftDirection.forward
             }
           }
         })
@@ -113,8 +103,8 @@ export class AircraftStore {
     }
   }
 
-  getAircraftPosition(aircraft: Aircraft, route: Route) {
-    const points = this.routeStore.getRoutePoints(route)
+  getAircraftPosition(aircraft: Aircraft) {
+    const points = this.routeStore.getRoutePoints(aircraft.route)
 
     // Обработка крайних точек
     if (aircraft.progress <= 0) return points[0]
@@ -133,9 +123,9 @@ export class AircraftStore {
     return new THREE.Vector3().lerpVectors(startPoint, endPoint, segmentProgress)
   }
 
-  getAircraftRotation(aircraft: Aircraft, route: Route): [number, number, number] {
-    const currentPoint = this.getAircraftPosition(aircraft, route)
-    const nextPoint = this.getNextPoint(aircraft, route)
+  getAircraftRotation(aircraft: Aircraft): [number, number, number] {
+    const currentPoint = this.getAircraftPosition(aircraft)
+    const nextPoint = this.getNextPoint(aircraft)
 
     // Создаем временный объект для вычисления поворота
     const tempObject = new THREE.Object3D()
@@ -149,15 +139,15 @@ export class AircraftStore {
     targetRotation.copy(tempObject.rotation)
 
     // Учитываем направление движения (вперёд/назад)
-    if (aircraft.direction === 'backward') {
+    if (aircraft.direction === AircraftDirection.backward) {
       targetRotation.y += Math.PI // Разворачиваем на 180 градусов
     }
 
     return [targetRotation.x, targetRotation.y, targetRotation.z]
   }
 
-  private getNextPoint(aircraft: Aircraft, route: Route): THREE.Vector3 {
-    const routePoints = this.routeStore.getRoutePoints(route)
+  private getNextPoint(aircraft: Aircraft): THREE.Vector3 {
+    const routePoints = this.routeStore.getRoutePoints(aircraft.route)
 
     // Вычисляем следующую точку для определения направления
     const nextPointIndex = Math.min(

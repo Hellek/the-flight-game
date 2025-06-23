@@ -15,7 +15,6 @@ export const Aircrafts: React.FC<AircraftsProps> = observer(({ route }) => {
         <Aircraft
           key={aircraft.id}
           aircraft={aircraft}
-          route={route}
         />
       ))}
     </>

@@ -22,5 +22,4 @@ export const CITY = {
 // Параметры самолетов
 export const AIRCRAFT = {
   SIZE: 0.0025,
-  SPEED: 0.1,
 }

@@ -4,19 +4,18 @@ import { observer } from 'mobx-react-lite'
 import { type ThreeEvent } from '@react-three/fiber'
 import { AIRCRAFT, aircraftColor, itemColorHovered, itemColorSelected } from '../constants'
 import { rootStore } from '../stores'
-import { type Aircraft as AircraftType, Route } from '../types'
+import { type Aircraft as AircraftType } from '../types'
 import { Airplane } from './Airplane'
 
 interface AircraftProps {
   aircraft: AircraftType;
-  route: Route;
 }
 
-export const Aircraft: React.FC<AircraftProps> = observer(({ aircraft, route }) => {
+export const Aircraft: React.FC<AircraftProps> = observer(({ aircraft }) => {
   const [isHovered, setIsHovered] = React.useState(false)
   const { selectedEntity } = rootStore.selection
-  const currentPoint = rootStore.aircraft.getAircraftPosition(aircraft, route)
-  const rotation = rootStore.aircraft.getAircraftRotation(aircraft, route)
+  const currentPoint = rootStore.aircraft.getAircraftPosition(aircraft)
+  const rotation = rootStore.aircraft.getAircraftRotation(aircraft)
 
   const isSelected = selectedEntity?.type === 'aircraft' &&
     selectedEntity.data.id === aircraft.id
