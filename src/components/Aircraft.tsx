@@ -41,11 +41,10 @@ export const Aircraft: React.FC<AircraftProps> = observer(({ aircraft }) => {
   }
 
   return (
-    <group position={[currentPoint.x, currentPoint.y, currentPoint.z]}>
+    <group position={[currentPoint.x, currentPoint.y, currentPoint.z]} rotation={rotation}>
       <DebugWrapper>
         <Airplane
           position={[0, 0, 0]}
-          rotation={rotation}
           scale={AIRCRAFT.SIZE}
           color={color}
           onClick={handleClick}

@@ -126,36 +126,53 @@ export class AircraftStore {
 
   getAircraftRotation(aircraft: Aircraft): [number, number, number] {
     const currentPoint = this.getAircraftPosition(aircraft)
-    const nextPoint = this.getNextPoint(aircraft)
-
-    // Создаем временный объект для вычисления поворота
-    const tempObject = new THREE.Object3D()
-    tempObject.position.copy(currentPoint)
-
-    // Устанавливаем направление на следующую точку
-    tempObject.lookAt(nextPoint)
-
-    // Получаем углы поворота
-    const targetRotation = new THREE.Euler()
-    targetRotation.copy(tempObject.rotation)
-
-    // Учитываем направление движения (вперёд/назад)
-    if (aircraft.direction === AircraftDirection.backward) {
-      targetRotation.y += Math.PI // Разворачиваем на 180 градусов
-    }
-
-    return [targetRotation.x, targetRotation.y, targetRotation.z]
-  }
-
-  private getNextPoint(aircraft: Aircraft): THREE.Vector3 {
     const routePoints = this.routeStore.getRoutePoints(aircraft.route)
 
-    // Вычисляем следующую точку для определения направления
-    const nextPointIndex = Math.min(
-      Math.floor(aircraft.progress * (routePoints.length - 1)) + 1,
-      routePoints.length - 1,
-    )
+    // Вычисляем индекс текущего сегмента
+    const segmentCount = routePoints.length - 1
+    const segmentIndex = Math.floor(aircraft.progress * segmentCount)
 
-    return routePoints[nextPointIndex]
+    // Получаем целевую точку в зависимости от направления движения
+    let targetPoint: THREE.Vector3
+    if (aircraft.direction === AircraftDirection.forward) {
+      targetPoint = routePoints[Math.min(segmentIndex + 1, segmentCount)]
+    } else {
+      targetPoint = routePoints[Math.max(segmentIndex, 0)]
+    }
+
+    // Вычисляем направление движения (вектор от текущей точки к целевой)
+    const direction = new THREE.Vector3().subVectors(targetPoint, currentPoint).normalize()
+
+    // Вычисляем нормаль к поверхности сферы (вектор от центра к точке самолёта)
+    const sphereNormal = currentPoint.clone().normalize()
+
+    // Создаем ортогональную систему координат
+    // Ось Z - направление движения (следует дуге маршрута)
+    const axisZ = direction.clone()
+
+    // Ось Y - проекция нормали сферы на плоскость, перпендикулярную направлению движения
+    // Это обеспечивает, что "низ" самолёта всегда направлен к центру планеты
+    const axisY = new THREE.Vector3()
+    axisY.copy(sphereNormal)
+    // Проектируем нормаль на плоскость, перпендикулярную направлению движения
+    const projection = axisY.dot(axisZ)
+    axisY.sub(axisZ.clone().multiplyScalar(projection))
+    axisY.normalize()
+
+    // Ось X - перпендикуляр к Y и Z
+    const axisX = new THREE.Vector3().crossVectors(axisY, axisZ).normalize()
+
+    // Корректируем ось Z, чтобы система была ортогональной
+    axisZ.crossVectors(axisX, axisY).normalize()
+
+    // Создаем матрицу поворота
+    const rotationMatrix = new THREE.Matrix4()
+    rotationMatrix.makeBasis(axisX, axisY, axisZ)
+
+    // Получаем углы Эйлера из матрицы
+    const targetRotation = new THREE.Euler()
+    targetRotation.setFromRotationMatrix(rotationMatrix)
+
+    return [targetRotation.x, targetRotation.y, targetRotation.z]
   }
 }
