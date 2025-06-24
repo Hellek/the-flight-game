@@ -11,6 +11,9 @@ type SelectedEntity = {
 } | {
   type: 'aircraft';
   data: Aircraft;
+} | {
+  type: 'changelog';
+  data: null;
 } | null
 
 export class SelectionStore {
@@ -53,6 +56,13 @@ export class SelectionStore {
     this.selectedEntity = {
       type: 'aircraft',
       data: aircraft,
+    }
+  }
+
+  selectChangelog() {
+    this.selectedEntity = {
+      type: 'changelog',
+      data: null,
     }
   }
 
