@@ -1,9 +1,8 @@
 import { makeAutoObservable } from 'mobx'
 import * as THREE from 'three'
 
-import { ROUTE } from '../constants'
 import { Route } from '../types'
-import { calculateDistance, getArcPoints, positionToVector } from '../utils'
+import { calculateDistance, getArcPoints, positionToVector, calculateSegments } from '../utils'
 
 export class RouteStore {
   routes: Route[] = []
@@ -25,10 +24,12 @@ export class RouteStore {
     const cacheKey = `${route.departureCity.iata}-${route.arrivalCity.iata}`
 
     if (!this.routePointsCache.has(cacheKey)) {
+      const segments = calculateSegments(route.distance)
+
       const points = getArcPoints(
         positionToVector(route.departureCity.position),
         positionToVector(route.arrivalCity.position),
-        ROUTE.SEGMENTS,
+        segments,
       )
 
       this.routePointsCache.set(cacheKey, points)

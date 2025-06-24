@@ -30,11 +30,35 @@ export const calculateDistance = (pos1: Position, pos2: Position): number => {
   return earthRadiusKm * c
 }
 
+/**
+ * Вычисляет количество сегментов для маршрута на основе его длины
+ * @param distanceKm - расстояние маршрута в километрах
+ * @returns количество сегментов
+ */
+export const calculateSegments = (distanceKm: number): number => {
+  const { SEGMENT_LENGTH_KM, MIN_SEGMENTS } = ROUTE
+
+  // Вычисляем количество сегментов: делим расстояние на длину одного сегмента
+  const segments = Math.ceil(distanceKm / SEGMENT_LENGTH_KM)
+
+  // Возвращаем максимум из вычисленного количества и минимального
+  return Math.max(segments, MIN_SEGMENTS)
+}
+
 export const getArcPoints = (
   start: THREE.Vector3,
   end: THREE.Vector3,
-  segments: number = ROUTE.SEGMENTS,
+  segments?: number,
 ): THREE.Vector3[] => {
+  // Если количество сегментов не указано, вычисляем его на основе расстояния
+  if (segments === undefined) {
+    // Вычисляем расстояние в километрах используя сферические координаты
+    const pos1 = { x: start.x, y: start.y, z: start.z }
+    const pos2 = { x: end.x, y: end.y, z: end.z }
+    const distanceKm = calculateDistance(pos1, pos2)
+    segments = calculateSegments(distanceKm)
+  }
+
   const points: THREE.Vector3[] = []
 
   // Вычисляем расстояние между точками
