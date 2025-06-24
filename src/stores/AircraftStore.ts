@@ -1,9 +1,9 @@
 import { makeAutoObservable, makeObservable, observable, runInAction } from 'mobx'
 import * as THREE from 'three'
 
-import { Aircraft, AircraftSize, Route, AircraftDirection } from '../types'
-import { RouteStore } from './RouteStore'
 import { AircraftSpeed, TIME_ACCELERATION_FACTOR } from '../constants'
+import { Aircraft, AircraftDirection, AircraftSize, Route } from '../types'
+import { RouteStore } from './RouteStore'
 
 export class AircraftStore {
   aircrafts: Aircraft[] = []
@@ -48,6 +48,7 @@ export class AircraftStore {
       if (routeIndex !== -1) {
         aircraft.route.aircrafts.splice(routeIndex, 1)
       }
+
       // Удаляем из списка самолётов
       this.aircrafts.splice(index, 1)
 

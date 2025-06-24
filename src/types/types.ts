@@ -13,16 +13,16 @@ export interface Position {
 
 // Размер самолета
 export enum AircraftSize {
-  small = 'small',      // маленькие самолёты (например, Cessna)
-  medium = 'medium',    // средние самолёты (например, Boeing 737)
-  large = 'large',      // большие самолёты (например, Boeing 777)
-  xlarge = 'xlarge',    // очень большие самолёты (например, Boeing 747)
-  xxlarge = 'xxlarge',  // гигантские самолёты (например, Airbus A380)
+  small = 'small', // маленькие самолёты (например, Cessna)
+  medium = 'medium', // средние самолёты (например, Boeing 737)
+  large = 'large', // большие самолёты (например, Boeing 777)
+  xlarge = 'xlarge', // очень большие самолёты (например, Boeing 747)
+  xxlarge = 'xxlarge', // гигантские самолёты (например, Airbus A380)
 }
 
 export enum AircraftDirection {
   forward = 'forward',
-  backward = 'backward'
+  backward = 'backward',
 }
 
 // Самолет

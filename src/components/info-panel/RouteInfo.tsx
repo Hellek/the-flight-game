@@ -1,8 +1,8 @@
 import React from 'react'
 import { observer } from 'mobx-react-lite'
 
-import { type Route } from '../../types'
 import { rootStore } from '../../stores'
+import { type Route } from '../../types'
 import { CreateAircraft } from './CreateAircraft'
 import { RouteAircrafts } from './RouteAircrafts'
 

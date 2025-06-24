@@ -1,4 +1,4 @@
-import { AircraftSize } from "../types/types";
+import { AircraftSize } from '../types/types'
 
 // Базовые скорости в км/ч для разных типов самолётов
 export const AircraftSpeed = {

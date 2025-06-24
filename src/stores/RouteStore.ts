@@ -30,6 +30,7 @@ export class RouteStore {
         positionToVector(route.arrivalCity.position),
         ROUTE.SEGMENTS,
       )
+
       this.routePointsCache.set(cacheKey, points)
     }
 

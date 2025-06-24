@@ -6,6 +6,7 @@ import { AIRCRAFT, aircraftColor, itemColorHovered, itemColorSelected } from '..
 import { rootStore } from '../stores'
 import { type Aircraft as AircraftType } from '../types'
 import { Airplane } from './Airplane'
+import { DebugWrapper } from './DebugWrapper'
 
 interface AircraftProps {
   aircraft: AircraftType;
@@ -40,14 +41,18 @@ export const Aircraft: React.FC<AircraftProps> = observer(({ aircraft }) => {
   }
 
   return (
-    <Airplane
-      position={[currentPoint.x, currentPoint.y, currentPoint.z]}
-      rotation={rotation}
-      scale={AIRCRAFT.SIZE}
-      color={color}
-      onClick={handleClick}
-      onPointerOver={handlePointerOver}
-      onPointerOut={handlePointerOut}
-    />
+    <group position={[currentPoint.x, currentPoint.y, currentPoint.z]}>
+      <DebugWrapper>
+        <Airplane
+          position={[0, 0, 0]}
+          rotation={rotation}
+          scale={AIRCRAFT.SIZE}
+          color={color}
+          onClick={handleClick}
+          onPointerOver={handlePointerOver}
+          onPointerOut={handlePointerOut}
+        />
+      </DebugWrapper>
+    </group>
   )
 })

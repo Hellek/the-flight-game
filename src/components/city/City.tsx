@@ -1,9 +1,9 @@
-import React, { useState, useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import * as THREE from 'three'
-import { type ThreeEvent } from '@react-three/fiber'
 
 import { Circle } from '@react-three/drei'
+import { type ThreeEvent } from '@react-three/fiber'
 import { itemColor, itemColorHovered, itemColorSelected } from '../../constants'
 import { CITY } from '../../constants'
 import { rootStore } from '../../stores'
