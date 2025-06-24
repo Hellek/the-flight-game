@@ -1,3 +1,4 @@
+import { DEBUG } from '../constants'
 import { federalRussiaAirports } from '../data'
 import { City, Route, WorldInitials } from '../types'
 import { calculateDistance } from './geometry'
@@ -19,6 +20,11 @@ const convertToSphereCoordinates = (lat: number, lon: number) => {
 const getPredefinedRoutes = (cities: City[]): Route[] => {
   const routes: Route[] = []
 
+  // Если дебаг отключен, возвращаем пустой массив маршрутов
+  if (!DEBUG.ADD_PREDEFINED_ROUTES) {
+    return routes
+  }
+
   // Создаем маршруты между городами
   const predefinedRoutes = [
     { departureCity: 'KZN', arrivalCity: 'BAX' },
@@ -28,6 +34,9 @@ const getPredefinedRoutes = (cities: City[]): Route[] => {
     { departureCity: 'MCX', arrivalCity: 'PKC' },
     { departureCity: 'VVO', arrivalCity: 'OVB' },
     { departureCity: 'VOZ', arrivalCity: 'LPK' },
+    { departureCity: 'OMS', arrivalCity: 'SCL' },
+    { departureCity: 'OMS', arrivalCity: 'KVX' },
+    { departureCity: 'OMS', arrivalCity: 'PKV' },
   ]
 
   for (const route of predefinedRoutes) {
