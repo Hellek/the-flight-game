@@ -1,8 +1,18 @@
 {
   "name": "the-flight-game",
-  "private": true,
   "version": "0.1.0",
   "type": "module",
+  "description": "The Flight Game",
+  "author": "Roman Basharin",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Hellek/the-flight-game"
+  },
+  "engines": {
+    "node": "22",
+    "npm": "9 || 10"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
