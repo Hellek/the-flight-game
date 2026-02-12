@@ -1,8 +1,8 @@
 import React from 'react'
 
+import { ChangelogButton } from './header/ChangelogButton'
 import { HeaderLeft } from './header/HeaderLeft'
 import { RouteToggle } from './header/RouteToggle'
-import { ChangelogButton } from './header/ChangelogButton'
 
 export const Header: React.FC = () => {
   return (

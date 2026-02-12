@@ -2,7 +2,7 @@ import React from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { rootStore } from '../stores'
-import { AircraftInfo, CityInfo, PanelHeader, RouteInfo, ChangelogInfo } from './info-panel'
+import { AircraftInfo, ChangelogInfo, CityInfo, PanelHeader, RouteInfo } from './info-panel'
 
 export const InfoPanel: React.FC = observer(() => {
   const { selectedEntity } = rootStore.selection
@@ -14,27 +14,27 @@ export const InfoPanel: React.FC = observer(() => {
       case 'city':
         return {
           title: 'Город',
-          component: <CityInfo city={selectedEntity.data} />
+          component: <CityInfo city={selectedEntity.data} />,
         }
       case 'route':
         return {
           title: 'Маршрут',
-          component: <RouteInfo route={selectedEntity.data} />
+          component: <RouteInfo route={selectedEntity.data} />,
         }
       case 'aircraft':
         return {
           title: 'Самолет',
-          component: <AircraftInfo aircraft={selectedEntity.data} />
+          component: <AircraftInfo aircraft={selectedEntity.data} />,
         }
       case 'changelog':
         return {
           title: 'Изменения',
-          component: <ChangelogInfo />
+          component: <ChangelogInfo />,
         }
       default:
         return {
           title: '',
-          component: null
+          component: null,
         }
     }
   }

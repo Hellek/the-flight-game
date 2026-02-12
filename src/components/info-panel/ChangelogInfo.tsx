@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { completedFeatures, plannedFeatures } from '../../data'
 
 export const ChangelogInfo: React.FC = () => {
