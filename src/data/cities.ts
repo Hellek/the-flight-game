@@ -1,4 +1,4 @@
-import { CityGeo } from '../types'
+import type { CityGeo } from '../types'
 
 // https://www.airport-data.com/
 // Тут не весь список аэропортов, список скорректирован для лучшей геймификации

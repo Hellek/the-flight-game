@@ -1,10 +1,9 @@
-import React from 'react'
 import { Canvas } from '@react-three/fiber'
 import { GameControls } from './GameControls'
 import { GlobeSphere } from './GlobeSphere'
 import { InfoPanel } from './InfoPanel'
 
-export const Game: React.FC = () => {
+export const Game = () => {
   return (
     <div className="grow w-full relative">
       <Canvas>

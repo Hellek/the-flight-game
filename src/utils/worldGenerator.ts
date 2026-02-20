@@ -1,6 +1,6 @@
 import { DEBUG } from '../constants'
 import { federalRussiaAirports } from '../data'
-import { City, Route, WorldInitials } from '../types'
+import type { City, Route, WorldInitials } from '../types'
 import { calculateDistance } from './geometry'
 
 /**

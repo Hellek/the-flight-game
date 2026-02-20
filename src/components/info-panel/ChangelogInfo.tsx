@@ -1,12 +1,12 @@
-import React from 'react'
 import { completedFeatures, plannedFeatures } from '../../data'
+import { Heading } from '../ui'
 
-export const ChangelogInfo: React.FC = () => {
+export const ChangelogInfo = () => {
   return (
     <div className="space-y-4">
       <div className="pt-3 border-t border-slate-200">
         <div className="space-y-3">
-          <h4 className="text-lg font-medium text-slate-800">Планы на будущее</h4>
+          <Heading level={4}>Планы на будущее</Heading>
           <div className="space-y-2 text-sm text-slate-600">
             {plannedFeatures.map((feature, index) => (
               <div key={index} className="flex items-start gap-2">
@@ -19,7 +19,7 @@ export const ChangelogInfo: React.FC = () => {
       </div>
 
       <div className="space-y-3">
-        <h4 className="text-lg font-medium text-slate-800">Что было сделано</h4>
+        <Heading level={4}>Что было сделано</Heading>
         <div className="space-y-2 text-sm text-slate-600">
           {completedFeatures.map((feature, index) => (
             <div key={index} className="flex items-start gap-2">

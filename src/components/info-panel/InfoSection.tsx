@@ -1,15 +1,16 @@
-import React from 'react'
+import type { ReactNode } from 'react'
+import { Heading } from '../ui'
 
 interface InfoSectionProps {
   title: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
-export const InfoSection: React.FC<InfoSectionProps> = ({ title, children }) => (
+export const InfoSection = ({ title, children }: InfoSectionProps) => (
   <div className="space-y-2">
     <div className="flex items-center gap-2">
       <div className="w-2 h-2 rounded-full bg-blue-500" />
-      <h4 className="text-lg font-medium text-slate-800">{title}</h4>
+      <Heading level={4}>{title}</Heading>
     </div>
     <div className="pl-4 text-sm text-slate-600">
       {children}

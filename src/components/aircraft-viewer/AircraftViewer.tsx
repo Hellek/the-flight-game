@@ -1,13 +1,13 @@
-import React, { useRef } from 'react'
-import * as THREE from 'three'
+import { createElement, useRef } from 'react'
+import type * as THREE from 'three'
 import { Environment, OrbitControls } from '@react-three/drei'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { DEBUG } from '../../constants'
 import { DebugWrapper } from '../DebugWrapper'
-import { AircraftViewerModel } from './aircraftsList'
+import type { AircraftViewerModel } from './aircraftsList'
 
 // Компонент для вращения самолета
-const RotatingAircraft: React.FC<{ model: AircraftViewerModel }> = ({ model: AircraftComponent }) => {
+const RotatingAircraft = ({ model: AircraftComponent }: { model: AircraftViewerModel }) => {
   const groupRef = useRef<THREE.Group>(null)
 
   useFrame(state => {
@@ -20,7 +20,7 @@ const RotatingAircraft: React.FC<{ model: AircraftViewerModel }> = ({ model: Air
   return (
     <group ref={groupRef}>
       <DebugWrapper size={DEBUG.VIEWER_PLANES_SIZE}>
-        {React.createElement(AircraftComponent, {
+        {createElement(AircraftComponent, {
           position: [0, 0, 0],
           color: '#4F46E5',
         })}
@@ -34,7 +34,7 @@ interface AircraftViewerProps {
   model: AircraftViewerModel
 }
 
-export const AircraftViewer: React.FC<AircraftViewerProps> = ({ className = '', model }) => {
+export const AircraftViewer = ({ className = '', model }: AircraftViewerProps) => {
   return (
     <div className={`w-full h-96 rounded-lg overflow-hidden ${className}`}>
       <Canvas

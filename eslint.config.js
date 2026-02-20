@@ -4,6 +4,7 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 import stylistic from '@stylistic/eslint-plugin'
+import importX from 'eslint-plugin-import-x'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
 import unusedImports from 'eslint-plugin-unused-imports'
 
@@ -20,12 +21,26 @@ export default tseslint.config(
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
       '@stylistic': stylistic,
+      'import-x': importX,
       'simple-import-sort': simpleImportSort,
       'unused-imports': unusedImports,
     },
     rules: {
       // React rules
       ...reactHooks.configs.recommended.rules,
+      'no-restricted-imports': [
+        'warn',
+        {
+          paths: [
+            {
+              name: 'react',
+              importNames: ['default'],
+              message:
+                'Используйте именованные импорты из "react" (например: import { ReactNode, useState } from "react").',
+            },
+          ],
+        },
+      ],
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true, extraHOCs: ['observer'] },
@@ -61,6 +76,16 @@ export default tseslint.config(
           argsIgnorePattern: '^_',
         },
       ],
+
+      // только типы → import type { A, B }; смешанный → import { type A, X }.
+      '@typescript-eslint/consistent-type-imports': [
+        'warn',
+        { disallowTypeAnnotations: false, fixStyle: 'inline-type-imports' },
+      ],
+      // Запрещает «только inline»: import { type A } → import type { A } (избегаем side-effect импорта).
+      '@typescript-eslint/no-import-type-side-effects': 'warn',
+      // Два импорта из одного модуля склеивать в одну строку (со смешанным — с inline type).
+      'import-x/no-duplicates': ['warn', { 'prefer-inline': true }],
 
       // General code style
       'no-plusplus': ['warn', { allowForLoopAfterthoughts: true }],

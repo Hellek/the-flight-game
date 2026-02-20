@@ -1,4 +1,4 @@
-import { WorldInitials } from '../types'
+import type { WorldInitials } from '../types'
 import { generateWorld } from '../utils'
 import { AircraftStore } from './AircraftStore'
 import { CityStore } from './CityStore'

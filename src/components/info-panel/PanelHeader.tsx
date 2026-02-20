@@ -1,19 +1,14 @@
-import React from 'react'
+import { Button, Heading } from '../ui'
 
 interface PanelHeaderProps {
   title: string;
   onClose: () => void;
 }
 
-export const PanelHeader: React.FC<PanelHeaderProps> = ({ title, onClose }) => (
+export const PanelHeader = ({ title, onClose }: PanelHeaderProps) => (
   <div className="flex items-center justify-between p-4 bg-slate-50 border-b border-slate-200">
-    <h3 className="text-lg font-semibold text-slate-800">
-      {title}
-    </h3>
-    <button
-      onClick={onClose}
-      className="p-1 hover:bg-slate-200 rounded-full transition-colors"
-    >
+    <Heading level={3}>{title}</Heading>
+    <Button variant="icon" onClick={onClose} aria-label="Закрыть">
       <svg
         className="w-5 h-5 text-slate-500"
         fill="none"
@@ -27,6 +22,6 @@ export const PanelHeader: React.FC<PanelHeaderProps> = ({ title, onClose }) => (
           d="M6 18L18 6M6 6l12 12"
         />
       </svg>
-    </button>
+    </Button>
   </div>
 )

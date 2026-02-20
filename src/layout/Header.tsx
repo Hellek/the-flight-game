@@ -1,8 +1,8 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
+import { Button, Checkbox, Heading } from '../components/ui'
 import { rootStore } from '../stores'
 
-export const Header: React.FC = () => {
+export const Header = () => {
   return (
     <header className="flex items-center justify-between px-4 py-4 bg-slate-700">
       <div className="flex items-center space-x-3">
@@ -10,9 +10,7 @@ export const Header: React.FC = () => {
           <div className="text-xl font-bold text-white">Flight Game</div>
         </div>
 
-        <h1 className="text-xl font-bold text-white">
-          {rootStore.finance.formattedBalance}
-        </h1>
+        <Heading level={1}>{rootStore.finance.formattedBalance}</Heading>
         <nav className="flex items-center space-x-4 ml-6">
           <Link
             to="/"
@@ -30,23 +28,20 @@ export const Header: React.FC = () => {
       </div>
 
       <div className="flex items-center space-x-4">
-        <button
+        <Button
+          variant="ghost"
           onClick={rootStore.selection.selectChangelog}
-          className="flex items-center space-x-2 text-white hover:text-blue-300 transition-colors"
           title="Изменения в игре"
         >
           <span className="text-sm">Изменения</span>
-        </button>
+        </Button>
 
-        <label className="flex items-center space-x-2 text-white cursor-pointer">
-          <input
-            type="checkbox"
-            checked={rootStore.viewSettings.showRoutes}
-            onChange={rootStore.viewSettings.toggleRoutes}
-            className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
-          />
-          <span className="text-sm">Показать маршруты</span>
-        </label>
+        <Checkbox
+          checked={rootStore.viewSettings.showRoutes}
+          onChange={rootStore.viewSettings.toggleRoutes}
+          label="Показать маршруты"
+          className="text-white"
+        />
       </div>
     </header>
   )

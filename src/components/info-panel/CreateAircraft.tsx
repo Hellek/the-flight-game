@@ -1,14 +1,20 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import { rootStore } from '../../stores'
-import { AircraftSize, Route } from '../../types'
+import { AircraftSize, type Route } from '../../types'
 import { getAircraftSizeName } from '../../utils'
+import { Button, Select } from '../ui'
 
 interface CreateAircraftProps {
   route: Route
 }
 
-export const CreateAircraft: React.FC<CreateAircraftProps> = observer(({ route }) => {
+const sizeOptions = Object.values(AircraftSize).map(size => ({
+  value: size,
+  label: getAircraftSizeName(size),
+}))
+
+export const CreateAircraft = observer(({ route }: CreateAircraftProps) => {
   const [selectedType, setSelectedType] = useState<AircraftSize>(AircraftSize.small)
 
   const handleCreate = () => {
@@ -22,25 +28,14 @@ export const CreateAircraft: React.FC<CreateAircraftProps> = observer(({ route }
         <label className="block text-sm font-medium text-slate-700">
           Купить самолет
         </label>
-        <select
+        <Select<AircraftSize>
           value={selectedType}
-          onChange={e => setSelectedType(e.target.value as AircraftSize)}
-          className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-        >
-          {Object.values(AircraftSize).map(size => (
-            <option key={size} value={size}>
-              {getAircraftSizeName(size)}
-            </option>
-          ))}
-        </select>
+          onChange={setSelectedType}
+          options={sizeOptions}
+        />
       </div>
 
-      <button
-        onClick={handleCreate}
-        className="w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-      >
-        Создать самолет
-      </button>
+      <Button onClick={handleCreate}>Создать самолет</Button>
     </div>
   )
 })

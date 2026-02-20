@@ -1,18 +1,17 @@
-import React, { useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import * as THREE from 'three'
 import { Circle } from '@react-three/drei'
-import { type ThreeEvent } from '@react-three/fiber'
-import { itemColor, itemColorHovered, itemColorSelected } from '../../constants'
-import { CITY } from '../../constants'
+import type { ThreeEvent } from '@react-three/fiber'
+import { CITY, itemColor, itemColorHovered, itemColorSelected } from '../../constants'
 import { rootStore } from '../../stores'
-import { City as CityType } from '../../types'
+import type { City as CityType } from '../../types'
 
 interface CityProps {
   city: CityType
 }
 
-export const City: React.FC<CityProps> = observer(({ city }) => {
+export const City = observer(({ city }: CityProps) => {
   const [isHovered, setIsHovered] = useState(false)
   const { selectedEntity } = rootStore.selection
 

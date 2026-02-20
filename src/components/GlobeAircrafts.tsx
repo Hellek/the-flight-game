@@ -1,10 +1,9 @@
-import React from 'react'
 import { observer } from 'mobx-react-lite'
 import { GLOBE_ROTATION } from '../constants'
 import { rootStore } from '../stores'
 import { Aircrafts } from './Aircrafts'
 
-export const GlobeAircrafts: React.FC = observer(() => {
+export const GlobeAircrafts = observer(() => {
   const { routes } = rootStore.route
 
   return (

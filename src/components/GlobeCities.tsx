@@ -1,10 +1,9 @@
-import React from 'react'
 import { observer } from 'mobx-react-lite'
 import { GLOBE_ROTATION } from '../constants'
 import { rootStore } from '../stores'
 import { City } from './city'
 
-export const GlobeCities: React.FC = observer(() => {
+export const GlobeCities = observer(() => {
   const { cities } = rootStore.city
 
   return (

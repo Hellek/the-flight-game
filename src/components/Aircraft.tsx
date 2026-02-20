@@ -1,9 +1,9 @@
-import React from 'react'
+import { useState } from 'react'
 import { observer } from 'mobx-react-lite'
-import { type ThreeEvent } from '@react-three/fiber'
+import type { ThreeEvent } from '@react-three/fiber'
 import { AIRCRAFT, aircraftColor, itemColorHovered, itemColorSelected } from '../constants'
 import { rootStore } from '../stores'
-import { type Aircraft as AircraftType } from '../types'
+import type { Aircraft as AircraftType } from '../types'
 import { Airplane } from './Airplane'
 import { DebugWrapper } from './DebugWrapper'
 
@@ -11,8 +11,8 @@ interface AircraftProps {
   aircraft: AircraftType;
 }
 
-export const Aircraft: React.FC<AircraftProps> = observer(({ aircraft }) => {
-  const [isHovered, setIsHovered] = React.useState(false)
+export const Aircraft = observer(({ aircraft }: AircraftProps) => {
+  const [isHovered, setIsHovered] = useState(false)
   const { selectedEntity } = rootStore.selection
   const currentPoint = rootStore.aircraft.getAircraftPosition(aircraft)
   const rotation = rootStore.aircraft.getAircraftRotation(aircraft)

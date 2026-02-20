@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { Continent } from '../types'
+import type { Continent } from '../types'
 
 export const createGlobeTexture = ({
   continents,

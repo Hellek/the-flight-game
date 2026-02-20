@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react'
+import { useMemo, useRef } from 'react'
 import { observer } from 'mobx-react-lite'
 import * as THREE from 'three'
 import { Sphere } from '@react-three/drei'
@@ -10,7 +10,7 @@ import { GlobeCities } from './GlobeCities'
 import { GlobeRoutes } from './GlobeRoutes'
 import { createGlobeTexture } from './GlobeTexture'
 
-export const GlobeSphere: React.FC = observer(() => {
+export const GlobeSphere = observer(() => {
   const sphereRef = useRef<THREE.Mesh>(null)
   const textureQuality = 2
 

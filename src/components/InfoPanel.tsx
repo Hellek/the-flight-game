@@ -1,9 +1,8 @@
-import React from 'react'
 import { observer } from 'mobx-react-lite'
 import { rootStore } from '../stores'
 import { AircraftInfo, ChangelogInfo, CityInfo, PanelHeader, RouteInfo } from './info-panel'
 
-export const InfoPanel: React.FC = observer(() => {
+export const InfoPanel = observer(() => {
   const { selectedEntity } = rootStore.selection
 
   if (!selectedEntity) return null

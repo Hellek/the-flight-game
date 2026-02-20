@@ -1,14 +1,12 @@
-import React from 'react'
 import { observer } from 'mobx-react-lite'
-import { Aircraft } from '../../types'
-import { getAircraftSizeName } from '../../utils'
-import { formatDistance } from '../../utils/geometry'
+import type { Aircraft } from '../../types'
+import { formatDistance, getAircraftSizeName } from '../../utils'
 
 interface AircraftInfoProps {
   aircraft: Aircraft
 }
 
-export const AircraftInfo: React.FC<AircraftInfoProps> = observer(({ aircraft }) => {
+export const AircraftInfo = observer(({ aircraft }: AircraftInfoProps) => {
   const { route, progress, speed } = aircraft
 
   const progressPercent = aircraft.direction === 'forward'

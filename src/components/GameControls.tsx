@@ -1,8 +1,7 @@
-import React from 'react'
 import { OrbitControls } from '@react-three/drei'
 
 // https://threejs.org/docs/#examples/en/controls/OrbitControls
-export const GameControls: React.FC = () => {
+export const GameControls = () => {
   return (
     <OrbitControls
       enableDamping={true} // инерция вращения

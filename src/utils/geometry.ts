@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { ROUTE } from '../constants'
-import { Position } from '../types'
+import type { Position } from '../types'
 
 export const positionToVector = (position: Position): THREE.Vector3 => {
   return new THREE.Vector3(position.x, position.y, position.z)

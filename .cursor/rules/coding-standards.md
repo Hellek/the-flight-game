@@ -34,21 +34,23 @@ export enum AircraftSize {
 ### Функциональные компоненты
 
 - Использовать функциональные компоненты с TypeScript
-- Явно типизировать props через интерфейсы
-- Использовать `React.FC` или явную типизацию возвращаемого значения
+- Типизировать props через интерфейс и указывать тип **в параметрах функции**, не использовать `React.FC`
+- Формат: `export const ComponentName = ({ prop1, prop2 }: Props) => { ... }`
 
 ```tsx
-interface Props {
+interface AircraftInfoProps {
   aircraft: Aircraft
   onSelect: (aircraft: Aircraft) => void
 }
 
-export const AircraftInfo: React.FC<Props> = ({ aircraft, onSelect }) => {
+export const AircraftInfo = ({ aircraft, onSelect }: AircraftInfoProps) => {
   return (
     // ...
   )
 }
 ```
+
+Для компонентов без props: `export const Page = () => { ... }` (тип параметра не указывать).
 
 ### MobX компоненты
 
@@ -59,7 +61,7 @@ export const AircraftInfo: React.FC<Props> = ({ aircraft, onSelect }) => {
 ```tsx
 import { observer } from 'mobx-react-lite'
 
-export const InfoPanel: React.FC = observer(function InfoPanel() {
+export const InfoPanel = observer(function InfoPanel() {
   const { selectedEntity } = rootStore.selection
   // ...
 })
@@ -68,7 +70,7 @@ export const InfoPanel: React.FC = observer(function InfoPanel() {
 ### Типизация props
 
 - Всегда определять интерфейс для props компонента
-- Использовать деструктуризацию для props
+- Использовать деструктуризацию для props и указывать тип после деструктуризации: `({ a, b }: Props)`
 - Избегать `any` в типах props
 
 ```tsx
@@ -77,7 +79,7 @@ interface CityInfoProps {
   onClose?: () => void
 }
 
-export const CityInfo: React.FC<CityInfoProps> = ({ city, onClose }) => {
+export const CityInfo = ({ city, onClose }: CityInfoProps) => {
   // ...
 }
 ```
@@ -160,7 +162,7 @@ const cityName = city.name // может быть undefined
 - Проверять данные перед рендерингом компонентов
 
 ```tsx
-export const InfoPanel: React.FC = observer(() => {
+export const InfoPanel = observer(() => {
   const { selectedEntity } = rootStore.selection
 
   if (!selectedEntity) return null
@@ -208,7 +210,7 @@ const handleSelect = useCallback((aircraft: Aircraft) => {
 - Группировать связанные объекты в `<group>`
 
 ```tsx
-export const GlobeCities: React.FC = observer(() => {
+export const GlobeCities = observer(() => {
   const { cities } = rootStore.city
 
   return (

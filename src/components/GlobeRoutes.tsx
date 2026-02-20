@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import { Line } from '@react-three/drei'
-import { itemColor, itemColorHovered, itemColorSelected } from '../constants'
-import { GLOBE_ROTATION, ROUTE } from '../constants'
+import { GLOBE_ROTATION, itemColor, itemColorHovered, itemColorSelected, ROUTE } from '../constants'
 import { rootStore } from '../stores'
 
-export const GlobeRoutes: React.FC = observer(() => {
+export const GlobeRoutes = observer(() => {
   const { routes } = rootStore.route
   const { selectedEntity } = rootStore.selection
   const [hoveredRoute, setHoveredRoute] = useState<string | null>(null)

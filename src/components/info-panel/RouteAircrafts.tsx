@@ -1,17 +1,17 @@
-import React from 'react'
 import { observer } from 'mobx-react-lite'
-import { Route } from '../../types'
+import type { Route } from '../../types'
 import { getAircraftSizeName } from '../../utils'
+import { Heading } from '../ui'
 
 interface RouteAircraftsProps {
   route: Route
 }
 
-export const RouteAircrafts: React.FC<RouteAircraftsProps> = observer(({ route }) => {
+export const RouteAircrafts = observer(({ route }: RouteAircraftsProps) => {
   const { aircrafts } = route
   return (
     <div className="space-y-2">
-      <h4 className="text-sm font-medium text-slate-700">Самолеты на маршруте</h4>
+      <Heading level={4} className="text-sm font-medium text-slate-700">Самолеты на маршруте</Heading>
 
       {aircrafts.length > 0 ? (
         <div className="space-y-2">

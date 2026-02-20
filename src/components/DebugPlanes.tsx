@@ -1,11 +1,10 @@
-import React from 'react'
 import * as THREE from 'three'
 
 interface DebugPlanesProps {
   size?: number
 }
 
-export const DebugPlanes: React.FC<DebugPlanesProps> = ({ size = 0.1 }) => {
+export const DebugPlanes = ({ size = 0.1 }: DebugPlanesProps) => {
   return (
     <group position={[0, 0, 0]}>
       {/* Плоскость XZ (Y = 0) - зеленая */}

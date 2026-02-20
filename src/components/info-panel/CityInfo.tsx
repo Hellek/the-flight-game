@@ -1,11 +1,10 @@
-import React from 'react'
-import { City as CityType } from '../../types'
+import type { City as CityType } from '../../types'
 
 interface CityInfoProps {
   city: CityType;
 }
 
-export const CityInfo: React.FC<CityInfoProps> = ({ city }) => (
+export const CityInfo = ({ city }: CityInfoProps) => (
   <>
     <div className="flex justify-between text-sm text-slate-600">
       <span>Название:</span>
