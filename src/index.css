@@ -1,3 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@theme {
+  /* Цветовая схема для переиспользования в CSS и JavaScript */
+  --color-water: #60a5fa; /* blue-400 */
+  --color-continent: #16a34a; /* green-600 */
+  --color-item: #134e4a; /* teal-900 */
+  --color-aircraft: #fff; /* white */
+  --color-item-selected: #eab308; /* yellow-500 */
+  --color-item-hovered: #ca8a04; /* yellow-600 */
+}
