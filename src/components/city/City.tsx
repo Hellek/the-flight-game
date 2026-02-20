@@ -2,9 +2,9 @@ import { useCallback, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import * as THREE from 'three'
 import { CITY, itemColor, itemColorHovered, itemColorSelected } from '@constants'
+import { rootModel } from '@models'
 import { Circle } from '@react-three/drei'
 import type { ThreeEvent } from '@react-three/fiber'
-import { rootStore } from '@stores'
 import type { City as CityType } from '@types'
 
 interface CityProps {
@@ -13,14 +13,14 @@ interface CityProps {
 
 export const City = observer(({ city }: CityProps) => {
   const [isHovered, setIsHovered] = useState(false)
-  const { selectedEntity } = rootStore.selection
+  const { selectedEntity } = rootModel.selection
 
   const isSelected = selectedEntity?.type === 'city' &&
     selectedEntity.data.iata === city.iata
 
   const handleClick = useCallback((e: ThreeEvent<MouseEvent>) => {
     e.stopPropagation()
-    rootStore.selection.selectCity(city)
+    rootModel.selection.selectCity(city)
   }, [city])
 
   const handlePointerOver = (e: ThreeEvent<PointerEvent>) => {

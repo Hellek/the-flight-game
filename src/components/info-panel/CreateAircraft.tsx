@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import { Button, Select } from '@components/ui'
-import { rootStore } from '@stores'
+import { rootModel } from '@models'
 import { AircraftSize, type Route } from '@types'
 import { getAircraftSizeName } from '@utils'
 
@@ -18,7 +18,7 @@ export const CreateAircraft = observer(({ route }: CreateAircraftProps) => {
   const [selectedType, setSelectedType] = useState<AircraftSize>(AircraftSize.small)
 
   const handleCreate = () => {
-    rootStore.aircraft.createAircraft(route, selectedType)
+    rootModel.aircraft.createAircraft(route, selectedType)
     setSelectedType(AircraftSize.small)
   }
 

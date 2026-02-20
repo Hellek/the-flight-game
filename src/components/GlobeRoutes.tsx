@@ -1,18 +1,18 @@
 import { useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import { GLOBE_ROTATION, itemColor, itemColorHovered, itemColorSelected, ROUTE } from '@constants'
+import { rootModel } from '@models'
 import { Line } from '@react-three/drei'
-import { rootStore } from '@stores'
 
 export const GlobeRoutes = observer(() => {
-  const { routes } = rootStore.route
-  const { selectedEntity } = rootStore.selection
+  const { routes } = rootModel.route
+  const { selectedEntity } = rootModel.selection
   const [hoveredRoute, setHoveredRoute] = useState<string | null>(null)
 
   return (
     <group rotation={[GLOBE_ROTATION.X, GLOBE_ROTATION.Y, GLOBE_ROTATION.Z]}>
       {routes.map(route => {
-        const points = rootStore.route.getRoutePoints(route)
+        const points = rootModel.route.getRoutePoints(route)
 
         const isSelected = selectedEntity?.type === 'route' &&
           selectedEntity.data.id === route.id
@@ -27,7 +27,7 @@ export const GlobeRoutes = observer(() => {
             lineWidth={ROUTE.WIDTH}
             onClick={e => {
               e.stopPropagation()
-              rootStore.selection.selectRoute(route)
+              rootModel.selection.selectRoute(route)
             }}
             onPointerOver={e => {
               e.stopPropagation()

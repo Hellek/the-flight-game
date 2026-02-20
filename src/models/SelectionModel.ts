@@ -15,7 +15,7 @@ type SelectedEntity = {
   data: null;
 } | null
 
-export class SelectionStore {
+export class SelectionModel {
   selectedEntity: SelectedEntity = null
 
   constructor() {

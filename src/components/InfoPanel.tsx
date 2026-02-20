@@ -1,9 +1,9 @@
 import { observer } from 'mobx-react-lite'
 import { AircraftInfo, ChangelogInfo, CityInfo, PanelHeader, RouteInfo } from '@components/info-panel'
-import { rootStore } from '@stores'
+import { rootModel } from '@models'
 
 export const InfoPanel = observer(() => {
-  const { selectedEntity } = rootStore.selection
+  const { selectedEntity } = rootModel.selection
 
   if (!selectedEntity) return null
 
@@ -43,7 +43,7 @@ export const InfoPanel = observer(() => {
     <div className="absolute top-4 right-4 w-80 max-h-[calc(100vh-6rem)] bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
       <PanelHeader
         title={title}
-        onClose={() => rootStore.selection.clearSelection()}
+        onClose={() => rootModel.selection.clearSelection()}
       />
 
       <div className="p-4 space-y-3 overflow-y-auto flex-1">

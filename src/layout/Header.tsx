@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Button, Checkbox, Heading } from '@components/ui'
-import { rootStore } from '@stores'
+import { rootModel } from '@models'
 
 export const Header = () => {
   return (
@@ -10,7 +10,7 @@ export const Header = () => {
           <div className="text-xl font-bold text-white">Flight Game</div>
         </div>
 
-        <Heading level={1}>{rootStore.finance.formattedBalance}</Heading>
+        <Heading level={1}>{rootModel.finance.formattedBalance}</Heading>
         <nav className="flex items-center space-x-4 ml-6">
           <Link
             to="/"
@@ -30,15 +30,15 @@ export const Header = () => {
       <div className="flex items-center space-x-4">
         <Button
           variant="ghost"
-          onClick={rootStore.selection.selectChangelog}
+          onClick={rootModel.selection.selectChangelog}
           title="Изменения в игре"
         >
           <span className="text-sm">Изменения</span>
         </Button>
 
         <Checkbox
-          checked={rootStore.viewSettings.showRoutes}
-          onChange={rootStore.viewSettings.toggleRoutes}
+          checked={rootModel.viewSettings.showRoutes}
+          onChange={rootModel.viewSettings.toggleRoutes}
           label="Показать маршруты"
           className="text-white"
         />

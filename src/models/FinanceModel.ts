@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 
-export class FinanceStore {
+export class FinanceModel {
   balance: number = 10000
 
   constructor() {

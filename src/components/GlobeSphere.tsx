@@ -7,8 +7,8 @@ import { GlobeRoutes } from '@components/GlobeRoutes'
 import { createGlobeTexture } from '@components/GlobeTexture'
 import { continentColor, waterColor } from '@constants'
 import { eurasiaCoordinates } from '@data'
+import { rootModel } from '@models'
 import { Sphere } from '@react-three/drei'
-import { rootStore } from '@stores'
 
 export const GlobeSphere = observer(() => {
   const sphereRef = useRef<THREE.Mesh>(null)
@@ -40,7 +40,7 @@ export const GlobeSphere = observer(() => {
         />
       </Sphere>
       <GlobeCities />
-      {rootStore.viewSettings.showRoutes && <GlobeRoutes />}
+      {rootModel.viewSettings.showRoutes && <GlobeRoutes />}
       <GlobeAircrafts />
     </group>
   )

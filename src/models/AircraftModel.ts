@@ -1,17 +1,17 @@
 import { makeAutoObservable, makeObservable, observable, runInAction } from 'mobx'
 import * as THREE from 'three'
 import { AircraftSpeed, TIME_ACCELERATION_FACTOR } from '@constants'
-import type { RouteStore } from '@stores/RouteStore'
+import type { RouteModel } from '@models/RouteModel'
 import { type Aircraft, AircraftDirection, type AircraftSize, type Route } from '@types'
 
-export class AircraftStore {
+export class AircraftModel {
   aircrafts: Aircraft[] = []
-  private routeStore: RouteStore
+  private routeModel: RouteModel
   private lastUpdateTime: number = 0
   private animationId: number | null = null
 
-  constructor(routeStore: RouteStore) {
-    this.routeStore = routeStore
+  constructor(routeModel: RouteModel) {
+    this.routeModel = routeModel
     makeAutoObservable(this)
   }
 
@@ -104,7 +104,7 @@ export class AircraftStore {
   }
 
   getAircraftPosition(aircraft: Aircraft) {
-    const points = this.routeStore.getRoutePoints(aircraft.route)
+    const points = this.routeModel.getRoutePoints(aircraft.route)
 
     // Обработка крайних точек
     if (aircraft.progress <= 0) return points[0]
@@ -125,7 +125,7 @@ export class AircraftStore {
 
   getAircraftRotation(aircraft: Aircraft): [number, number, number] {
     const currentPoint = this.getAircraftPosition(aircraft)
-    const routePoints = this.routeStore.getRoutePoints(aircraft.route)
+    const routePoints = this.routeModel.getRoutePoints(aircraft.route)
 
     // Вычисляем индекс текущего сегмента
     const segmentCount = routePoints.length - 1

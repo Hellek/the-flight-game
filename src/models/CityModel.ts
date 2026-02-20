@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 import type { City } from '@types'
 
-export class CityStore {
+export class CityModel {
   cities: City[] = []
   selectedCity: City | null = null
 

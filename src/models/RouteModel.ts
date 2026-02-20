@@ -3,7 +3,7 @@ import type * as THREE from 'three'
 import type { Route } from '@types'
 import { calculateDistance, calculateSegments, getArcPoints, positionToVector } from '@utils'
 
-export class RouteStore {
+export class RouteModel {
   routes: Route[] = []
   selectedRoute: Route | null = null
   private routePointsCache = new Map<string, THREE.Vector3[]>()

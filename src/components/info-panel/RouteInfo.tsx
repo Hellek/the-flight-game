@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite'
 import { CreateAircraft } from '@components/info-panel/CreateAircraft'
 import { RouteAircrafts } from '@components/info-panel/RouteAircrafts'
-import { rootStore } from '@stores'
+import { rootModel } from '@models'
 import type { Route } from '@types'
 
 interface RouteInfoProps {
@@ -10,7 +10,7 @@ interface RouteInfoProps {
 
 export const RouteInfo = observer(({ route }: RouteInfoProps) => {
   const { departureCity, arrivalCity } = route
-  const distanceInKm = Math.round(rootStore.route.getDirectDistance(route))
+  const distanceInKm = Math.round(rootModel.route.getDirectDistance(route))
 
   return (
     <>

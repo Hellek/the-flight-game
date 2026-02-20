@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 
-export class ViewSettingsStore {
+export class ViewSettingsModel {
   showRoutes: boolean = true
 
   constructor() {
