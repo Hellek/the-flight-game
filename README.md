@@ -1,6 +1,13 @@
-## Инструменты
+# The Flight Game
 
-https://www.keene.edu/campus/maps/tool/ - получение точек координат вручную из полигона
+Игра-симулятор полёта в браузере на React и Three.js. Управление состоянием — MobX, стили — Tailwind CSS, сборка — Vite.
 
-<!-- Можно брать svg -->
-https://www.dimensions.com/element/airbus-a380-800 - схемы самолётов
+## Запуск
+
+- **Разработка:** `npm run dev`
+- **Сборка:** `npm run build`
+- **Превью сборки:** `npm run preview`
+
+## Требования
+
+- Node.js 22
