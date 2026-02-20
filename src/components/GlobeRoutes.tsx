@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { observer } from 'mobx-react-lite'
+import { GLOBE_ROTATION, itemColor, itemColorHovered, itemColorSelected, ROUTE } from '@constants'
 import { Line } from '@react-three/drei'
-import { GLOBE_ROTATION, itemColor, itemColorHovered, itemColorSelected, ROUTE } from '../constants'
-import { rootStore } from '../stores'
+import { rootStore } from '@stores'
 
 export const GlobeRoutes = observer(() => {
   const { routes } = rootStore.route

@@ -1,4 +1,4 @@
-import { colors } from '../utils/colors'
+import { colors } from '@utils/colors'
 
 /**
  * Цвета материалов для Three.js/canvas

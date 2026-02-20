@@ -1,10 +1,10 @@
 import { forwardRef } from 'react'
 import type { Mesh } from 'three'
+import { Fuselage } from '@components/airplane/Fuselage'
+import { NoseCone } from '@components/airplane/NoseCone'
+import { TailSection } from '@components/airplane/TailSection'
+import { Wings } from '@components/airplane/Wings'
 import type { ThreeEvent } from '@react-three/fiber'
-import { Fuselage } from './airplane/Fuselage'
-import { NoseCone } from './airplane/NoseCone'
-import { TailSection } from './airplane/TailSection'
-import { Wings } from './airplane/Wings'
 
 interface AirplaneProps {
   position?: [number, number, number]

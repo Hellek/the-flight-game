@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx'
-import type { City } from '../types'
+import type { City } from '@types'
 
 export class CityStore {
   cities: City[] = []

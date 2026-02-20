@@ -1,4 +1,4 @@
-import type { City as CityType } from '../../types'
+import type { City as CityType } from '@types'
 
 interface CityInfoProps {
   city: CityType;

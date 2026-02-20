@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
-import type { Route } from '../types'
-import { Aircraft } from './Aircraft'
+import { Aircraft } from '@components/Aircraft'
+import type { Route } from '@types'
 
 interface AircraftsProps {
   route: Route;

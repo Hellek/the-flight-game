@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { observer } from 'mobx-react-lite'
+import { Airplane } from '@components/Airplane'
+import { DebugWrapper } from '@components/DebugWrapper'
+import { AIRCRAFT, aircraftColor, itemColorHovered, itemColorSelected } from '@constants'
 import type { ThreeEvent } from '@react-three/fiber'
-import { AIRCRAFT, aircraftColor, itemColorHovered, itemColorSelected } from '../constants'
-import { rootStore } from '../stores'
-import type { Aircraft as AircraftType } from '../types'
-import { Airplane } from './Airplane'
-import { DebugWrapper } from './DebugWrapper'
+import { rootStore } from '@stores'
+import type { Aircraft as AircraftType } from '@types'
 
 interface AircraftProps {
   aircraft: AircraftType;

@@ -1,4 +1,4 @@
-import { Button, Heading } from '../ui'
+import { Button, Heading } from '@components/ui'
 
 interface PanelHeaderProps {
   title: string;

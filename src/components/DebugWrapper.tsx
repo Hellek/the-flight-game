@@ -1,5 +1,5 @@
 import { lazy, type ReactNode, Suspense } from 'react'
-import { DEBUG } from '../constants'
+import { DEBUG } from '@constants'
 
 interface DebugWrapperProps {
   children?: ReactNode
@@ -13,7 +13,7 @@ export const DebugWrapper = ({ children, size }: DebugWrapperProps) => {
   }
 
   // Ленивый импорт для отладочного компонента (только при включенной отладке)
-  const DebugPlanes = lazy(() => import('./DebugPlanes').then(module => ({ default: module.DebugPlanes })))
+  const DebugPlanes = lazy(() => import('@components/DebugPlanes').then(module => ({ default: module.DebugPlanes })))
 
   // Если отладка включена, добавляем отладочные элементы
   return (

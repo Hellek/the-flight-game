@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import { Header } from './layout/Header'
-import { AircraftsPage, GamePage } from './pages'
+import { Header } from '@layout/Header'
+import { AircraftsPage, GamePage } from '@pages'
 
 export const App = () => {
   return (

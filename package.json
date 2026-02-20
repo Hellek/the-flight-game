@@ -45,6 +45,7 @@
     "@stylistic/eslint-plugin": "5.9.0",
     "@tailwindcss/postcss": "^4.2.0",
     "@types/react": "^19.2.14",
+    "@types/node": "^22.10.0",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.4",
     "eslint": "^10.0.0",

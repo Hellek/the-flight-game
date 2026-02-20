@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { Heading } from '../ui'
+import { Heading } from '@components/ui'
 
 interface InfoSectionProps {
   title: string;

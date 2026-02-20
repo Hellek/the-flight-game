@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite'
-import { GLOBE_ROTATION } from '../constants'
-import { rootStore } from '../stores'
-import { Aircrafts } from './Aircrafts'
+import { Aircrafts } from '@components/Aircrafts'
+import { GLOBE_ROTATION } from '@constants'
+import { rootStore } from '@stores'
 
 export const GlobeAircrafts = observer(() => {
   const { routes } = rootStore.route

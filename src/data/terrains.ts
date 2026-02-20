@@ -1,4 +1,4 @@
-import type { Continent } from '../types'
+import type { Continent } from '@types'
 
 export const eurasiaCoordinates: Continent['perimeterNodeCoordinates'] = [
   [

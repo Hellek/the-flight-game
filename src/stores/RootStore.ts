@@ -1,11 +1,11 @@
-import type { WorldInitials } from '../types'
-import { generateWorld } from '../utils'
-import { AircraftStore } from './AircraftStore'
-import { CityStore } from './CityStore'
-import { FinanceStore } from './FinanceStore'
-import { RouteStore } from './RouteStore'
-import { SelectionStore } from './SelectionStore'
-import { ViewSettingsStore } from './ViewSettingsStore'
+import { AircraftStore } from '@stores/AircraftStore'
+import { CityStore } from '@stores/CityStore'
+import { FinanceStore } from '@stores/FinanceStore'
+import { RouteStore } from '@stores/RouteStore'
+import { SelectionStore } from '@stores/SelectionStore'
+import { ViewSettingsStore } from '@stores/ViewSettingsStore'
+import type { WorldInitials } from '@types'
+import { generateWorld } from '@utils'
 
 export class RootStore {
   city: CityStore

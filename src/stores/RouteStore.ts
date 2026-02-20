@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 import type * as THREE from 'three'
-import type { Route } from '../types'
-import { calculateDistance, calculateSegments, getArcPoints, positionToVector } from '../utils'
+import type { Route } from '@types'
+import { calculateDistance, calculateSegments, getArcPoints, positionToVector } from '@utils'
 
 export class RouteStore {
   routes: Route[] = []

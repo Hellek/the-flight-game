@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
-import { rootStore } from '../stores'
-import { AircraftInfo, ChangelogInfo, CityInfo, PanelHeader, RouteInfo } from './info-panel'
+import { AircraftInfo, ChangelogInfo, CityInfo, PanelHeader, RouteInfo } from '@components/info-panel'
+import { rootStore } from '@stores'
 
 export const InfoPanel = observer(() => {
   const { selectedEntity } = rootStore.selection

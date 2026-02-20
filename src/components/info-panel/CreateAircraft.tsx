@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { observer } from 'mobx-react-lite'
-import { rootStore } from '../../stores'
-import { AircraftSize, type Route } from '../../types'
-import { getAircraftSizeName } from '../../utils'
-import { Button, Select } from '../ui'
+import { Button, Select } from '@components/ui'
+import { rootStore } from '@stores'
+import { AircraftSize, type Route } from '@types'
+import { getAircraftSizeName } from '@utils'
 
 interface CreateAircraftProps {
   route: Route

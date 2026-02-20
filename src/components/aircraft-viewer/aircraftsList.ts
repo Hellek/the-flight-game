@@ -1,7 +1,7 @@
 import type { ComponentType, ForwardRefExoticComponent, RefAttributes } from 'react'
 import type { Mesh } from 'three'
+import { Airplane } from '@components/Airplane'
 import type { ThreeEvent } from '@react-three/fiber'
-import { Airplane } from '../Airplane'
 
 // Интерфейс для пропсов модели самолета
 export interface AircraftModelProps {

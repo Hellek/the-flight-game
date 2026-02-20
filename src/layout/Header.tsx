@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
-import { Button, Checkbox, Heading } from '../components/ui'
-import { rootStore } from '../stores'
+import { Button, Checkbox, Heading } from '@components/ui'
+import { rootStore } from '@stores'
 
 export const Header = () => {
   return (

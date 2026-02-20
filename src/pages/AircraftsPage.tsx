@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { AircraftsList, AircraftViewer, AircraftViewerSelector } from '../components/aircraft-viewer'
-import { Heading } from '../components/ui'
+import { AircraftsList, AircraftViewer, AircraftViewerSelector } from '@components/aircraft-viewer'
+import { Heading } from '@components/ui'
 
 export const AircraftsPage = () => {
   const [selectedModelName, setSelectedModelName] = useState<string>(Object.keys(AircraftsList)[0])

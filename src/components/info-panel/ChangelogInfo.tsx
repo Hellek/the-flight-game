@@ -1,5 +1,5 @@
-import { completedFeatures, plannedFeatures } from '../../data'
-import { Heading } from '../ui'
+import { Heading } from '@components/ui'
+import { completedFeatures, plannedFeatures } from '@data'
 
 export const ChangelogInfo = () => {
   return (

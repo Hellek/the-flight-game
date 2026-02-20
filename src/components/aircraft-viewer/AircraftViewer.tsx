@@ -1,10 +1,10 @@
 import { createElement, useRef } from 'react'
 import type * as THREE from 'three'
+import type { AircraftViewerModel } from '@components/aircraft-viewer/aircraftsList'
+import { DebugWrapper } from '@components/DebugWrapper'
+import { DEBUG } from '@constants'
 import { Environment, OrbitControls } from '@react-three/drei'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { DEBUG } from '../../constants'
-import { DebugWrapper } from '../DebugWrapper'
-import type { AircraftViewerModel } from './aircraftsList'
 
 // Компонент для вращения самолета
 const RotatingAircraft = ({ model: AircraftComponent }: { model: AircraftViewerModel }) => {

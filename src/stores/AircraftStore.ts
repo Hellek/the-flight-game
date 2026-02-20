@@ -1,8 +1,8 @@
 import { makeAutoObservable, makeObservable, observable, runInAction } from 'mobx'
 import * as THREE from 'three'
-import { AircraftSpeed, TIME_ACCELERATION_FACTOR } from '../constants'
-import { type Aircraft, AircraftDirection, type AircraftSize, type Route } from '../types'
-import type { RouteStore } from './RouteStore'
+import { AircraftSpeed, TIME_ACCELERATION_FACTOR } from '@constants'
+import type { RouteStore } from '@stores/RouteStore'
+import { type Aircraft, AircraftDirection, type AircraftSize, type Route } from '@types'
 
 export class AircraftStore {
   aircrafts: Aircraft[] = []

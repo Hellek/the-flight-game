@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite'
-import type { Route } from '../../types'
-import { getAircraftSizeName } from '../../utils'
-import { Heading } from '../ui'
+import { Heading } from '@components/ui'
+import type { Route } from '@types'
+import { getAircraftSizeName } from '@utils'
 
 interface RouteAircraftsProps {
   route: Route

@@ -1,4 +1,4 @@
-import { AircraftSize } from '../types'
+import { AircraftSize } from '@types'
 
 export const getAircraftSizeName = (size: AircraftSize): string => {
   const sizeNames: Record<AircraftSize, string> = {

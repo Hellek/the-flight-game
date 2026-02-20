@@ -1,7 +1,7 @@
+import { GameControls } from '@components/GameControls'
+import { GlobeSphere } from '@components/GlobeSphere'
+import { InfoPanel } from '@components/InfoPanel'
 import { Canvas } from '@react-three/fiber'
-import { GameControls } from './GameControls'
-import { GlobeSphere } from './GlobeSphere'
-import { InfoPanel } from './InfoPanel'
 
 export const Game = () => {
   return (

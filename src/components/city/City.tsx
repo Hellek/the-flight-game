@@ -1,11 +1,11 @@
 import { useCallback, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import * as THREE from 'three'
+import { CITY, itemColor, itemColorHovered, itemColorSelected } from '@constants'
 import { Circle } from '@react-three/drei'
 import type { ThreeEvent } from '@react-three/fiber'
-import { CITY, itemColor, itemColorHovered, itemColorSelected } from '../../constants'
-import { rootStore } from '../../stores'
-import type { City as CityType } from '../../types'
+import { rootStore } from '@stores'
+import type { City as CityType } from '@types'
 
 interface CityProps {
   city: CityType

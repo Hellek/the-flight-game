@@ -1,5 +1,5 @@
-import { Select } from '../ui'
-import { AircraftsList } from './aircraftsList'
+import { AircraftsList } from '@components/aircraft-viewer/aircraftsList'
+import { Select } from '@components/ui'
 
 interface AircraftViewerSelectorProps {
   selectedModelName: string

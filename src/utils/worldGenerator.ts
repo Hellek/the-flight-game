@@ -1,7 +1,7 @@
-import { DEBUG } from '../constants'
-import { federalRussiaAirports } from '../data'
-import type { City, Route, WorldInitials } from '../types'
-import { calculateDistance } from './geometry'
+import { DEBUG } from '@constants'
+import { federalRussiaAirports } from '@data'
+import type { City, Route, WorldInitials } from '@types'
+import { calculateDistance } from '@utils/geometry'
 
 /**
  * Преобразует географические координаты в 3D координаты на сфере
