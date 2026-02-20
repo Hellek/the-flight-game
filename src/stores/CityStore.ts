@@ -1,5 +1,4 @@
 import { makeAutoObservable } from 'mobx'
-
 import { City } from '../types'
 
 export class CityStore {

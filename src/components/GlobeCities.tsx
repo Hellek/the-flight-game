@@ -1,6 +1,5 @@
 import React from 'react'
 import { observer } from 'mobx-react-lite'
-
 import { GLOBE_ROTATION } from '../constants'
 import { rootStore } from '../stores'
 import { City } from './city'

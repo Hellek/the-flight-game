@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { City as CityType } from '../../types'
 
 interface CityInfoProps {

@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { DEBUG } from '../constants'
 
 interface DebugWrapperProps {

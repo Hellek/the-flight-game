@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import * as THREE from 'three'
-
 import { Circle } from '@react-three/drei'
 import { type ThreeEvent } from '@react-three/fiber'
 import { itemColor, itemColorHovered, itemColorSelected } from '../../constants'

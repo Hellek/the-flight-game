@@ -1,6 +1,5 @@
 import { forwardRef } from 'react'
 import { type Mesh } from 'three'
-
 import { type ThreeEvent } from '@react-three/fiber'
 import { Fuselage } from './airplane/Fuselage'
 import { NoseCone } from './airplane/NoseCone'

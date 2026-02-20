@@ -1,6 +1,5 @@
 import React from 'react'
 import { observer } from 'mobx-react-lite'
-
 import { type ThreeEvent } from '@react-three/fiber'
 import { AIRCRAFT, aircraftColor, itemColorHovered, itemColorSelected } from '../constants'
 import { rootStore } from '../stores'

@@ -1,5 +1,4 @@
 import { makeAutoObservable } from 'mobx'
-
 import { Aircraft, City, Route } from '../types'
 
 type SelectedEntity = {

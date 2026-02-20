@@ -1,6 +1,5 @@
 import { makeAutoObservable } from 'mobx'
 import * as THREE from 'three'
-
 import { Route } from '../types'
 import { calculateDistance, calculateSegments, getArcPoints, positionToVector } from '../utils'
 

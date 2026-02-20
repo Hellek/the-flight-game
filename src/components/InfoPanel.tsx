@@ -1,6 +1,5 @@
 import React from 'react'
 import { observer } from 'mobx-react-lite'
-
 import { rootStore } from '../stores'
 import { AircraftInfo, ChangelogInfo, CityInfo, PanelHeader, RouteInfo } from './info-panel'
 

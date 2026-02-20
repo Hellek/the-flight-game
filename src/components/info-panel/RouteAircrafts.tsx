@@ -1,6 +1,5 @@
 import React from 'react'
 import { observer } from 'mobx-react-lite'
-
 import { Route } from '../../types'
 import { getAircraftSizeName } from '../../utils'
 

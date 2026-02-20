@@ -36,11 +36,14 @@ export default tseslint.config(
         'warn',
         {
           groups: [
-            ['^.+\\.css$'], // Style imports
-            ['^react', '(\\w-/)*'], // React and other packages
-            ['^@pages'], // Page aliases
-            ['^@components'], // Component aliases
-            ['^\\u0000', '^@assets', '^@store', '^@router', '^@', '^\\.'], // Side effects, aliases, relative
+            [
+              '^\\u0000',
+              '^.+\\.css$', // Style imports
+              '^react',
+              '(\\w-/)*', // Other packages
+              '^@',
+              '^\\.', // Relative
+            ],
           ],
         },
       ],

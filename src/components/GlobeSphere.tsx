@@ -1,7 +1,6 @@
 import React, { useMemo, useRef } from 'react'
 import { observer } from 'mobx-react-lite'
 import * as THREE from 'three'
-
 import { Sphere } from '@react-three/drei'
 import { continentColor, waterColor } from '../constants'
 import { eurasiaCoordinates } from '../data'
