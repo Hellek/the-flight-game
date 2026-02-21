@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
@@ -8,12 +9,27 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['src/core/di/__tests__/setup.ts'],
+    include: ['src/**/*.{test,spec}.{ts,tsx}'],
+    pool: 'forks',
+    isolate: true,
+  },
   resolve: {
     alias: {
       '@components': path.resolve(__dirname, 'src/components'),
-      '@pages': path.resolve(__dirname, 'src/pages'),
+      '@core': path.resolve(__dirname, 'src/core'),
+      '@core/*': path.resolve(__dirname, 'src/core/*'),
       '@layout': path.resolve(__dirname, 'src/layout'),
       '@models': path.resolve(__dirname, 'src/models'),
+      '@pages': path.resolve(__dirname, 'src/pages'),
+      '@routes': path.resolve(__dirname, 'src/routes'),
+      '@routes/*': path.resolve(__dirname, 'src/routes/*'),
+      '@shared': path.resolve(__dirname, 'src/shared'),
+      '@shared/*': path.resolve(__dirname, 'src/shared/*'),
+      '@widgets': path.resolve(__dirname, 'src/widgets'),
+      '@widgets/*': path.resolve(__dirname, 'src/widgets/*'),
       '@types': path.resolve(__dirname, 'src/types'),
       '@utils': path.resolve(__dirname, 'src/utils'),
       '@constants': path.resolve(__dirname, 'src/constants'),

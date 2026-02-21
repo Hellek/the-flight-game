@@ -24,13 +24,23 @@
       "@constants": ["src/constants"],
       "@constants/*": ["src/constants/*"],
       "@data": ["src/data"],
-      "@data/*": ["src/data/*"]
+      "@data/*": ["src/data/*"],
+      "@core": ["src/core"],
+      "@core/*": ["src/core/*"],
+      "@routes": ["src/routes"],
+      "@routes/*": ["src/routes/*"],
+      "@shared": ["src/shared"],
+      "@shared/*": ["src/shared/*"],
+      "@widgets": ["src/widgets"],
+      "@widgets/*": ["src/widgets/*"]
     },
 
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
