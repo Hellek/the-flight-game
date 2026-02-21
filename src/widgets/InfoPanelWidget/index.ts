@@ -1,0 +1,1 @@
+export { InfoPanelWidget } from './InfoPanelWidget';

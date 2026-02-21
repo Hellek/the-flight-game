@@ -2,39 +2,95 @@
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "module": "ESNext",
     "skipLibCheck": true,
-
     /* Path aliases */
     "baseUrl": ".",
     "paths": {
-      "@components": ["src/components"],
-      "@components/*": ["src/components/*"],
-      "@pages": ["src/pages"],
-      "@pages/*": ["src/pages/*"],
-      "@layout": ["src/layout"],
-      "@layout/*": ["src/layout/*"],
-      "@models": ["src/models"],
-      "@models/*": ["src/models/*"],
-      "@types": ["src/types"],
-      "@types/*": ["src/types/*"],
-      "@utils": ["src/utils"],
-      "@utils/*": ["src/utils/*"],
-      "@constants": ["src/constants"],
-      "@constants/*": ["src/constants/*"],
-      "@data": ["src/data"],
-      "@data/*": ["src/data/*"],
-      "@core": ["src/core"],
-      "@core/*": ["src/core/*"],
-      "@routes": ["src/routes"],
-      "@routes/*": ["src/routes/*"],
-      "@shared": ["src/shared"],
-      "@shared/*": ["src/shared/*"],
-      "@widgets": ["src/widgets"],
-      "@widgets/*": ["src/widgets/*"]
+      "@components": [
+        "src/components"
+      ],
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@pages": [
+        "src/pages"
+      ],
+      "@pages/*": [
+        "src/pages/*"
+      ],
+      "@layout": [
+        "src/layout"
+      ],
+      "@layout/*": [
+        "src/layout/*"
+      ],
+      "@models": [
+        "src/models"
+      ],
+      "@models/*": [
+        "src/models/*"
+      ],
+      "@services": [
+        "src/services"
+      ],
+      "@services/*": [
+        "src/services/*"
+      ],
+      "@types": [
+        "src/types"
+      ],
+      "@types/*": [
+        "src/types/*"
+      ],
+      "@utils": [
+        "src/utils"
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ],
+      "@constants": [
+        "src/constants"
+      ],
+      "@constants/*": [
+        "src/constants/*"
+      ],
+      "@data": [
+        "src/data"
+      ],
+      "@data/*": [
+        "src/data/*"
+      ],
+      "@core": [
+        "src/core"
+      ],
+      "@core/*": [
+        "src/core/*"
+      ],
+      "@routes": [
+        "src/routes"
+      ],
+      "@routes/*": [
+        "src/routes/*"
+      ],
+      "@shared": [
+        "src/shared"
+      ],
+      "@shared/*": [
+        "src/shared/*"
+      ],
+      "@widgets": [
+        "src/widgets"
+      ],
+      "@widgets/*": [
+        "src/widgets/*"
+      ]
     },
-
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -44,12 +100,14 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
-
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "vite.config.ts"]
+  "include": [
+    "src",
+    "vite.config.ts"
+  ]
 }

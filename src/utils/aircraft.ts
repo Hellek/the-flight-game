@@ -1,4 +1,4 @@
-import { AircraftSize } from '@types'
+import { AircraftSize } from '@services';
 
 export const getAircraftSizeName = (size: AircraftSize): string => {
   const sizeNames: Record<AircraftSize, string> = {
@@ -7,7 +7,7 @@ export const getAircraftSizeName = (size: AircraftSize): string => {
     [AircraftSize.large]: 'Большой',
     [AircraftSize.xlarge]: 'Очень большой',
     [AircraftSize.xxlarge]: 'Гигантский',
-  }
+  };
 
-  return sizeNames[size]
-}
+  return sizeNames[size];
+};

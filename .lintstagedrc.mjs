@@ -12,9 +12,11 @@ const stylelintCommand = filenames =>
 
 const typeCheckCommand = () => 'npm run check-types'
 
+const testCommand = () => 'npm run test:run'
+
 const config = {
   '*.{js,jsx}': [buildEslintCommand],
-  '*.{ts,tsx}': [buildEslintCommand, typeCheckCommand],
+  '*.{ts,tsx}': [buildEslintCommand, typeCheckCommand, testCommand],
   '*.css': [stylelintCommand],
 }
 

@@ -57,6 +57,8 @@ export const AircraftInfo = ({ aircraft, onSelect }: AircraftInfoProps) => {
 - Для MobX компонентов всегда использовать `observer` из `mobx-react-lite`
 - `observer` должен оборачивать весь компонент
 - Внутри `observer` использовать именованную функцию для лучшей отладки в React DevTools
+- Во вьюшке виджета получать модель через хук с деструктуризацией: `const { cities, selectCity, selectedCity } = useCitiesModel()`, а не `const model = useCitiesModel()` и далее `model.cities`
+- В ViewModel методы, которые передаются во вьюшку (колбэки), объявлять стрелочными функциями поля класса (`method = (): void => { ... }`), чтобы не терять контекст `this`
 
 ```tsx
 import { observer } from 'mobx-react-lite'
@@ -138,6 +140,82 @@ private startAnimation() {
 - Избегать прямых мутаций store извне
 - Использовать публичные методы store для изменений
 - Доступ к `rootStore` через импорт: `import { rootStore } from '../stores'`
+
+## DI (Dependency Injection)
+
+### Типизация входящих props в ViewModel
+
+Если виджет получает данные от родителя через props (например, `cities`, `routes`), модель должна:
+
+1. Объявить интерфейс пропсов (например, `CitiesModelProps`).
+2. Инжектировать в конструктор типизированный `Props<YourModelProps>` первым аргументом — провайдер при резолве вызовет на нём `set(restProps)`, в модели доступен типобезопасный `this.props.current`.
+3. Оставить `[init](props: YourModelProps)` для первичной инициализации; при необходимости читать актуальные пропсы через `this.props.current` и реализовать `updateProps(props)` при смене пропсов.
+
+```typescript
+import { init, Props, scope } from '@core/di';
+
+export interface CitiesModelProps {
+  cities: Cities;
+}
+
+@scope.transient()
+export class CitiesModel {
+  constructor(
+    public readonly props: Props<CitiesModelProps>,
+    private readonly cityService: CityService,
+    private readonly selectionService: SelectionService,
+  ) {}
+
+  [init](props: CitiesModelProps): void {
+    this.cityService.initialSet(props.cities);
+  }
+
+  // при необходимости — доступ к актуальным пропсам
+  get cities(): City[] {
+    return this.cityService.cities;
+  }
+}
+```
+
+Модели без входящих пропсов (виджет не принимает props) не инжектируют `Props`.
+
+### Импорты для инжектируемых зависимостей
+
+- В конструкторе классов, резолвящихся из контейнера (ViewModel, сервисы с зависимостями), **не использовать `import type`** для параметров конструктора.
+- Типы, импортированные через `import type`, стираются при компиляции; контейнер (Tsyringe) не видит тип на позиции и выдаёт ошибку вида «TypeInfo not known for "Object"».
+- Использовать **обычный импорт** класса: тогда тип доступен и в TypeScript, и в рантайме для разрешения зависимости.
+
+```typescript
+// ✅ Правильно: обычный import — контейнер видит класс и может инжектить
+import { scope } from '@core/di';
+import { FinanceService } from '@services/FinanceService';
+import { SelectionService } from '@services/SelectionService';
+
+@scope.transient()
+export class HeaderModel {
+  constructor(
+    public readonly finance: FinanceService,
+    public readonly selection: SelectionService,
+  ) {}
+}
+```
+
+```typescript
+// ❌ Неправильно: import type стирается в JS, контейнер не может разрешить зависимости
+import { scope } from '@core/di';
+import type { FinanceService } from '@services/FinanceService';
+import type { SelectionService } from '@services/SelectionService';
+
+@scope.transient()
+export class HeaderModel {
+  constructor(
+    public readonly finance: FinanceService,
+    public readonly selection: SelectionService,
+  ) {}
+}
+```
+
+- Для типов, которые **не** участвуют в инжекте (интерфейсы, типы пропсов, типы данных), по-прежнему использовать `import type` где уместно.
 
 ## Обработка ошибок
 

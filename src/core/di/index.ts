@@ -1,11 +1,16 @@
-export { DIContainer, rootContainer, scopeToLifecycle } from './container'
-export type { Constructor } from './container'
-export { DIProvider, ChildDIProvider } from './ContainerContext'
-export { useContainer, useResolve } from './useContainer'
-export type { ChildDIProviderProps, DIProviderProps } from './ContainerContext'
-export { createProvider } from './createProvider'
-export type { InferProviderProps, InitableModel } from './createProvider'
-export { createWidget } from './createWidget'
-export { scopes } from './scope'
-export type { Scope } from './scope'
-export { scope } from './scopeDecorators'
+export { DIContainer, rootContainer, scopeToLifecycle } from './container';
+export type { Constructor } from './container';
+export type { Destroyable, Initable, Updatable, AnyConstructor, AbstractConstructor } from './types';
+export { isDestroyable, isInitable, isUpdatable } from './guards';
+export { DIProvider, ChildDIProvider } from './ContainerContext';
+export { destroy, init, update } from './symbols';
+export { useContainer, useResolve } from './useContainer';
+export type { ChildDIProviderProps, DIProviderProps } from './ContainerContext';
+export { createProvider } from './createProvider';
+export type { CreateProviderConfig, InferProviderProps, InitableModel } from './createProvider';
+export { createWidget } from './createWidget';
+export { scopes } from './scope';
+export type { Scope } from './scope';
+export { scope } from './scopeDecorators';
+export { Props } from './Props';
+export { propsAttribute } from './symbols';

@@ -9,6 +9,6 @@ export const scopes = {
   CONTAINER: 'CONTAINER',
   /** Один инстанс на всё приложение */
   SINGLETON: 'SINGLETON',
-} as const
+} as const;
 
-export type Scope = (typeof scopes)[keyof typeof scopes]
+export type Scope = (typeof scopes)[keyof typeof scopes];

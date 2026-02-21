@@ -16,6 +16,10 @@ export default tseslint.config(
     languageOptions: {
       ecmaVersion: 'latest',
       globals: globals.browser,
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
     plugins: {
       'react-hooks': reactHooks,
@@ -43,7 +47,7 @@ export default tseslint.config(
       ],
       'react-refresh/only-export-components': [
         'warn',
-        { allowConstantExport: true, extraHOCs: ['observer'] },
+        { allowConstantExport: true, extraHOCs: ['observer', 'createWidget'] },
       ],
 
       // Import sorting
@@ -116,7 +120,7 @@ export default tseslint.config(
           ignoreTemplateLiterals: true,
         },
       ],
-      '@stylistic/semi': ['warn', 'never'],
+      '@stylistic/semi': ['warn', 'always'],
 
       // Stylistic rules - Commas
       '@stylistic/comma-dangle': ['warn', 'always-multiline'],
@@ -153,6 +157,12 @@ export default tseslint.config(
       // Stylistic rules - Function formatting
       '@stylistic/function-call-argument-newline': ['warn', 'consistent'],
       '@stylistic/function-paren-newline': ['error', 'multiline-arguments'],
+
+      // Class modifiers: readonly where appropriate
+      '@typescript-eslint/prefer-readonly': [
+        'warn',
+        { onlyInlineLambdas: false },
+      ],
 
       // Stylistic rules - Class members
       '@stylistic/lines-between-class-members': [

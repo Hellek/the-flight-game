@@ -10,20 +10,20 @@ const defaults: Record<string, string> = {
   '--color-aircraft': '#ffffff',
   '--color-item-selected': '#eab308',
   '--color-item-hovered': '#ca8a04',
-}
+};
 
 const getCSSVariable = (varName: string): string => {
   if (typeof window === 'undefined') {
     // SSR fallback - возвращаем значения по умолчанию
-    return defaults[varName] || '#000000'
+    return defaults[varName] || '#000000';
   }
 
   const value = getComputedStyle(document.documentElement)
     .getPropertyValue(varName)
-    .trim()
+    .trim();
 
-  return value || defaults[varName] || '#000000'
-}
+  return value || defaults[varName] || '#000000';
+};
 
 /**
  * Цветовая схема проекта
@@ -37,11 +37,11 @@ export const colors = {
   aircraft: getCSSVariable('--color-aircraft'),
   itemSelected: getCSSVariable('--color-item-selected'),
   itemHovered: getCSSVariable('--color-item-hovered'),
-} as const
+} as const;
 
 /**
  * Функция для получения цвета (для динамического чтения при необходимости)
  */
 export const getColor = (name: keyof typeof colors): string => {
-  return getCSSVariable(`--color-${name.replace(/([A-Z])/g, '-$1').toLowerCase()}`)
-}
+  return getCSSVariable(`--color-${name.replace(/([A-Z])/g, '-$1').toLowerCase()}`);
+};

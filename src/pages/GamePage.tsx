@@ -1,5 +1,5 @@
-import { Game } from '@components/Game'
+import { GameWidget } from '@widgets/GameWidget';
 
 export const GamePage = () => {
-  return <Game />
-}
+  return <GameWidget />;
+};

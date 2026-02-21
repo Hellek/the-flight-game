@@ -1,4 +1,4 @@
-import { createContext } from 'react'
-import type { DIContainer } from './container'
+import { createContext } from 'react';
+import type { DIContainer } from './container';
 
-export const ContainerContext = createContext<DIContainer | null>(null)
+export const ContainerContext = createContext<DIContainer | null>(null);

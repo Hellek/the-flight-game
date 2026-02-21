@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from 'react';
 
 interface CheckboxProps {
   checked: boolean
@@ -17,7 +17,7 @@ export const Checkbox = ({
   inputClassName = '',
   'aria-label': ariaLabel,
 }: CheckboxProps) => {
-  const inputClasses = `w-4 h-4 text-blue-600 rounded focus:ring-blue-500 ${inputClassName}`.trim()
+  const inputClasses = `w-4 h-4 text-blue-600 rounded focus:ring-blue-500 ${inputClassName}`.trim();
 
   const wrapper = (
     <label className={`flex items-center space-x-2 cursor-pointer ${className}`.trim()}>
@@ -30,7 +30,7 @@ export const Checkbox = ({
       />
       {label != null && <span className="text-sm">{label}</span>}
     </label>
-  )
+  );
 
-  return wrapper
-}
+  return wrapper;
+};

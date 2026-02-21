@@ -5,4 +5,4 @@ export const DEBUG = {
   ADD_PREDEFINED_ROUTES: true, // Добавляем преднастроенные маршруты
   PLANES_SIZE: 0.02, // Размер плоскостей для обычных самолетов
   VIEWER_PLANES_SIZE: 10.0, // Размер плоскостей для AircraftViewer
-}
+};

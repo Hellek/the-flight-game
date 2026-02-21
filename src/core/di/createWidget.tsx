@@ -1,4 +1,4 @@
-import type { ComponentType, FC, PropsWithChildren } from 'react'
+import type { ComponentType, FC, PropsWithChildren } from 'react';
 
 /**
  * Склеивает провайдер модели и презентационный компонент в виджет.
@@ -13,9 +13,9 @@ export function createWidget<Props extends object>(
       <Provider {...props}>
         <View {...props} />
       </Provider>
-    )
+    );
   }
 
-  Widget.displayName = `Widget(${View.displayName ?? View.name ?? 'View'})`
-  return Widget
+  Widget.displayName = `Widget(${View.displayName ?? View.name ?? 'View'})`;
+  return Widget;
 }

@@ -1,6 +1,6 @@
-import type { ButtonHTMLAttributes, ReactNode } from 'react'
+import type { ButtonHTMLAttributes, ReactNode } from 'react';
 
-type ButtonVariant = 'primary' | 'ghost' | 'icon'
+type ButtonVariant = 'primary' | 'ghost' | 'icon';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant
@@ -13,7 +13,7 @@ const variantClasses: Record<ButtonVariant, string> = {
   ghost:
     'flex items-center space-x-2 text-white hover:text-blue-300 transition-colors',
   icon: 'p-1 hover:bg-slate-200 rounded-full transition-colors',
-}
+};
 
 export const Button = ({
   variant = 'primary',
@@ -21,7 +21,7 @@ export const Button = ({
   children,
   ...props
 }: ButtonProps) => {
-  const base = variant === 'primary' ? '' : 'bg-transparent border-0 cursor-pointer'
+  const base = variant === 'primary' ? '' : 'bg-transparent border-0 cursor-pointer';
   return (
     <button
       className={`${base} ${variantClasses[variant]} ${className}`.trim()}
@@ -29,5 +29,5 @@ export const Button = ({
     >
       {children}
     </button>
-  )
-}
+  );
+};

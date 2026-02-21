@@ -17,6 +17,35 @@ export class AircraftStore { /* ... */ }
 export default GamePage
 ```
 
+### Импорты из core/di
+
+Импортировать сущности из `@core/di` (barrel), не из вложенных модулей:
+
+```typescript
+// Хорошо
+import { scope, createProvider, createWidget } from '@core/di'
+
+// Избегать
+import { scope } from '@core/di/scopeDecorators'
+```
+
+### Типизация props в model виджета
+
+Если виджет принимает props от родителя, в модели объявить интерфейс (например, `CitiesModelProps`) и инжектировать в конструктор первым аргументом `Props<YourModelProps>` из `@core/di`. Подробнее — в [Стандарты написания кода](./coding-standards.md#типизация-входящих-props-в-viewmodel).
+
+### Экспорт createProvider в model виджета
+
+В `widgets/*/model/index.ts` результат `createProvider(SomeModel)` экспортировать одной строкой через `export const`:
+
+```typescript
+import { createProvider } from '@core/di/createProvider'
+import { GameModel } from './GameModel'
+
+export const { Provider: GameModelProvider, useModel: useGameModel } = createProvider(GameModel);
+```
+
+Не использовать промежуточную переменную и отдельный `export { ... }`.
+
 ### Barrel exports
 
 - Создавать `index.ts` файлы для группировки экспортов

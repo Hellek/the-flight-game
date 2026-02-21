@@ -4,7 +4,7 @@
 
 Перед началом работы с проектом ознакомься со следующими правилами:
 
-- [Стандарты написания кода](./coding-standards.md) - TypeScript типизация, именование, компоненты, MobX stores, React Three Fiber, производительность
+- [Стандарты написания кода](./coding-standards.md) - TypeScript типизация, именование, компоненты, MobX stores, DI (в т.ч. типизация входящих props через `Props<ModelProps>` в ViewModel), React Three Fiber, производительность
 - [Организация файлов](./file-organization.md) - экспорты, импорты, структура директорий
 - [Обзор проекта](./project-overview.md) - требования к окружению, основные зависимости
 - [Правила стилизации](./styling-rules.md) - Tailwind CSS и форматирование кода

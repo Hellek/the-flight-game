@@ -1,3 +1,2 @@
-export * from './cities'
-export * from './terrains'
-export * from './changelog'
+export * from './cities';
+export * from './changelog';

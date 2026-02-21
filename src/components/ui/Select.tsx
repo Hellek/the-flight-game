@@ -1,4 +1,4 @@
-type SelectVariant = 'light' | 'dark'
+type SelectVariant = 'light' | 'dark';
 
 interface SelectOption<T extends string = string> {
   value: T
@@ -19,7 +19,7 @@ const variantClasses: Record<SelectVariant, string> = {
   light:
     'w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-slate-900',
   dark: 'w-full max-w-xs px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent',
-}
+};
 
 export function Select<T extends string = string>({
   id,
@@ -44,5 +44,5 @@ export function Select<T extends string = string>({
         </option>
       ))}
     </select>
-  )
+  );
 }

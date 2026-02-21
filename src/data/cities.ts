@@ -1,4 +1,4 @@
-import type { CityGeo } from '@types'
+import type { CityGeo } from '@types';
 
 // https://www.airport-data.com/
 // Тут не весь список аэропортов, список скорректирован для лучшей геймификации
@@ -87,4 +87,4 @@ export const federalRussiaAirports: CityGeo[] = [
   { iata: 'UUS', name: 'Южно-Сахалинск', lon: 142.717, lat: 46.9161 },
   { iata: 'YKS', name: 'Якутск', lon: 129.763, lat: 67.4836 },
   { iata: 'IAR', name: 'Ярославль', lon: 39.87368, lat: 57.62987 },
-]
+];
