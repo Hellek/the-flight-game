@@ -29,11 +29,19 @@ src/
 
 ---
 
+## UI-компоненты
+
+Переиспользуемые UI-компоненты (дизайн-система shadcn/ui) — в `src/components/ui/`. Документация по созданию и правилам: **docs/ui-components.md**. Инструкции для ИИ-агента: **.cursor/rules/ui-components.md**.
+
+---
+
 ## Алиасы
 ВСЕГДА используй алиасы вместо прямого пути.
 
 | Алиас | Путь |
 |-------|------|
+| `@` | `src` |
+| `@utils` | `src/utils` |
 | `@components` | `src/components` |
 | `@components/*` | `src/components/*` |
 | `@widgets/*` | `src/widgets/*` |

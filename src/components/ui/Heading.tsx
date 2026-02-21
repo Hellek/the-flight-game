@@ -9,10 +9,10 @@ interface HeadingProps {
 }
 
 const levelClasses: Record<HeadingLevel, string> = {
-  1: 'text-xl font-bold text-white',
-  2: 'text-4xl font-bold',
-  3: 'text-lg font-semibold text-slate-800',
-  4: 'text-lg font-medium text-slate-800',
+  1: 'text-xl font-bold text-white', /* уровень 1 в тёмном хедере */
+  2: 'text-4xl font-bold text-foreground',
+  3: 'text-lg font-semibold text-foreground',
+  4: 'text-lg font-medium text-foreground',
 };
 
 type HeadingTag = 'h1' | 'h2' | 'h3' | 'h4';
