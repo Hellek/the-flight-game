@@ -17,7 +17,7 @@ export class CitiesModel {
   ) { }
 
   [init](props: CitiesModelProps): void {
-    this.cityService.initialSet(props.cities);
+    this.cityService.setCities(props.cities);
   }
 
   get cities(): City[] {

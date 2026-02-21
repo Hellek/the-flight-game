@@ -10,7 +10,7 @@ import { GameControls } from './components/GameControls';
 import { GameModelProvider, useGameModel } from './model';
 
 const GameView = observer(function GameView() {
-  const { world } = useGameModel();
+  const { world, showRoutes } = useGameModel();
 
   return (
     <div className="grow w-full relative">
@@ -19,7 +19,7 @@ const GameView = observer(function GameView() {
         <group>
           <GlobeSphere />
           <CitiesWidget cities={world?.cities ?? []} />
-          <RoutesWidget routes={world?.routes ?? []} />
+          {showRoutes && <RoutesWidget routes={world?.routes ?? []} />}
           <AircraftsWidget />
         </group>
         <GameControls />

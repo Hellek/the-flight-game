@@ -3,6 +3,7 @@ import { DEBUG } from '@constants';
 import { init, scope } from '@core/di';
 import { federalRussiaAirports } from '@data';
 import type { Cities, Routes } from '@services';
+import { GameSettingsService } from '@services/GameSettingsService';
 import { calculateDistance, convertToSphereCoordinates } from '@utils';
 
 interface World {
@@ -17,8 +18,12 @@ interface World {
 export class GameModel {
   private _world: World | null = null;
 
-  constructor() {
+  constructor(readonly gameSettings: GameSettingsService) {
     makeAutoObservable(this);
+  }
+
+  get showRoutes() {
+    return this.gameSettings.showRoutes;
   }
 
   [init]() {
