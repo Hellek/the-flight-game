@@ -89,6 +89,12 @@
       ],
       "@widgets/*": [
         "src/widgets/*"
+      ],
+      "@hooks": [
+        "src/hooks"
+      ],
+      "@hooks/*": [
+        "src/hooks/*"
       ]
     },
     /* Bundler mode */

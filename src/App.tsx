@@ -7,7 +7,15 @@ export const App = () => {
   return (
     <DIProvider>
       <Router>
-        <div className="h-screen select-none flex flex-col">
+        <div
+          className="h-screen select-none flex flex-col"
+          style={{
+            paddingTop: 'var(--safe-area-inset-top)',
+            paddingRight: 'var(--safe-area-inset-right)',
+            paddingBottom: 'var(--safe-area-inset-bottom)',
+            paddingLeft: 'var(--safe-area-inset-left)',
+          }}
+        >
           <HeaderWidget />
           <Routes>
             <Route path="/" element={<GamePage />} />

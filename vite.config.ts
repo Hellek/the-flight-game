@@ -2,6 +2,7 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
+import { VitePWA } from 'vite-plugin-pwa';
 import react from '@vitejs/plugin-react-swc';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -17,6 +18,24 @@ export default defineConfig({
         options.jsc.transform.legacyDecorator = true;
         options.jsc.transform.decoratorMetadata = true;
         options.jsc.transform.useDefineForClassFields = false;
+      },
+    }),
+    VitePWA({
+      registerType: 'autoUpdate',
+      injectRegister: 'script',
+      manifest: {
+        name: 'Авиа магнат',
+        short_name: 'Авиа магнат',
+        description: 'The Flight Game',
+        start_url: '/',
+        display: 'standalone',
+        orientation: 'any',
+        background_color: '#0f172a',
+        theme_color: '#0f172a',
+        icons: [
+          { src: '/favicon.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
+          { src: '/favicon.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
+        ],
       },
     }),
   ],
@@ -47,6 +66,8 @@ export default defineConfig({
       '@utils': path.resolve(__dirname, 'src/utils'),
       '@constants': path.resolve(__dirname, 'src/constants'),
       '@data': path.resolve(__dirname, 'src/data'),
+      '@hooks': path.resolve(__dirname, 'src/hooks'),
+      '@hooks/*': path.resolve(__dirname, 'src/hooks/*'),
     },
   },
   optimizeDeps: {
