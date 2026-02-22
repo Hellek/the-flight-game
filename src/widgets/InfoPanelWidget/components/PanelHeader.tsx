@@ -6,11 +6,13 @@ interface PanelHeaderProps {
 }
 
 export const PanelHeader = ({ title, onClose }: PanelHeaderProps) => (
-  <div className="flex items-center justify-between p-4 bg-slate-50 border-b border-slate-200">
+  <div className="
+    flex items-center justify-between border-b border-slate-200 bg-slate-50 p-4
+  ">
     <Heading level={3}>{title}</Heading>
     <Button variant="icon" onClick={onClose} aria-label="Закрыть">
       <svg
-        className="w-5 h-5 text-slate-500"
+        className="size-5 text-slate-500"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"

@@ -1,13 +1,14 @@
-import { relative } from 'path'
+import { cwd } from 'node:process'
+import { relative } from 'node:path'
 
 const buildEslintCommand = filenames =>
   `eslint --fix --max-warnings=0 ${filenames
-    .map(f => relative(process.cwd(), f))
+    .map(f => relative(cwd(), f))
     .join(' ')}`
 
 const stylelintCommand = filenames =>
-  `stylelint --fix --allow-empty-input ${filenames
-    .map(f => relative(process.cwd(), f))
+  `npm run lint:styles:fix -- ${filenames
+    .map(f => relative(cwd(), f))
     .join(' ')}`
 
 const typeCheckCommand = () => 'npm run check-types'

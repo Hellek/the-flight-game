@@ -26,11 +26,11 @@ export function RouteInfo({ route, getDirectDistance, onCreateAircraft }: RouteI
         <span className="font-medium">{distanceInKm} км</span>
       </div>
 
-      <div className="pt-2 border-t border-slate-200">
+      <div className="border-t border-slate-200 pt-2">
         <RouteAircrafts route={route} />
       </div>
 
-      <div className="pt-2 border-t border-slate-200">
+      <div className="border-t border-slate-200 pt-2">
         <CreateAircraft route={route} onCreate={onCreateAircraft} />
       </div>
     </>

@@ -13,7 +13,7 @@ const AircraftViewerWidgetView = observer(function AircraftViewerWidgetView() {
 
   return (
     <>
-      <div className="flex items-center gap-6 mb-8">
+      <div className="mb-8 flex items-center gap-6">
         <Heading level={2}>Модель</Heading>
         <AircraftViewerSelector
           modelNames={modelNames}

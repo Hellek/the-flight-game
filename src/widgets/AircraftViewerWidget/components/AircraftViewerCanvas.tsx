@@ -34,7 +34,10 @@ interface AircraftViewerCanvasProps {
 
 export function AircraftViewerCanvas({ model, className = '' }: AircraftViewerCanvasProps) {
   return (
-    <div className={`w-full h-96 rounded-lg overflow-hidden ${className}`}>
+    <div className={`
+      h-96 w-full overflow-hidden rounded-lg
+      ${className}
+    `}>
       <Canvas
         camera={{ position: [15, 10, 5], fov: 50 }}
         style={{ background: 'linear-gradient(to bottom, #1e293b, #334155)' }}

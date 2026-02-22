@@ -7,11 +7,13 @@ import stylistic from '@stylistic/eslint-plugin'
 import importX from 'eslint-plugin-import-x'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
 import unusedImports from 'eslint-plugin-unused-imports'
+import eslintPluginBetterTailwindcss from 'eslint-plugin-better-tailwindcss'
 
-export default tseslint.config(
+export default [
   { ignores: ['dist'] },
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
   {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 'latest',
@@ -178,4 +180,13 @@ export default tseslint.config(
       ],
     },
   },
-)
+  {
+    ...eslintPluginBetterTailwindcss.configs.recommended,
+    files: ['**/*.{ts,tsx}'],
+    settings: {
+      'better-tailwindcss': {
+        entryPoint: 'src/index.css',
+      },
+    },
+  },
+]

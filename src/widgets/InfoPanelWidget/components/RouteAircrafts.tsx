@@ -17,7 +17,9 @@ export function RouteAircrafts({ route }: RouteAircraftsProps) {
       {aircrafts.length > 0 ? (
         <div className="space-y-2">
           {aircrafts.map(aircraft => (
-            <div key={aircraft.id} className="flex items-center justify-between text-sm">
+            <div key={aircraft.id} className="
+              flex items-center justify-between text-sm
+            ">
               <span>{getAircraftSizeName(aircraft.type)}</span>
               <span className="text-slate-500">{aircraft.speed} км/ч</span>
             </div>

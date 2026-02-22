@@ -2,8 +2,8 @@ import { useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { continentColor, waterColor } from '@constants';
 import { Sphere } from '@react-three/drei';
-import { eurasiaCoordinates } from './data';
 import { createGlobeTexture } from './createGlobeTexture';
+import { eurasiaCoordinates } from './data';
 
 export const GlobeSphere = () => {
   const sphereRef = useRef<THREE.Mesh>(null);

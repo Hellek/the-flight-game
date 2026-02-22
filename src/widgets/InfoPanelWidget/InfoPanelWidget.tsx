@@ -50,10 +50,13 @@ const InfoPanelView = observer(function InfoPanelView() {
   const { title, component } = getPanelConfig();
 
   return (
-    <div className="absolute top-4 right-4 w-80 max-h-[calc(100vh-6rem)] bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
+    <div className="
+      absolute top-4 right-4 flex max-h-[calc(100vh-6rem)] w-80 flex-col
+      overflow-hidden rounded-lg bg-white shadow-lg
+    ">
       <PanelHeader title={title} onClose={clearSelection} />
 
-      <div className="p-4 space-y-3 overflow-y-auto flex-1">{component}</div>
+      <div className="flex-1 space-y-3 overflow-y-auto p-4">{component}</div>
     </div>
   );
 });

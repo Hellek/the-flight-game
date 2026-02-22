@@ -59,7 +59,7 @@ export function Checkbox({
 }: CheckboxWrapperProps) {
   return (
     <label
-      className={cn('flex items-center gap-2 cursor-pointer', className)}
+      className={cn('flex cursor-pointer items-center gap-2', className)}
     >
       <ShadcnCheckbox
         checked={checked}

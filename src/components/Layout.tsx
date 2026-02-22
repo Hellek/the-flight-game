@@ -19,7 +19,7 @@ interface LayoutProps {
 export function Layout({ children }: LayoutProps) {
   return (
     <div
-      className="h-screen select-none flex flex-col"
+      className="flex h-screen flex-col select-none"
       style={safeAreaPaddingStyle}
     >
       {children}

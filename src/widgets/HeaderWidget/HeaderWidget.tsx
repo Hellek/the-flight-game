@@ -21,23 +21,29 @@ const HeaderView = observer(function HeaderView() {
   const { isFullscreen, toggle, supported } = useFullscreen();
 
   return (
-    <header className="flex items-center justify-between px-4 py-4 bg-slate-700">
+    <header className="flex items-center justify-between bg-slate-700 p-4">
       <div className="flex items-center space-x-3">
         <div className="flex items-center space-x-3">
           <div className="text-xl font-bold text-white">Flight Game</div>
         </div>
 
         <Heading level={1}>{formattedBalance}</Heading>
-        <nav className="flex items-center space-x-4 ml-6">
+        <nav className="ml-6 flex items-center space-x-4">
           <Link
             to="/"
-            className="text-white hover:text-blue-300 transition-colors"
+            className="
+              text-white transition-colors
+              hover:text-blue-300
+            "
           >
             Игра
           </Link>
           <Link
             to="/aircrafts"
-            className="text-white hover:text-blue-300 transition-colors"
+            className="
+              text-white transition-colors
+              hover:text-blue-300
+            "
           >
             Самолеты
           </Link>
@@ -50,7 +56,7 @@ const HeaderView = observer(function HeaderView() {
             variant="ghost"
             onClick={toggle}
             title={isFullscreen ? 'Выйти из полноэкранного режима' : 'На весь экран'}
-            className="text-white p-2"
+            className="p-2 text-white"
           >
             <FullscreenIcon isFullscreen={isFullscreen} />
           </Button>
