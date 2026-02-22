@@ -1,10 +1,10 @@
 import { makeAutoObservable } from 'mobx';
 import { DEBUG } from '@constants';
 import { init, scope } from '@core/di';
-import { federalRussiaAirports } from '@data';
 import type { Cities, Routes } from '@services';
 import { GameSettingsService } from '@services/GameSettingsService';
 import { calculateDistance, convertToSphereCoordinates } from '@utils';
+import { federalRussiaAirports } from '../dataCitiesList';
 
 interface World {
   cities: Cities;

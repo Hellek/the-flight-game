@@ -14,13 +14,3 @@ export interface Position {
   y: number;
   z: number;
 }
-
-/**
- * Географические координаты города
- */
-export interface CityGeo {
-  name: string;
-  iata: string;
-  lon: Coordinates['lon'];
-  lat: Coordinates['lat'];
-}

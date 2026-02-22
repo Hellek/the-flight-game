@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { continentColor, waterColor } from '@constants';
 import { Sphere } from '@react-three/drei';
 import { eurasiaCoordinates } from './data';
-import { createGlobeTexture } from './utils/createGlobeTexture';
+import { createGlobeTexture } from './createGlobeTexture';
 
 export const GlobeSphere = () => {
   const sphereRef = useRef<THREE.Mesh>(null);

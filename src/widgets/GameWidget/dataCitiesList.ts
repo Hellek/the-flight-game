@@ -1,4 +1,14 @@
-import type { CityGeo } from '@types';
+import { Coordinates } from "@/types";
+
+/**
+ * Географические координаты города
+ */
+interface CityGeo {
+  name: string;
+  iata: string;
+  lon: Coordinates['lon'];
+  lat: Coordinates['lat'];
+}
 
 // https://www.airport-data.com/
 // Тут не весь список аэропортов, список скорректирован для лучшей геймификации

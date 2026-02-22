@@ -1,5 +1,5 @@
 import { Heading } from '@components/ui';
-import { completedFeatures, plannedFeatures } from '@data';
+import { completedFeatures, plannedFeatures } from './changelogInfoData';
 
 export const ChangelogInfo = () => {
   return (

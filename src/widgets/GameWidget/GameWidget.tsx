@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import { GlobeSphere } from '@components/GlobeSphere/GlobeSphere';
+import { GlobeSphere } from './components/GlobeSphere/GlobeSphere';
 import { createWidget } from '@core/di';
 import { Canvas } from '@react-three/fiber';
 import { AircraftsWidget } from '@widgets/AircraftsWidget';
