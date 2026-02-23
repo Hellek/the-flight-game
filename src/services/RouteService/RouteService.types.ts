@@ -1,5 +1,5 @@
-import type { Aircraft } from './AircraftService.types';
-import type { City } from './CityService.types';
+import type { Aircraft } from '../AircraftService/AircraftService.types';
+import type { City } from '../CityService/CityService.types';
 
 /**
  * Маршрут

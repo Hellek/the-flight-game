@@ -1,23 +1,9 @@
 import { makeAutoObservable } from 'mobx';
 import { scope } from '@core/di';
-import type { Aircraft } from './AircraftService.types';
-import type { City } from './CityService.types';
-import type { Route } from './RouteService.types';
-import { EntityTypeEnum } from './SelectionService.types';
-
-type SelectedEntity = {
-  type: EntityTypeEnum.city
-  data: City
-} | {
-  type: EntityTypeEnum.route
-  data: Route
-} | {
-  type: EntityTypeEnum.aircraft
-  data: Aircraft
-} | {
-  type: EntityTypeEnum.changelog
-  data: null
-} | null;
+import type { Aircraft } from '../AircraftService/AircraftService.types';
+import type { City } from '../CityService/CityService.types';
+import type { Route } from '../RouteService/RouteService.types';
+import { EntityTypeEnum, type SelectedEntity } from './SelectionService.types';
 
 @scope.singleton()
 export class SelectionService {

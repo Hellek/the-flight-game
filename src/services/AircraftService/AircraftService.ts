@@ -7,6 +7,8 @@ import {
 import { Euler, Matrix4, Vector3 } from 'three';
 import { scope } from '@core/di';
 import { GameSettingsPlugin } from '@plugins';
+import { RouteService } from '../RouteService/RouteService';
+import type { Route } from '../RouteService/RouteService.types';
 import {
   Aircraft,
   AircraftDirection,
@@ -14,8 +16,6 @@ import {
   AircraftSize,
   AircraftSpeed,
 } from './AircraftService.types';
-import { RouteService } from './RouteService';
-import type { Route } from './RouteService.types';
 
 @scope.singleton()
 export class AircraftService {

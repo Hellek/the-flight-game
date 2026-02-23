@@ -1,4 +1,4 @@
-import type { Route } from './RouteService.types';
+import type { Route } from '../RouteService/RouteService.types';
 
 /**
  * Размер самолета
