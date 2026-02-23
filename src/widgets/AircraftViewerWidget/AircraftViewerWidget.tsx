@@ -21,7 +21,10 @@ const AircraftViewerWidgetView = observer(function AircraftViewerWidgetView() {
           onModelChange={setSelectedModelName}
         />
       </div>
-      <AircraftViewerCanvas model={currentModel} className="mt-8" />
+      <AircraftViewerCanvas
+        model={currentModel}
+        className="mt-8"
+      />
     </>
   );
 });

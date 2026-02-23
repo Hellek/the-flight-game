@@ -1,7 +1,12 @@
 import { forwardRef } from 'react';
 import type { Mesh } from 'three';
 import type { ThreeEvent } from '@react-three/fiber';
-import { Fuselage, NoseCone, TailSection, Wings } from './airplane/index';
+import {
+  Fuselage,
+  NoseCone,
+  TailSection,
+  Wings,
+} from './airplane/index';
 
 interface AirplaneProps {
   position?: [number, number, number];

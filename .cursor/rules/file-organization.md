@@ -9,9 +9,9 @@
 
 ```typescript
 // Хорошо
-export const GamePage: React.FC = () => { /* ... */ }
+export const GamePage = () => { /* ... */ }
 export interface Aircraft { /* ... */ }
-export class AircraftStore { /* ... */ }
+export class CityService { /* ... */ }
 
 // Избегать
 export default GamePage
@@ -35,16 +35,7 @@ import { scope } from '@core/di/scopeDecorators'
 
 ### Экспорт createProvider в model виджета
 
-В `widgets/*/model/index.ts` результат `createProvider(SomeModel)` экспортировать одной строкой через `export const`:
-
-```typescript
-import { createProvider } from '@core/di/createProvider'
-import { GameModel } from './GameModel'
-
-export const { Provider: GameModelProvider, useModel: useGameModel } = createProvider(GameModel);
-```
-
-Не использовать промежуточную переменную и отдельный `export { ... }`.
+В `widgets/*/model/index.ts` результат `createProvider(SomeModel)` экспортировать одной строкой через `export const`, без промежуточной переменной. Подробнее — в [Стандарты написания кода](./coding-standards.md) (раздел DI).
 
 ### Barrel exports
 
@@ -52,7 +43,7 @@ export const { Provider: GameModelProvider, useModel: useGameModel } = createPro
 - Использовать `export * from` для реэкспорта
 
 ```typescript
-// src/components/info-panel/index.ts
+// widgets/InfoPanelWidget/components/ — через index или явные экспорты
 export * from './CityInfo'
 export * from './RouteInfo'
 export * from './AircraftInfo'
@@ -65,11 +56,11 @@ export * from './PanelHeader'
 
 ```typescript
 // Хорошо
-import { AircraftInfo, CityInfo, RouteInfo } from './info-panel'
+import { AircraftInfo, CityInfo, RouteInfo } from './components'
 
 // Избегать (если есть index.ts)
-import { AircraftInfo } from './info-panel/AircraftInfo'
-import { CityInfo } from './info-panel/CityInfo'
+import { AircraftInfo } from './components/CityInfo'
+import { CityInfo } from './components/RouteInfo'
 ```
 
 ## Организация файлов
@@ -80,10 +71,10 @@ import { CityInfo } from './info-panel/CityInfo'
 - Имя файла должно соответствовать имени экспортируемого элемента
 
 ```
-src/components/
-  Game.tsx          → export const Game
-  InfoPanel.tsx     → export const InfoPanel
-  Header.tsx        → export const Header
+src/widgets/
+  GameWidget/           → export const GameWidget
+  InfoPanelWidget/      → компоненты + model/
+  HeaderWidget/         → компоненты + model/
 ```
 
 ### Группировка связанных файлов
@@ -92,51 +83,20 @@ src/components/
 - Создавать поддиректории для компонентов с множественными файлами
 
 ```
-src/components/
-  info-panel/
+src/widgets/
+  InfoPanelWidget/
     CityInfo.tsx
     RouteInfo.tsx
     AircraftInfo.tsx
-    index.ts
-  header/
-    HeaderLeft.tsx
-    ChangelogButton.tsx
-    RouteToggle.tsx
-    index.ts
+    model/
+      index.ts
+  HeaderWidget/
+    HeaderWidget.tsx
+    hooks/
+    model/
+      index.ts
 ```
 
 ### Структура директорий
 
-#### Компоненты (`src/components/`)
-
-- Основные компоненты в корне `components/`
-- Группы компонентов в поддиректориях
-- Каждая группа имеет `index.ts` для экспорта
-
-#### Stores (`src/stores/`)
-
-- Каждый store в отдельном файле
-- `RootStore.ts` для объединения всех stores
-- `index.ts` для экспорта `rootStore`
-
-#### Типы (`src/types/`)
-
-- Типы группируются по домену
-- `types.ts` для основных типов
-- Дополнительные файлы для специфичных доменов
-- `index.ts` для экспорта всех типов
-
-#### Утилиты (`src/utils/`)
-
-- Каждая утилита в отдельном файле
-- `index.ts` для экспорта всех утилит
-
-#### Константы (`src/constants/`)
-
-- Константы группируются по назначению
-- `index.ts` для экспорта всех констант
-
-#### Данные (`src/data/`)
-
-- Статические данные в отдельных файлах
-- `index.ts` для экспорта всех данных
+Актуальная структура директорий и алиасы путей — в [docs/STRUCTURE.md](../docs/STRUCTURE.md). Плагины импортировать из `@plugins`, сервисы — из `@services`. Классы плагинов имеют суффикс "Plugin". Здесь сохраняются общие принципы: один элемент на файл, группировка в поддиректории, barrel-экспорты через `index.ts`.

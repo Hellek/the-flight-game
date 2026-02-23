@@ -1,19 +1,19 @@
 import { useMemo, useRef } from 'react';
-import * as THREE from 'three';
-import { continentColor, waterColor } from '@constants';
+import { DoubleSide, type Mesh } from 'three';
 import { Sphere } from '@react-three/drei';
+import { twColorVars } from '@utils';
 import { createGlobeTexture } from './createGlobeTexture';
 import { eurasiaCoordinates } from './data';
 
 export const GlobeSphere = () => {
-  const sphereRef = useRef<THREE.Mesh>(null);
+  const sphereRef = useRef<Mesh>(null);
   const textureQuality = 2;
 
   const texture = useMemo(() => {
     return createGlobeTexture({
       continents: [eurasiaCoordinates],
-      waterColor: waterColor,
-      continentColor: continentColor,
+      waterColor: twColorVars.water,
+      continentColor: twColorVars.continent,
       width: 2048 * textureQuality,
       height: 1024 * textureQuality,
     });
@@ -30,7 +30,7 @@ export const GlobeSphere = () => {
       >
         <meshPhongMaterial
           map={texture}
-          side={THREE.DoubleSide}
+          side={DoubleSide}
           transparent={false}
         />
       </Sphere>

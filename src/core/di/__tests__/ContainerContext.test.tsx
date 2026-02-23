@@ -1,6 +1,11 @@
 import { useEffect } from 'react';
 import { describe, expect, it } from 'vitest';
-import { render, screen, waitFor, within } from '@testing-library/react';
+import {
+  render,
+  screen,
+  waitFor,
+  within,
+} from '@testing-library/react';
 import { DIContainer, rootContainer } from '../container';
 import { ChildDIProvider, DIProvider } from '../ContainerContext';
 import { useContainer } from '../useContainer';

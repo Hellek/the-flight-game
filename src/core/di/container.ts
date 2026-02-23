@@ -1,8 +1,4 @@
-import {
-  container as tsyringeContainer,
-  type DependencyContainer,
-  Lifecycle,
-} from 'tsyringe';
+import { container as tsyringeContainer, type DependencyContainer, Lifecycle } from 'tsyringe';
 import { isDestroyable } from './guards';
 import { resolveTransformer } from './internal/resolve-transformer';
 import { destroy } from './symbols';

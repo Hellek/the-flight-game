@@ -1,12 +1,19 @@
 import { init, Props, scope } from '@core/di';
-import { EntityTypeEnum, type Route, type Routes, RouteService, SelectionService } from '@services';
+import { GameSettingsPlugin } from '@plugins';
+import {
+  EntityTypeEnum,
+  type Route,
+  type Routes,
+  RouteService,
+  SelectionService,
+} from '@services';
 
 export interface RoutesModelProps {
   routes: Routes;
 }
 
 /**
- * ViewModel виджета маршрутов
+ * Виджет маршрутов
  */
 @scope.transient()
 export class RoutesModel {
@@ -14,7 +21,8 @@ export class RoutesModel {
     public readonly props: Props<RoutesModelProps>,
     private readonly routeService: RouteService,
     private readonly selectionService: SelectionService,
-  ) {}
+    private readonly gameSettingsPlugin: GameSettingsPlugin,
+  ) { }
 
   [init](props: RoutesModelProps): void {
     this.routeService.initialSet(props.routes);
@@ -36,4 +44,8 @@ export class RoutesModel {
   selectRoute = (route: Route): void => {
     this.selectionService.selectRoute(route);
   };
+
+  get globeInitialRotation() {
+    return this.gameSettingsPlugin.globeInitialRotation;
+  }
 }

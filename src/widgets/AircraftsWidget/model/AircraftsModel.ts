@@ -1,4 +1,5 @@
 import { scope } from '@core/di';
+import { GameSettingsPlugin } from '@plugins';
 import {
   type Aircraft,
   AircraftService,
@@ -14,12 +15,14 @@ export class AircraftsModel {
   constructor(
     private readonly aircraftService: AircraftService,
     private readonly selectionService: SelectionService,
-  ) {}
+    private readonly gameSettingsPlugin: GameSettingsPlugin,
+  ) { }
 
   get aircrafts(): Aircraft[] {
     return this.aircraftService.aircrafts;
   }
 
+  // TODO а тут можно сделать через get?
   getAircraftPosition = (aircraft: Aircraft) => {
     return this.aircraftService.getAircraftPosition(aircraft);
   };
@@ -35,4 +38,8 @@ export class AircraftsModel {
   selectAircraft = (aircraft: Aircraft): void => {
     this.selectionService.selectAircraft(aircraft);
   };
+
+  get globeInitialRotation() {
+    return this.gameSettingsPlugin.globeInitialRotation;
+  }
 }

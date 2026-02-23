@@ -1,7 +1,7 @@
 import { scope } from '@core/di';
 
 @scope.singleton()
-export class LoggerService {
+export class LoggerPlugin {
   log(level: 'error' | 'warn' | 'info', message: string, payload?: unknown): void {
     const entry = { level, message, ...(payload !== undefined && { payload }) };
 

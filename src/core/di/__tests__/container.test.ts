@@ -1,4 +1,9 @@
-import { describe, expect, it, vi } from 'vitest';
+import {
+  describe,
+  expect,
+  it,
+  vi,
+} from 'vitest';
 import { destroy, scope } from '@core/di';
 import { DIContainer, rootContainer, scopeToLifecycle } from '../container';
 import type { Constructor, Destroyable } from '../types';

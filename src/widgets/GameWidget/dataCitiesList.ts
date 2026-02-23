@@ -1,4 +1,10 @@
-import type { Coordinates } from '@/types';
+/**
+ * Географические координаты
+ */
+export interface Coordinates {
+  lon: number;
+  lat: number;
+}
 
 /**
  * Географические координаты города

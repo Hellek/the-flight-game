@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import { CanvasTexture, type Texture } from 'three';
 import type { Continent } from './types';
 
 export const createGlobeTexture = ({
@@ -13,7 +13,7 @@ export const createGlobeTexture = ({
   continentColor: string,
   width: number,
   height: number
-}): THREE.Texture => {
+}): Texture => {
   const canvas = document.createElement('canvas');
   canvas.width = width;
   canvas.height = height;
@@ -40,7 +40,7 @@ export const createGlobeTexture = ({
     ctx.fill();
   });
 
-  const texture = new THREE.CanvasTexture(canvas);
+  const texture = new CanvasTexture(canvas);
   texture.needsUpdate = true;
   return texture;
 };

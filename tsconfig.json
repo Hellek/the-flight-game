@@ -12,90 +12,29 @@
     /* Path aliases */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
       "@components": [
         "src/components"
       ],
       "@components/*": [
         "src/components/*"
       ],
+      "@core/di": [
+        "src/core/di"
+      ],
       "@pages": [
         "src/pages"
       ],
-      "@pages/*": [
-        "src/pages/*"
-      ],
-      "@layout": [
-        "src/layout"
-      ],
-      "@layout/*": [
-        "src/layout/*"
-      ],
-      "@models": [
-        "src/models"
-      ],
-      "@models/*": [
-        "src/models/*"
+      "@plugins": [
+        "src/plugins"
       ],
       "@services": [
         "src/services"
       ],
-      "@services/*": [
-        "src/services/*"
-      ],
-      "@types": [
-        "src/types"
-      ],
-      "@types/*": [
-        "src/types/*"
-      ],
       "@utils": [
         "src/utils"
       ],
-      "@utils/*": [
-        "src/utils/*"
-      ],
-      "@constants": [
-        "src/constants"
-      ],
-      "@constants/*": [
-        "src/constants/*"
-      ],
-      "@data": [
-        "src/data"
-      ],
-      "@data/*": [
-        "src/data/*"
-      ],
-      "@core": [
-        "src/core"
-      ],
-      "@core/*": [
-        "src/core/*"
-      ],
-      "@routes": [
-        "src/routes"
-      ],
-      "@routes/*": [
-        "src/routes/*"
-      ],
-      "@shared": [
-        "src/shared"
-      ],
-      "@shared/*": [
-        "src/shared/*"
-      ],
-      "@widgets": [
-        "src/widgets"
-      ],
       "@widgets/*": [
         "src/widgets/*"
-      ],
-      "@hooks": [
-        "src/hooks"
-      ],
-      "@hooks/*": [
-        "src/hooks/*"
       ]
     },
     /* Bundler mode */

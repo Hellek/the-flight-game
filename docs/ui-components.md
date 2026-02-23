@@ -15,12 +15,10 @@
 ```
 src/components/ui/
 ├── index.ts          # Публичные экспорты: обёртки + примитивы shadcn
-├── wrappers.tsx      # Обёртки с API приложения (Button, Checkbox, Select)
+├── wrappers.tsx      # Обёртки с API приложения (Button, Heading)
 ├── Button.tsx        # Примитив shadcn (button)
-├── Checkbox.tsx      # Примитив shadcn (checkbox)
-├── Select.tsx        # Примитив shadcn (select)
 ├── Heading.tsx       # Кастомный компонент (типографика)
-└── ...              # Другие примитивы, добавленные через CLI
+└── ...               # Другие примитивы, добавленные через CLI
 ```
 
 - **Примитивы** — компоненты из shadcn (можно перезаписывать через `npx shadcn@canary add <name> --overwrite`).
@@ -39,12 +37,7 @@ src/components/ui/
 
 2. Имена файлов в `src/components/ui/` совпадают с именами от CLI в **PascalCase** (например, после добавления `card` может появиться `Card.tsx` — при необходимости переименуй файл для единообразия с существующими).
 
-3. Заменить импорт утилиты в новом файле:
-
-   - Было: `import { cn } from "@/lib/utils"`
-   - Должно быть: `import { cn } from "@utils/cn"`
-
-4. Добавить экспорты в `src/components/ui/index.ts`:
+3. Добавить экспорты в `src/components/ui/index.ts`:
    - Нужна обёртка с упрощённым API → реализовать в `wrappers.tsx` и экспортировать из `index.ts` под основным именем.
    - Достаточно примитива → экспортировать из соответствующего файла (например, `export { Card } from './Card'`).
 
@@ -61,13 +54,12 @@ src/components/ui/
    - Экспортировать обёртку как основной экспорт: `export { Card } from './wrappers';`
    - При необходимости экспортировать примитив под другим именем: `export { Card as ShadcnCard } from './Card';`
 
-Виджеты и страницы импортируют только из `@components/ui` (они получают обёртки).
-
 ## Стили и тема
 
 - Цвета и радиусы задаются CSS-переменными в `src/index.css` (`:root`, `.dark`, `@theme inline`).
 - В компонентах использовать токены Tailwind: `bg-primary`, `text-foreground`, `border-input`, `rounded-md` и т.д., а не жёсткие цвета (например, не `bg-blue-600`).
-- Для объединения классов всегда использовать `cn()` из `@utils/cn`.
+- Для объединения классов всегда использовать `cn()` из `@utils`.
+- Общие правила стилей и форматирования (Tailwind, отступы, длина строки): `.cursor/rules/styling-rules.md`.
 
 ## Иконки
 

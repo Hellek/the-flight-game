@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Layout } from '@/components/Layout';
-import { DIProvider } from '@core/di/ContainerContext';
+import { Layout } from '@components/Layout';
+import { DIProvider } from '@core/di';
 import { AircraftsPage, GamePage } from '@pages';
 import { HeaderWidget } from '@widgets/HeaderWidget';
 

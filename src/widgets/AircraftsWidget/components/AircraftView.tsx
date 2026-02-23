@@ -1,14 +1,19 @@
 import { useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { AIRCRAFT, aircraftColor, itemColorHovered, itemColorSelected } from '@constants';
+import type { Vector3 } from 'three';
 import type { ThreeEvent } from '@react-three/fiber';
 import type { Aircraft } from '@services';
+import { twColorVars } from '@utils';
 import { Airplane } from './Airplane';
-import { DebugWrapper } from './DebugWrapper';
+
+/**
+ * Параметры воздушного судна (пока хардкод)
+ */
+const AIRCRAFT = { SIZE: 0.0025 };
 
 interface AircraftViewProps {
   aircraft: Aircraft;
-  getPosition: (aircraft: Aircraft) => { x: number; y: number; z: number };
+  getPosition: (aircraft: Aircraft) => Vector3;
   getRotation: (aircraft: Aircraft) => [number, number, number];
   isSelected: boolean;
   onSelect: (aircraft: Aircraft) => void;
@@ -25,7 +30,7 @@ export const AircraftView = observer(function AircraftView({
 
   const currentPoint = getPosition(aircraft);
   const rotation = getRotation(aircraft);
-  const color = isSelected ? itemColorSelected : isHovered ? itemColorHovered : aircraftColor;
+  const color = isSelected ? twColorVars.itemSelected : isHovered ? twColorVars.itemHovered : twColorVars.aircraft;
 
   const handleClick = (e: ThreeEvent<MouseEvent>) => {
     e.stopPropagation();
@@ -46,16 +51,14 @@ export const AircraftView = observer(function AircraftView({
 
   return (
     <group position={[currentPoint.x, currentPoint.y, currentPoint.z]} rotation={rotation}>
-      <DebugWrapper>
-        <Airplane
-          position={[0, 0, 0]}
-          scale={AIRCRAFT.SIZE}
-          color={color}
-          onClick={handleClick}
-          onPointerOver={handlePointerOver}
-          onPointerOut={handlePointerOut}
-        />
-      </DebugWrapper>
+      <Airplane
+        position={[0, 0, 0]}
+        scale={AIRCRAFT.SIZE}
+        color={color}
+        onClick={handleClick}
+        onPointerOver={handlePointerOver}
+        onPointerOut={handlePointerOut}
+      />
     </group>
   );
 });

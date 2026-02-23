@@ -1,19 +1,32 @@
-import { makeAutoObservable, makeObservable, observable, runInAction } from 'mobx';
-import * as THREE from 'three';
-import { AircraftSpeed, TIME_ACCELERATION_FACTOR } from '@constants';
+import {
+  makeAutoObservable,
+  makeObservable,
+  observable,
+  runInAction,
+} from 'mobx';
+import { Euler, Matrix4, Vector3 } from 'three';
 import { scope } from '@core/di';
-import { RouteService } from '@services/RouteService';
-import { type Aircraft, AircraftDirection, type Aircrafts, AircraftSize, type Route } from './types';
+import { GameSettingsPlugin } from '@plugins';
+import { RouteService } from './RouteService';
+import {
+  type Aircraft,
+  AircraftDirection,
+  type Aircrafts,
+  AircraftSize,
+  AircraftSpeed,
+  type Route,
+} from './types';
 
 @scope.singleton()
 export class AircraftService {
   aircrafts: Aircrafts = [];
-  private readonly routeService: RouteService;
   private lastUpdateTime: number = 0;
   private animationId: number | null = null;
 
-  constructor(routeService: RouteService) {
-    this.routeService = routeService;
+  constructor(
+    private readonly routeService: RouteService,
+    private readonly gameSettingsPlugin: GameSettingsPlugin,
+  ) {
     makeAutoObservable(this);
   }
 
@@ -60,6 +73,8 @@ export class AircraftService {
   }
 
   private startAnimation() {
+    const { timeAccelerationFactor } = this.gameSettingsPlugin;
+
     const animate = (timestamp: number) => {
       if (!this.lastUpdateTime) this.lastUpdateTime = timestamp;
       const deltaTime = (timestamp - this.lastUpdateTime) / 1000;
@@ -68,7 +83,7 @@ export class AircraftService {
       runInAction(() => {
         this.aircrafts.forEach(aircraft => {
           const distanceTraveled =
-            (aircraft.speed * deltaTime * TIME_ACCELERATION_FACTOR) / 3600;
+            (aircraft.speed * deltaTime * timeAccelerationFactor) / 3600;
 
           const routeDistance = aircraft.route.distance;
           const progressStep = distanceTraveled / routeDistance;
@@ -115,7 +130,7 @@ export class AircraftService {
     const startPoint = points[segmentIndex];
     const endPoint = points[segmentIndex + 1];
 
-    return new THREE.Vector3().lerpVectors(startPoint, endPoint, segmentProgress);
+    return new Vector3().lerpVectors(startPoint, endPoint, segmentProgress);
   }
 
   getAircraftRotation(aircraft: Aircraft): [number, number, number] {
@@ -125,31 +140,31 @@ export class AircraftService {
     const segmentCount = routePoints.length - 1;
     const segmentIndex = Math.floor(aircraft.progress * segmentCount);
 
-    let targetPoint: THREE.Vector3;
+    let targetPoint: Vector3;
     if (aircraft.direction === AircraftDirection.forward) {
       targetPoint = routePoints[Math.min(segmentIndex + 1, segmentCount)];
     } else {
       targetPoint = routePoints[Math.max(segmentIndex, 0)];
     }
 
-    const direction = new THREE.Vector3().subVectors(targetPoint, currentPoint).normalize();
+    const direction = new Vector3().subVectors(targetPoint, currentPoint).normalize();
     const sphereNormal = currentPoint.clone().normalize();
 
     const axisZ = direction.clone();
 
-    const axisY = new THREE.Vector3();
+    const axisY = new Vector3();
     axisY.copy(sphereNormal);
     const projection = axisY.dot(axisZ);
     axisY.sub(axisZ.clone().multiplyScalar(projection));
     axisY.normalize();
 
-    const axisX = new THREE.Vector3().crossVectors(axisY, axisZ).normalize();
+    const axisX = new Vector3().crossVectors(axisY, axisZ).normalize();
     axisZ.crossVectors(axisX, axisY).normalize();
 
-    const rotationMatrix = new THREE.Matrix4();
+    const rotationMatrix = new Matrix4();
     rotationMatrix.makeBasis(axisX, axisY, axisZ);
 
-    const targetRotation = new THREE.Euler();
+    const targetRotation = new Euler();
     targetRotation.setFromRotationMatrix(rotationMatrix);
 
     return [targetRotation.x, targetRotation.y, targetRotation.z];

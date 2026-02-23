@@ -4,6 +4,7 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 import stylistic from '@stylistic/eslint-plugin'
+import importNewlines from 'eslint-plugin-import-newlines'
 import importX from 'eslint-plugin-import-x'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
 import unusedImports from 'eslint-plugin-unused-imports'
@@ -27,6 +28,7 @@ export default [
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
       '@stylistic': stylistic,
+      'import-newlines': importNewlines,
       'import-x': importX,
       'simple-import-sort': simpleImportSort,
       'unused-imports': unusedImports,
@@ -92,6 +94,11 @@ export default [
       '@typescript-eslint/no-import-type-side-effects': 'warn',
       // Два импорта из одного модуля склеивать в одну строку (со смешанным — с inline type).
       'import-x/no-duplicates': ['warn', { 'prefer-inline': true }],
+      // Импорты: 1–2 элемента — в одну строку, 3+ — каждый с новой строки (автофикс через lint:fix).
+      'import-newlines/enforce': [
+        'warn',
+        { items: 3, 'max-len': 120, semi: true },
+      ],
 
       // General code style
       'no-plusplus': ['warn', { allowForLoopAfterthoughts: true }],
@@ -129,6 +136,8 @@ export default [
       '@stylistic/comma-spacing': 'warn',
 
       // Stylistic rules - Spacing
+      // Пустые блоки: {} вместо { } (constructor() {}, function() {})
+      '@stylistic/block-spacing': ['warn', 'never'],
       '@stylistic/no-multi-spaces': 'warn',
       '@stylistic/key-spacing': ['warn', { beforeColon: false, afterColon: true }],
       '@stylistic/array-bracket-spacing': 'warn',
@@ -138,7 +147,19 @@ export default [
 
       // Stylistic rules - Brackets and parentheses
       '@stylistic/arrow-parens': ['warn', 'as-needed'],
-      '@stylistic/object-curly-newline': ['warn', { multiline: true, consistent: true }],
+      // Объекты: запрет «смешанного» формата; разрешены либо все свойства в одной строке, либо каждое с новой.
+      '@stylistic/object-property-newline': ['warn', { allowAllPropertiesOnSameLine: true }],
+      // Объекты: singleline если помещается в одну строку, multiline если есть переносы или не помещается (max-len 120).
+      // minProperties высокий — не принуждаем к переносу по количеству свойств, только по длине строки (max-len предупредит).
+      '@stylistic/object-curly-newline': [
+        'warn',
+        {
+          ObjectExpression: { multiline: true, consistent: false, minProperties: 100 },
+          ObjectPattern: { multiline: true, consistent: true },
+          ImportDeclaration: { multiline: true, consistent: true, minProperties: 4 },
+          ExportDeclaration: { multiline: true, consistent: true, minProperties: 4 },
+        },
+      ],
 
       // Stylistic rules - Empty lines
       '@stylistic/no-multiple-empty-lines': ['warn', { max: 1, maxBOF: 0 }],

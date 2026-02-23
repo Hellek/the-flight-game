@@ -1,14 +1,14 @@
 import { makeAutoObservable } from 'mobx';
-import type * as THREE from 'three';
+import type { Vector3 } from 'three';
 import { scope } from '@core/di';
-import { calculateDistance, calculateSegments, getArcPoints, positionToVector } from '@utils';
+import { calculateDistance, calculateSegments, getArcPoints } from '@utils';
 import type { Route, Routes } from './types';
 
 @scope.singleton()
 export class RouteService {
   routes: Routes = [];
   selectedRoute: Route | null = null;
-  private readonly routePointsCache = new Map<string, THREE.Vector3[]>();
+  private readonly routePointsCache = new Map<string, Vector3[]>();
   private readonly routeDistanceCache = new Map<string, number>();
   private readonly directDistanceCache = new Map<string, number>();
   private initialized = false;
@@ -27,15 +27,15 @@ export class RouteService {
     this.selectedRoute = route;
   }
 
-  getRoutePoints(route: Route): THREE.Vector3[] {
+  getRoutePoints(route: Route): Vector3[] {
     const cacheKey = `${route.departureCity.iata}-${route.arrivalCity.iata}`;
 
     if (!this.routePointsCache.has(cacheKey)) {
       const segments = calculateSegments(route.distance);
 
       const points = getArcPoints(
-        positionToVector(route.departureCity.position),
-        positionToVector(route.arrivalCity.position),
+        route.departureCity.position,
+        route.arrivalCity.position,
         segments,
       );
 

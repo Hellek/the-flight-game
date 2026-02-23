@@ -17,6 +17,4 @@ export type AircraftViewerModel =
   | ForwardRefExoticComponent<AircraftModelProps & RefAttributes<Mesh>>
   | ComponentType<AircraftModelProps>;
 
-export const aircraftsList: Record<string, AircraftViewerModel> = {
-  Airplane,
-};
+export const aircraftsList: Record<string, AircraftViewerModel> = { Airplane };

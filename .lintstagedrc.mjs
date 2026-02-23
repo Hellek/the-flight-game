@@ -2,7 +2,7 @@ import { cwd } from 'node:process'
 import { relative } from 'node:path'
 
 const buildEslintCommand = filenames =>
-  `eslint --fix --max-warnings=0 ${filenames
+  `npm run lint:fix -- ${filenames
     .map(f => relative(cwd(), f))
     .join(' ')}`
 

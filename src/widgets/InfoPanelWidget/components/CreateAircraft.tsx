@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button, Select } from '@components/ui';
 import { AircraftSize, type Route } from '@services';
-import { getAircraftSizeName } from '@utils';
+import { getAircraftSizeName } from './utils';
 
 interface CreateAircraftProps {
   route: Route;

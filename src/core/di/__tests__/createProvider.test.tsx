@@ -1,4 +1,9 @@
-import { describe, expect, it, vi } from 'vitest';
+import {
+  describe,
+  expect,
+  it,
+  vi,
+} from 'vitest';
 import { destroy, init, scope } from '@core/di';
 import { render, screen, waitFor } from '@testing-library/react';
 import { rootContainer } from '../container';

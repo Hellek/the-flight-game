@@ -7,7 +7,7 @@ export function useContainer(): DIContainer {
   return c ?? rootContainer;
 }
 
-/** Резолв сущности из контейнера (по аналогии с vkcom: useContainer().resolve(Class)). */
+/** Резолв сущности из контейнера: useContainer().resolve(Class). */
 export function useResolve<T>(token: Constructor<T>): T {
   const container = useContainer();
   return useMemo(() => container.resolve(token) as T, [container, token]);

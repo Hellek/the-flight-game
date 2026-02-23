@@ -1,7 +1,6 @@
 import { scope } from '@core/di';
-import { FinanceService } from '@services/FinanceService';
-import { GameSettingsService } from '@services/GameSettingsService';
-import { SelectionService } from '@services/SelectionService';
+import { GameSettingsPlugin } from '@plugins';
+import { FinanceService, SelectionService } from '@services';
 
 /**
  * Модель виджета шапки
@@ -9,9 +8,9 @@ import { SelectionService } from '@services/SelectionService';
 @scope.transient()
 export class HeaderModel {
   constructor(
-    readonly finance: FinanceService,
-    readonly selection: SelectionService,
-    readonly gameSettings: GameSettingsService,
+    private readonly finance: FinanceService,
+    private readonly selection: SelectionService,
+    private readonly gameSettings: GameSettingsPlugin,
   ) { }
 
   get formattedBalance() {
@@ -19,11 +18,11 @@ export class HeaderModel {
   }
 
   get showRoutes() {
-    return this.gameSettings.showRoutes;
+    return this.gameSettings.routesVisible;
   }
 
   toggleRoutes = (): void => {
-    this.gameSettings.toggleRoutes();
+    this.gameSettings.toggleRoutesVisible();
   };
   selectChangelog = (): void => {
     this.selection.selectChangelog();

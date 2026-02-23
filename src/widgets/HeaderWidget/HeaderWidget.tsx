@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { Button, Checkbox, Heading } from '@components/ui';
 import { createWidget } from '@core/di';
-import { useFullscreen } from '@hooks/useFullscreen';
+import { useFullscreen } from './hooks/useFullscreen';
 import { HeaderModelProvider, useHeaderModel } from './model';
 
 const FullscreenIcon = ({ isFullscreen }: { isFullscreen: boolean }) =>

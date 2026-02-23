@@ -5,8 +5,7 @@
 ## Обязательные правила
 
 1. **Импорт `cn`**
-   - Всегда: `import { cn } from "@utils/cn"`.
-   - Не использовать `@/lib/utils` или `src/lib/utils`.
+   - Всегда: `import { cn } from "@utils"`.
 
 2. **Расположение файлов**
    - Все примитивы и обёртки UI лежат в `src/components/ui/`.
@@ -31,7 +30,7 @@
 
 ## При создании обёртки вручную
 
-1. Реализовать компонент в `wrappers.tsx` (импорт примитива из `./PrimitiveName`, использование `cn` из `@utils/cn`).
+1. Реализовать компонент в `wrappers.tsx` (импорт примитива из `./PrimitiveName`, использование `cn` из `@utils`).
 2. В `index.ts` экспортировать обёртку под основным именем и при необходимости примитив под другим именем.
 
 ## При изменении существующего UI-компонента
@@ -43,14 +42,4 @@
 
 - Использовать токены темы: `bg-primary`, `text-foreground`, `border-input`, `muted`, `accent` и т.д. (см. `src/index.css`).
 - Не хардкодить цвета вроде `bg-blue-600` или `text-slate-800` в UI-компонентах — только токены или явно оговорённые исключения (например, игровые цвета из `@theme`).
-
-## Алиасы
-
-- `@components` / `@components/*` → `src/components`
-- `@utils` / `@utils/*` → `src/utils`
-- `@/` → `src/` (используется в `components.json` для shadcn)
-
-## Справка по структуре
-
-- Полная документация: `docs/ui-components.md`.
-- Конфиг shadcn: `components.json` (aliases: `utils` → `@/utils/cn`, `ui` → `@/components/ui`).
+- Общие правила стилей и форматирования — [styling-rules.md](./styling-rules.md).

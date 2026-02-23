@@ -1,5 +1,12 @@
 import { init, Props, scope } from '@core/di';
-import { type Cities, type City, CityService, EntityTypeEnum, SelectionService } from '@services';
+import { GameSettingsPlugin } from '@plugins';
+import {
+  type Cities,
+  type City,
+  CityService,
+  EntityTypeEnum,
+  SelectionService,
+} from '@services';
 
 export interface CitiesModelProps {
   cities: Cities;
@@ -14,6 +21,7 @@ export class CitiesModel {
     public readonly props: Props<CitiesModelProps>,
     private readonly cityService: CityService,
     private readonly selectionService: SelectionService,
+    private readonly gameSettingsPlugin: GameSettingsPlugin,
   ) { }
 
   [init](props: CitiesModelProps): void {
@@ -32,4 +40,8 @@ export class CitiesModel {
   selectCity = (city: City): void => {
     this.selectionService.selectCity(city);
   };
+
+  get globeInitialRotation() {
+    return this.gameSettingsPlugin.globeInitialRotation;
+  }
 }

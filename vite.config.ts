@@ -1,15 +1,13 @@
 /// <reference types="vitest/config" />
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
+import tsconfigPaths from 'vite-tsconfig-paths';
 import react from '@vitejs/plugin-react-swc';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
+    tsconfigPaths(),
     react({
       tsDecorators: true,
       useAtYourOwnRisk_mutateSwcOptions(options) {
@@ -45,31 +43,6 @@ export default defineConfig({
     include: ['src/**/*.{test,spec}.{ts,tsx}'],
     pool: 'forks',
     isolate: true,
-  },
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, 'src'),
-      '@components': path.resolve(__dirname, 'src/components'),
-      '@core': path.resolve(__dirname, 'src/core'),
-      '@core/*': path.resolve(__dirname, 'src/core/*'),
-      '@layout': path.resolve(__dirname, 'src/layout'),
-      '@models': path.resolve(__dirname, 'src/models'),
-      '@services': path.resolve(__dirname, 'src/services'),
-      '@services/*': path.resolve(__dirname, 'src/services/*'),
-      '@pages': path.resolve(__dirname, 'src/pages'),
-      '@routes': path.resolve(__dirname, 'src/routes'),
-      '@routes/*': path.resolve(__dirname, 'src/routes/*'),
-      '@shared': path.resolve(__dirname, 'src/shared'),
-      '@shared/*': path.resolve(__dirname, 'src/shared/*'),
-      '@widgets': path.resolve(__dirname, 'src/widgets'),
-      '@widgets/*': path.resolve(__dirname, 'src/widgets/*'),
-      '@types': path.resolve(__dirname, 'src/types'),
-      '@utils': path.resolve(__dirname, 'src/utils'),
-      '@constants': path.resolve(__dirname, 'src/constants'),
-      '@data': path.resolve(__dirname, 'src/data'),
-      '@hooks': path.resolve(__dirname, 'src/hooks'),
-      '@hooks/*': path.resolve(__dirname, 'src/hooks/*'),
-    },
   },
   optimizeDeps: {
     exclude: ['lucide-react'],

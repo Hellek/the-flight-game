@@ -1,16 +1,21 @@
 import { useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { GLOBE_ROTATION, itemColor, itemColorHovered, itemColorSelected, ROUTE } from '@constants';
 import { createWidget } from '@core/di';
 import { Line } from '@react-three/drei';
+import { twColorVars } from '@utils';
 import { RoutesModelProvider, useRoutesModel } from './model';
 
+/**
+ * Параметры маршрута (пока хардкод)
+ */
+const ROUTE = { WIDTH: 5 };
+
 const RoutesView = observer(function RoutesView() {
-  const { routes, getRoutePoints, selectedRoute, selectRoute } = useRoutesModel();
+  const { routes, getRoutePoints, selectedRoute, selectRoute, globeInitialRotation } = useRoutesModel();
   const [hoveredRoute, setHoveredRoute] = useState<string | null>(null);
 
   return (
-    <group rotation={[GLOBE_ROTATION.X, GLOBE_ROTATION.Y, GLOBE_ROTATION.Z]}>
+    <group rotation={globeInitialRotation}>
       {routes.map(route => {
         const points = getRoutePoints(route);
         const isSelected = selectedRoute?.id === route.id;
@@ -20,7 +25,7 @@ const RoutesView = observer(function RoutesView() {
           <Line
             key={route.id}
             points={points}
-            color={isSelected ? itemColorSelected : isHovered ? itemColorHovered : itemColor}
+            color={isSelected ? twColorVars.itemSelected : isHovered ? twColorVars.itemHovered : twColorVars.item}
             lineWidth={ROUTE.WIDTH}
             onClick={e => {
               e.stopPropagation();

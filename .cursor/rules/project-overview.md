@@ -7,18 +7,19 @@
 
 ## Основные зависимости
 
-- `react`, `react-dom` - React библиотеки
-- `mobx`, `mobx-react-lite` - управление состоянием
-- `@react-three/fiber`, `@react-three/drei` - 3D графика
-- `three`, `@types/three` - Three.js библиотека
-- `react-router-dom` - маршрутизация
-- `tailwindcss`, `@tailwindcss/postcss` - стилизация
-- `clsx`, `tailwind-merge` - утилиты для работы с классами
-- `lucide-react` - иконки
-- `@floating-ui/react` - позиционирование элементов
+- `react`, `react-dom` — React
+- `mobx`, `mobx-react-lite` — реактивное состояние (сервисы, ViewModel)
+- `tsyringe`, `reflect-metadata` — DI-контейнер (`src/core/di/`)
+- `@react-three/fiber`, `@react-three/drei` — 3D графика
+- `three`, `@types/three` — Three.js
+- `react-router-dom` — маршрутизация
+- `tailwindcss`, `@tailwindcss/postcss` — стилизация
+- `clsx`, `tailwind-merge` — утилиты для классов
+- `lucide-react` — иконки
+- `@floating-ui/react` — позиционирование
 
 ## Важные замечания
 
 - Проект использует ES Modules (`"type": "module"`)
-- Все конфигурационные файлы используют современный синтаксис (ESM)
-- Бизнес-логика находится в директории `src/` и описывается отдельно
+- Конфигурационные файлы — современный синтаксис (ESM)
+- Структура: `widgets/`, `pages/`, `services/`, `plugins/`, `utils/`, `core/di/` — см. [docs/STRUCTURE.md](../../docs/STRUCTURE.md)

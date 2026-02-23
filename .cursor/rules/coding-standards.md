@@ -13,7 +13,7 @@
 ### Типы и интерфейсы
 
 - Использовать PascalCase для типов, интерфейсов и enum
-- Примеры: `Aircraft`, `Route`, `AircraftSize`, `Coordinates`
+- Примеры: `Aircraft`, `Route`, `AircraftSize`
 
 ```typescript
 export interface Aircraft {
@@ -64,7 +64,7 @@ export const AircraftInfo = ({ aircraft, onSelect }: AircraftInfoProps) => {
 import { observer } from 'mobx-react-lite'
 
 export const InfoPanel = observer(function InfoPanel() {
-  const { selectedEntity } = rootStore.selection
+  const { selectedEntity } = useInfoPanelModel() // или другой хук модели виджета
   // ...
 })
 ```
@@ -86,27 +86,28 @@ export const CityInfo = ({ city, onClose }: CityInfoProps) => {
 }
 ```
 
-## Stores
+## Stores и сервисы с реактивным состоянием
 
-### Структура store
+В проекте реактивное состояние (MobX) используется в **сервисах** (`services/`) и во **ViewModel виджетов** (`widgets/*/model/`). Единого RootStore нет; доступ к данным — через DI и хуки `useXxxModel()`.
 
-- Использовать классы для stores
+### Структура (классы с makeAutoObservable)
+
+- Использовать классы для сервисов и моделей с состоянием
 - Приватные методы и свойства помечать `private`
 - Публичные методы для изменения состояния
 - Использовать `makeAutoObservable` в конструкторе
 
 ```typescript
-export class MyStore {
-  public items: Item[] = []
-  private internalState: number = 0
+export class CityService {
+  public cities: City[] = []
   private animationId: number | null = null
 
   constructor() {
     makeAutoObservable(this)
   }
 
-  addItem(item: Item) {
-    this.items.push(item)
+  setCities(cities: City[]) {
+    this.cities = cities
   }
 
   private startAnimation() {
@@ -124,7 +125,6 @@ export class MyStore {
 private startAnimation() {
   const animate = (timestamp: number) => {
     runInAction(() => {
-      // изменения состояния здесь
       this.items.forEach(item => {
         item.progress += delta
       })
@@ -135,11 +135,10 @@ private startAnimation() {
 }
 ```
 
-### Доступ к stores
+### Доступ к состоянию
 
-- Избегать прямых мутаций store извне
-- Использовать публичные методы store для изменений
-- Доступ к `rootStore` через импорт: `import { rootStore } from '../stores'`
+- В виджетах — через хуки моделей: `const { cities, selectCity } = useCitiesModel()` (см. раздел MobX компоненты).
+- Сервисы инжектируются во ViewModel и в другие сервисы через DI; не импортировать сервисы напрямую из компонентов.
 
 ## DI (Dependency Injection)
 
@@ -186,10 +185,9 @@ export class CitiesModel {
 - Использовать **обычный импорт** класса: тогда тип доступен и в TypeScript, и в рантайме для разрешения зависимости.
 
 ```typescript
-// ✅ Правильно: обычный import — контейнер видит класс и может инжектить
 import { scope } from '@core/di';
-import { FinanceService } from '@services/FinanceService';
-import { SelectionService } from '@services/SelectionService';
+// ✅ Правильно: import сервисов без type  — контейнер видит класс и может инжектить
+import { FinanceService, SelectionService } from '@services';
 
 @scope.transient()
 export class HeaderModel {
@@ -199,23 +197,6 @@ export class HeaderModel {
   ) {}
 }
 ```
-
-```typescript
-// ❌ Неправильно: import type стирается в JS, контейнер не может разрешить зависимости
-import { scope } from '@core/di';
-import type { FinanceService } from '@services/FinanceService';
-import type { SelectionService } from '@services/SelectionService';
-
-@scope.transient()
-export class HeaderModel {
-  constructor(
-    public readonly finance: FinanceService,
-    public readonly selection: SelectionService,
-  ) {}
-}
-```
-
-- Для типов, которые **не** участвуют в инжекте (интерфейсы, типы пропсов, типы данных), по-прежнему использовать `import type` где уместно.
 
 ## Обработка ошибок
 
@@ -240,8 +221,8 @@ const cityName = city.name // может быть undefined
 - Проверять данные перед рендерингом компонентов
 
 ```tsx
-export const InfoPanel = observer(() => {
-  const { selectedEntity } = rootStore.selection
+export const InfoPanelView = observer(() => {
+  const { selectedEntity } = useSelectionModel() // или хук модели виджета с выбором
 
   if (!selectedEntity) return null
 
@@ -277,7 +258,7 @@ const texture = useMemo(() => {
 
 ```tsx
 const handleSelect = useCallback((aircraft: Aircraft) => {
-  rootStore.selection.selectAircraft(aircraft)
+  selectionService.selectAircraft(aircraft) // сервис из useXxxModel() или инжект
 }, [])
 ```
 
@@ -289,29 +270,16 @@ const handleSelect = useCallback((aircraft: Aircraft) => {
 
 ```tsx
 export const GlobeCities = observer(() => {
-  const { cities } = rootStore.city
+  const { cities, globeInitialRotation } = useCitiesModel()
 
   return (
-    <group rotation={[GLOBE_ROTATION.X, GLOBE_ROTATION.Y, GLOBE_ROTATION.Z]}>
+    <group rotation={globeInitialRotation}>
       {cities.map((city, index) => (
         <City key={index} city={city} />
       ))}
     </group>
   )
 })
-```
-
-## Комментарии
-
-### Когда комментировать
-
-- Комментировать сложную бизнес-логику
-- Объяснять неочевидные решения
-- Указывать единицы измерения в вычислениях
-
-```typescript
-// Вычисляем пройденное расстояние в км с учётом ускорения времени
-const distanceTraveled = (aircraft.speed * deltaTime * TIME_ACCELERATION_FACTOR) / 3600 // км/ч -> км/сек с ускорением
 ```
 
 ### Избегать
@@ -325,6 +293,6 @@ const distanceTraveled = (aircraft.speed * deltaTime * TIME_ACCELERATION_FACTOR)
 ### Работа с 3D компонентами
 
 - 3D компоненты используют `@react-three/fiber` и `@react-three/drei`
-- Three.js объекты импортируются как `import * as THREE from 'three'`
+- Three.js объекты импортируются как `import { Vector3 } from 'three'`
 - Использовать компоненты из `@react-three/drei` когда возможно (например, `Sphere`, `OrbitControls`)
 - Оптимизация 3D компонентов описана в разделе "Производительность"

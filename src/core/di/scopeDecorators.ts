@@ -1,4 +1,9 @@
-import { injectable, Lifecycle, scoped, singleton } from 'tsyringe';
+import {
+  injectable,
+  Lifecycle,
+  scoped,
+  singleton,
+} from 'tsyringe';
 import { constructorWrapper } from './internal/construction-interceptor';
 import { type Scope, scopes } from './scope';
 
@@ -23,8 +28,8 @@ function mapToTsyringe(scope: Scope): <T extends Constructor>(target: T) => T {
 }
 
 /**
- * Декораторы scope по аналогии с vkcom: явно задают время жизни сущности в контейнере.
- * ViewModel виджетов — @scope.transient(); сервисы — @scope.container() или @scope.singleton().
+ * Декораторы scope: явно задают время жизни сущности в контейнере.
+ * ViewModel виджетов — @scope.transient(); сервисы и плагины — @scope.container() или @scope.singleton().
  */
 export const scope = {
   /** Новый инстанс при каждом resolve (для ViewModel виджетов) */

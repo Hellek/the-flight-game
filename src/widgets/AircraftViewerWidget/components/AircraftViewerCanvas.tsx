@@ -1,13 +1,15 @@
 import { createElement, useRef } from 'react';
-import type * as THREE from 'three';
-import { DEBUG } from '@constants';
+import type { Group } from 'three';
 import { Environment, OrbitControls } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { DebugWrapper } from '@widgets/AircraftsWidget';
 import type { AircraftViewerModel } from '../model';
 
-const RotatingAircraft = ({ model: AircraftComponent }: { model: AircraftViewerModel }) => {
-  const groupRef = useRef<THREE.Group>(null);
+interface RotatingAircraftProps {
+  model: AircraftViewerModel;
+}
+
+const RotatingAircraft = ({ model: AircraftComponent }: RotatingAircraftProps) => {
+  const groupRef = useRef<Group>(null);
 
   useFrame(state => {
     if (groupRef.current) {
@@ -17,12 +19,10 @@ const RotatingAircraft = ({ model: AircraftComponent }: { model: AircraftViewerM
 
   return (
     <group ref={groupRef}>
-      <DebugWrapper size={DEBUG.VIEWER_PLANES_SIZE}>
-        {createElement(AircraftComponent, {
-          position: [0, 0, 0],
-          color: '#4F46E5',
-        })}
-      </DebugWrapper>
+      {createElement(AircraftComponent, {
+        position: [0, 0, 0],
+        color: '#4F46E5',
+      })}
     </group>
   );
 };
@@ -32,7 +32,10 @@ interface AircraftViewerCanvasProps {
   className?: string;
 }
 
-export function AircraftViewerCanvas({ model, className = '' }: AircraftViewerCanvasProps) {
+export function AircraftViewerCanvas({
+  model,
+  className = '',
+}: AircraftViewerCanvasProps) {
   return (
     <div className={`
       h-96 w-full overflow-hidden rounded-lg

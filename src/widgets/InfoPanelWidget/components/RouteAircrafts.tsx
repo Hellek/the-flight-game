@@ -1,6 +1,6 @@
 import { Heading } from '@components/ui';
 import type { Route } from '@services';
-import { getAircraftSizeName } from '@utils';
+import { getAircraftSizeName } from './utils';
 
 interface RouteAircraftsProps {
   route: Route;

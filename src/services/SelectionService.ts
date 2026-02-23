@@ -1,6 +1,11 @@
 import { makeAutoObservable } from 'mobx';
 import { scope } from '@core/di';
-import { type Aircraft, type City, EntityTypeEnum, type Route } from './types';
+import {
+  type Aircraft,
+  type City,
+  EntityTypeEnum,
+  type Route,
+} from './types';
 
 type SelectedEntity = {
   type: EntityTypeEnum.city

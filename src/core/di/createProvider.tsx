@@ -8,7 +8,12 @@ import {
 } from 'react';
 import { Props } from './Props';
 import { scopes } from './scope';
-import { constructorScope, destroy, init, propsAttribute } from './symbols';
+import {
+  constructorScope,
+  destroy,
+  init,
+  propsAttribute,
+} from './symbols';
 import { useContainer } from './useContainer';
 
 // Регистрируем Props в контейнере при первом импорте

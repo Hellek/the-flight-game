@@ -1,9 +1,19 @@
 import { useCallback, useState } from 'react';
-import * as THREE from 'three';
-import { CITY, itemColor, itemColorHovered, itemColorSelected } from '@constants';
+import {
+  Euler,
+  Matrix4,
+  Quaternion,
+  Vector3,
+} from 'three';
 import { Circle } from '@react-three/drei';
 import type { ThreeEvent } from '@react-three/fiber';
 import type { City } from '@services';
+import { twColorVars } from '@utils';
+
+/**
+ * Параметры городов (пока хардкод)
+ */
+const CITY = { SIZE: 0.005 };
 
 interface CityViewProps {
   city: City
@@ -35,19 +45,19 @@ export function CityView({ city, onSelect, selectedCity }: CityViewProps) {
     setIsHovered(false);
   };
 
-  const color = isSelected ? itemColorSelected : isHovered ? itemColorHovered : itemColor;
+  const color = isSelected ? twColorVars.itemSelected : isHovered ? twColorVars.itemHovered : twColorVars.item;
   const position = [city.position.x, city.position.y, city.position.z] as [number, number, number];
 
   // Вычисляем нормаль поверхности в точке города
-  const normal = new THREE.Vector3(city.position.x, city.position.y, city.position.z).normalize();
+  const normal = city.position.clone().normalize();
 
   // Вычисляем поворот для ориентации круга перпендикулярно нормали
-  const up = new THREE.Vector3(0, 1, 0);
-  const rotationMatrix = new THREE.Matrix4();
-  rotationMatrix.lookAt(new THREE.Vector3(0, 0, 0), normal, up);
-  const quaternion = new THREE.Quaternion();
+  const up = new Vector3(0, 1, 0);
+  const rotationMatrix = new Matrix4();
+  rotationMatrix.lookAt(new Vector3(0, 0, 0), normal, up);
+  const quaternion = new Quaternion();
   quaternion.setFromRotationMatrix(rotationMatrix);
-  const euler = new THREE.Euler();
+  const euler = new Euler();
   euler.setFromQuaternion(quaternion);
 
   // Разворачиваем на 180 градусов, чтобы лицевая сторона смотрела от центра

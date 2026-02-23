@@ -1,11 +1,9 @@
 import { makeAutoObservable } from 'mobx';
-import { DEBUG } from '@constants';
 import { init, scope } from '@core/di';
+import { GameSettingsPlugin } from '@plugins';
 import type { Cities, Routes } from '@services';
-import { GameSettingsService } from '@services/GameSettingsService';
 import { calculateDistance, convertToSphereCoordinates } from '@utils';
 import { federalRussiaAirports } from '../dataCitiesList';
-
 interface World {
   cities: Cities;
   routes: Routes;
@@ -18,12 +16,12 @@ interface World {
 export class GameModel {
   private _world: World | null = null;
 
-  constructor(readonly gameSettings: GameSettingsService) {
+  constructor(private readonly gameSettings: GameSettingsPlugin) {
     makeAutoObservable(this);
   }
 
   get showRoutes() {
-    return this.gameSettings.showRoutes;
+    return this.gameSettings.routesVisible;
   }
 
   [init]() {
@@ -32,7 +30,6 @@ export class GameModel {
 
   private getPredefinedRoutes(cities: Cities): Routes {
     const routes: Routes = [];
-    if (!DEBUG.ADD_PREDEFINED_ROUTES) return routes;
 
     const predefinedRoutes = [
       { departureCity: 'KZN', arrivalCity: 'BAX' },
@@ -70,7 +67,7 @@ export class GameModel {
       position: convertToSphereCoordinates(city.lat, city.lon),
     }));
 
-    const routes = this.getPredefinedRoutes(cities);
+    const routes: Routes = this.gameSettings.isProdEnv ? [] : this.getPredefinedRoutes(cities);
     this._world = { cities, routes };
   }
 

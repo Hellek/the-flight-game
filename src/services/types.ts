@@ -1,4 +1,4 @@
-import type { Position } from '@types';
+import type { Vector3 } from 'three';
 
 /**
  * Город
@@ -6,7 +6,7 @@ import type { Position } from '@types';
 export interface City {
   name: string
   iata: string
-  position: Position
+  position: Vector3
 }
 
 /**
@@ -24,6 +24,17 @@ export enum AircraftSize {
   xlarge = 'xlarge', // очень большие самолёты (например, Boeing 747)
   xxlarge = 'xxlarge', // гигантские самолёты (например, Airbus A380)
 }
+
+/**
+ * Базовые скорости в км/ч для разных типов самолётов
+ */
+export const AircraftSpeed = {
+  [AircraftSize.small]: 640,
+  [AircraftSize.medium]: 720,
+  [AircraftSize.large]: 800,
+  [AircraftSize.xlarge]: 880,
+  [AircraftSize.xxlarge]: 960,
+};
 
 /**
  * Направление движения самолета

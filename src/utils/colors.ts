@@ -30,7 +30,7 @@ const getCSSVariable = (varName: string): string => {
  * Цвета читаются из CSS-переменных, определённых в src/index.css через @theme
  * Это обеспечивает единый источник для CSS и JavaScript
  */
-export const colors = {
+export const twColorVars = {
   water: getCSSVariable('--color-water'),
   continent: getCSSVariable('--color-continent'),
   item: getCSSVariable('--color-item'),
@@ -42,6 +42,6 @@ export const colors = {
 /**
  * Функция для получения цвета (для динамического чтения при необходимости)
  */
-export const getColor = (name: keyof typeof colors): string => {
+export const getColor = (name: keyof typeof twColorVars): string => {
   return getCSSVariable(`--color-${name.replace(/([A-Z])/g, '-$1').toLowerCase()}`);
 };

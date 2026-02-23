@@ -1,12 +1,17 @@
-import * as THREE from 'three';
-import { ROUTE } from '@constants';
-import type { Position } from '@types';
+import { Vector3 } from 'three';
 
-export const positionToVector = (position: Position): THREE.Vector3 => {
-  return new THREE.Vector3(position.x, position.y, position.z);
+/**
+ * Параметры маршрута
+ */
+const ROUTE = {
+  SEGMENT_LENGTH_KM: 100, // Длина одного сегмента в километрах
+  MIN_SEGMENTS: 8, // Минимальное количество сегментов для коротких маршрутов
+  ARC_MAX_HEIGHT: 0.05, // Максимальная высота дуги маршрута (8-9 км)
+  ARC_MIN_DISTANCE: 2, // Минимальное расстояние для максимальной высоты дуги
+  ARC_MIN_HEIGHT: 0.005, // Минимальная высота дуги для близких точек
 };
 
-export const calculateDistance = (pos1: Position, pos2: Position): number => {
+export const calculateDistance = (pos1: Vector3, pos2: Vector3): number => {
   // Преобразуем декартовы координаты в сферические
   const lat1 = Math.asin(pos1.y);
   const lon1 = Math.atan2(pos1.z, pos1.x);
@@ -45,20 +50,17 @@ export const calculateSegments = (distanceKm: number): number => {
 };
 
 export const getArcPoints = (
-  start: THREE.Vector3,
-  end: THREE.Vector3,
+  start: Vector3,
+  end: Vector3,
   segments?: number,
-): THREE.Vector3[] => {
+): Vector3[] => {
   // Если количество сегментов не указано, вычисляем его на основе расстояния
   if (segments === undefined) {
-    // Вычисляем расстояние в километрах используя сферические координаты
-    const pos1 = { x: start.x, y: start.y, z: start.z };
-    const pos2 = { x: end.x, y: end.y, z: end.z };
-    const distanceKm = calculateDistance(pos1, pos2);
+    const distanceKm = calculateDistance(start, end);
     segments = calculateSegments(distanceKm);
   }
 
-  const points: THREE.Vector3[] = [];
+  const points: Vector3[] = [];
 
   // Вычисляем расстояние между точками
   const distance = start.distanceTo(end);
@@ -84,7 +86,7 @@ export const getArcPoints = (
     const progress = i / segments;
 
     // Базовое положение точки на сфере
-    const point = new THREE.Vector3().lerpVectors(start, end, progress);
+    const point = new Vector3().lerpVectors(start, end, progress);
 
     // Нормализуем вектор, чтобы получить точку на поверхности сферы
     point.normalize();
@@ -108,12 +110,12 @@ export const formatDistance = (distance: number): string => {
   return `${(distance / 1000).toFixed(1)} тыс. км`;
 };
 
-export function convertToSphereCoordinates(lat: number, lon: number) {
+export function convertToSphereCoordinates(lat: number, lon: number): Vector3 {
   const phi = (90 - lat) * (Math.PI / 180);
   const theta = (lon + 180) * (Math.PI / 180);
-  return {
-    x: -Math.sin(phi) * Math.cos(theta),
-    y: Math.cos(phi),
-    z: Math.sin(phi) * Math.sin(theta),
-  };
+  return new Vector3(
+    -Math.sin(phi) * Math.cos(theta),
+    Math.cos(phi),
+    Math.sin(phi) * Math.sin(theta),
+  );
 }
