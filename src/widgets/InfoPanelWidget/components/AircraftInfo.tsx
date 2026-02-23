@@ -1,7 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import type { Aircraft } from '@services';
-import { formatDistance } from '@utils';
-import { getAircraftSizeName } from './utils';
+import { formatDistance, getAircraftSizeName } from './utils';
 
 interface AircraftInfoProps {
   aircraft: Aircraft;

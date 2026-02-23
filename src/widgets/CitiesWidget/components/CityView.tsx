@@ -8,7 +8,7 @@ import {
 import { Circle } from '@react-three/drei';
 import type { ThreeEvent } from '@react-three/fiber';
 import type { City } from '@services';
-import { styleVars } from '@utils';
+import { styleVars } from '@ui';
 
 /**
  * Параметры городов (пока хардкод)

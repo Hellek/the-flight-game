@@ -6,7 +6,7 @@
 
 - **shadcn/ui** (стиль new-york) — примитивы на базе Radix UI
 - **Tailwind CSS v4** — стилизация, тема через CSS-переменные
-- **Утилита `cn`** — `src/utils/style.ts` (объединение классов через `clsx` + `tailwind-merge`)
+- **Утилита `cn`** — `src/components/ui/styleUtils.ts` (объединение классов через `clsx` + `tailwind-merge`)
 
 Конфигурация shadcn: `components.json` в корне проекта.
 
@@ -58,7 +58,7 @@ src/components/ui/
 
 - Цвета и радиусы задаются CSS-переменными в `src/index.css` (`:root`, `.dark`, `@theme inline`).
 - В компонентах использовать токены Tailwind: `bg-primary`, `text-foreground`, `border-input`, `rounded-md` и т.д., а не жёсткие цвета (например, не `bg-blue-600`).
-- Для объединения классов всегда использовать `cn()` из `@utils`.
+- Для объединения классов всегда использовать `cn()` из `@ui`.
 - Общие правила стилей и форматирования (Tailwind, отступы, длина строки): `.cursor/rules/styling-rules.md`.
 
 ## Иконки

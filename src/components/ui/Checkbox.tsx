@@ -1,7 +1,7 @@
 import type { ComponentProps } from 'react';
 import { CheckIcon } from 'lucide-react';
 import { Checkbox as CheckboxPrimitive } from 'radix-ui';
-import { cn } from '@utils';
+import { cn } from './styleUtils';
 
 function Checkbox({
   className,

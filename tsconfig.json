@@ -30,8 +30,11 @@
       "@services": [
         "src/services"
       ],
-      "@utils": [
-        "src/utils"
+      "@ui": [
+        "src/components/ui"
+      ],
+      "@ui/*": [
+        "src/components/ui/*"
       ],
       "@widgets/*": [
         "src/widgets/*"

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { cn } from '@utils';
+import { cn } from '@ui';
 import { Button as ShadcnButton } from './Button';
 import { Checkbox as ShadcnCheckbox } from './Checkbox';
 import {

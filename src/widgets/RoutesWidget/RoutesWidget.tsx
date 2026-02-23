@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { createWidget } from '@core/di';
 import { Line } from '@react-three/drei';
-import { styleVars } from '@utils';
+import { styleVars } from '@ui';
 import { RoutesModelProvider, useRoutesModel } from './model';
 
 /**

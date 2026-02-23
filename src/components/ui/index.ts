@@ -1,3 +1,4 @@
+export { cn, styleVars, getColor } from './styleUtils';
 export { Button, Checkbox, Select } from './wrappers';
 export { Heading } from './Heading';
 export { Button as ShadcnButton } from './Button';

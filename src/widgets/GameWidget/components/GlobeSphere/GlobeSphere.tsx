@@ -1,7 +1,7 @@
 import { useMemo, useRef } from 'react';
 import { DoubleSide, type Mesh } from 'three';
 import { Sphere } from '@react-three/drei';
-import { styleVars } from '@utils';
+import { styleVars } from '@ui';
 import { createGlobeTexture } from './createGlobeTexture';
 import { eurasiaCoordinates } from './data';
 

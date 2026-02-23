@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import type { Vector3 } from 'three';
 import type { ThreeEvent } from '@react-three/fiber';
 import type { Aircraft } from '@services';
-import { styleVars } from '@utils';
+import { styleVars } from '@ui';
 import { Airplane } from './Airplane';
 
 /**
