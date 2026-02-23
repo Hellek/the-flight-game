@@ -8,7 +8,7 @@ import {
 import { Circle } from '@react-three/drei';
 import type { ThreeEvent } from '@react-three/fiber';
 import type { City } from '@services';
-import { twColorVars } from '@utils';
+import { styleVars } from '@utils';
 
 /**
  * Параметры городов (пока хардкод)
@@ -45,7 +45,7 @@ export function CityView({ city, onSelect, selectedCity }: CityViewProps) {
     setIsHovered(false);
   };
 
-  const color = isSelected ? twColorVars.itemSelected : isHovered ? twColorVars.itemHovered : twColorVars.item;
+  const color = isSelected ? styleVars.colorItemSelected : isHovered ? styleVars.colorItemHovered : styleVars.colorItem;
   const position = [city.position.x, city.position.y, city.position.z] as [number, number, number];
 
   // Вычисляем нормаль поверхности в точке города

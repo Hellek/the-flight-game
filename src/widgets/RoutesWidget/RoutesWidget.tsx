@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { createWidget } from '@core/di';
 import { Line } from '@react-three/drei';
-import { twColorVars } from '@utils';
+import { styleVars } from '@utils';
 import { RoutesModelProvider, useRoutesModel } from './model';
 
 /**
@@ -25,7 +25,9 @@ const RoutesView = observer(function RoutesView() {
           <Line
             key={route.id}
             points={points}
-            color={isSelected ? twColorVars.itemSelected : isHovered ? twColorVars.itemHovered : twColorVars.item}
+            color={isSelected
+              ? styleVars.colorItemSelected
+              : isHovered ? styleVars.colorItemHovered : styleVars.colorItem}
             lineWidth={ROUTE.WIDTH}
             onClick={e => {
               e.stopPropagation();

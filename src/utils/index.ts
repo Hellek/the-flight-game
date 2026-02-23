@@ -1,3 +1,2 @@
-export * from './cn';
-export * from './colors';
+export * from './style';
 export * from './geometry';

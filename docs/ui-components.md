@@ -6,7 +6,7 @@
 
 - **shadcn/ui** (стиль new-york) — примитивы на базе Radix UI
 - **Tailwind CSS v4** — стилизация, тема через CSS-переменные
-- **Утилита `cn`** — `src/utils/cn.ts` (объединение классов через `clsx` + `tailwind-merge`)
+- **Утилита `cn`** — `src/utils/style.ts` (объединение классов через `clsx` + `tailwind-merge`)
 
 Конфигурация shadcn: `components.json` в корне проекта.
 

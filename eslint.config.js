@@ -9,6 +9,7 @@ import importX from 'eslint-plugin-import-x'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
 import unusedImports from 'eslint-plugin-unused-imports'
 import eslintPluginBetterTailwindcss from 'eslint-plugin-better-tailwindcss'
+import wrap from '@seahax/eslint-plugin-wrap'
 
 export default [
   { ignores: ['dist'] },
@@ -200,6 +201,14 @@ export default [
         },
       ],
     },
+  },
+  {
+    files: ['**/*.{ts,tsx}'],
+    ...wrap.config({
+      maxLen: 120,
+      tabWidth: 2,
+      severity: 'warn',
+    }),
   },
   {
     ...eslintPluginBetterTailwindcss.configs.recommended,

@@ -1,3 +1,10 @@
+import { type ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
 /**
  * Утилита для чтения цветов из CSS-переменных
  * Обеспечивает единый источник цветовой схемы для CSS и JavaScript
@@ -30,18 +37,18 @@ const getCSSVariable = (varName: string): string => {
  * Цвета читаются из CSS-переменных, определённых в src/index.css через @theme
  * Это обеспечивает единый источник для CSS и JavaScript
  */
-export const twColorVars = {
-  water: getCSSVariable('--color-water'),
-  continent: getCSSVariable('--color-continent'),
-  item: getCSSVariable('--color-item'),
-  aircraft: getCSSVariable('--color-aircraft'),
-  itemSelected: getCSSVariable('--color-item-selected'),
-  itemHovered: getCSSVariable('--color-item-hovered'),
+export const styleVars = {
+  colorWater: getCSSVariable('--color-water'),
+  colorContinent: getCSSVariable('--color-continent'),
+  colorAircraft: getCSSVariable('--color-aircraft'),
+  colorItem: getCSSVariable('--color-item'),
+  colorItemSelected: getCSSVariable('--color-item-selected'),
+  colorItemHovered: getCSSVariable('--color-item-hovered'),
 } as const;
 
 /**
  * Функция для получения цвета (для динамического чтения при необходимости)
  */
-export const getColor = (name: keyof typeof twColorVars): string => {
+export const getColor = (name: keyof typeof styleVars): string => {
   return getCSSVariable(`--color-${name.replace(/([A-Z])/g, '-$1').toLowerCase()}`);
 };

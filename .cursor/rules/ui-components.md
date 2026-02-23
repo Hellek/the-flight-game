@@ -23,7 +23,7 @@
 ## При добавлении компонента через shadcn CLI
 
 1. Выполнить: `npx shadcn@canary add <component-name> --overwrite`.
-2. В каждом новом/изменённом файле в `src/components/ui/` заменить импорт утилиты на `import { cn } from "@utils/cn"`.
+2. В каждом новом/изменённом файле в `src/components/ui/` заменить импорт утилиты на `import { cn } from "@utils"`.
 3. Добавить экспорт в `src/components/ui/index.ts`:
    - Если нужен только примитив: `export { ComponentName } from './ComponentName';`
    - Если нужна обёртка: реализовать её в `wrappers.tsx`, затем `export { ComponentName } from './wrappers';` (при необходимости также экспортировать примитив как `ShadcnComponentName` из соответствующего файла).

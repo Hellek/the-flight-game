@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import type { Vector3 } from 'three';
 import type { ThreeEvent } from '@react-three/fiber';
 import type { Aircraft } from '@services';
-import { twColorVars } from '@utils';
+import { styleVars } from '@utils';
 import { Airplane } from './Airplane';
 
 /**
@@ -30,7 +30,10 @@ export const AircraftView = observer(function AircraftView({
 
   const currentPoint = getPosition(aircraft);
   const rotation = getRotation(aircraft);
-  const color = isSelected ? twColorVars.itemSelected : isHovered ? twColorVars.itemHovered : twColorVars.aircraft;
+
+  const color = isSelected
+    ? styleVars.colorItemSelected
+    : isHovered ? styleVars.colorItemHovered : styleVars.colorAircraft;
 
   const handleClick = (e: ThreeEvent<MouseEvent>) => {
     e.stopPropagation();
