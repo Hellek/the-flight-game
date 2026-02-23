@@ -3,7 +3,7 @@ import { scope } from '@core/di';
 import type { Aircraft } from '../AircraftService/AircraftService.types';
 import type { City } from '../CityService/CityService.types';
 import type { Route } from '../RouteService/RouteService.types';
-import { EntityTypeEnum, type SelectedEntity } from './SelectionService.types';
+import { type SelectedEntity, SelectedEntityType } from './SelectionService.types';
 
 @scope.singleton()
 export class SelectionService {
@@ -15,28 +15,28 @@ export class SelectionService {
 
   selectCity(city: City) {
     this.selectedEntity = {
-      type: EntityTypeEnum.city,
+      type: SelectedEntityType.city,
       data: city,
     };
   }
 
   selectRoute(route: Route) {
     this.selectedEntity = {
-      type: EntityTypeEnum.route,
+      type: SelectedEntityType.route,
       data: route,
     };
   }
 
   selectAircraft(aircraft: Aircraft) {
     this.selectedEntity = {
-      type: EntityTypeEnum.aircraft,
+      type: SelectedEntityType.aircraft,
       data: aircraft,
     };
   }
 
   selectChangelog() {
     this.selectedEntity = {
-      type: EntityTypeEnum.changelog,
+      type: SelectedEntityType.changelog,
       data: null,
     };
   }

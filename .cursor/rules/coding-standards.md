@@ -147,8 +147,8 @@ private startAnimation() {
 Если виджет получает данные от родителя через props (например, `cities`, `routes`), модель должна:
 
 1. Объявить интерфейс пропсов (например, `CitiesModelProps`).
-2. Инжектировать в конструктор типизированный `Props<YourModelProps>` первым аргументом — провайдер при резолве вызовет на нём `set(restProps)`, в модели доступен типобезопасный `this.props.current`.
-3. Оставить `[init](props: YourModelProps)` для первичной инициализации; при необходимости читать актуальные пропсы через `this.props.current` и реализовать `updateProps(props)` при смене пропсов.
+2. Инжектировать в конструктор типизированный `Props<YourModelProps>` первым аргументом — провайдер при резолве и при смене props вызывает на нём `set(restProps)`, в модели доступен типобезопасный `this.props.current`.
+3. **Не** объявлять `[init]` и `updateProps`, если модель только читает пропсы через `this.props.current`: провайдер сам обновляет Props. Объявлять `[init](props)` только при первичной инициализации с побочными эффектами (например, вызов `cityService.setCities(props.cities)`); при смене пропсов с побочными эффектами — по необходимости реализовать `updateProps(props)`.
 
 ```typescript
 import { init, Props, scope } from '@core/di';
@@ -165,16 +165,18 @@ export class CitiesModel {
     private readonly selectionService: SelectionService,
   ) {}
 
+  // [init] нужен только при побочных эффектах при маунте (синхронизация с сервисом)
   [init](props: CitiesModelProps): void {
-    this.cityService.initialSet(props.cities);
+    this.cityService.setCities(props.cities);
   }
 
-  // при необходимости — доступ к актуальным пропсам
   get cities(): City[] {
     return this.cityService.cities;
   }
 }
 ```
+
+Модель, которая только читает пропсы (без побочных эффектов при инициализации), не объявляет `[init]` и `updateProps` — провайдер сам обновляет `this.props.current` при смене props.
 
 Модели без входящих пропсов (виджет не принимает props) не инжектируют `Props`.
 

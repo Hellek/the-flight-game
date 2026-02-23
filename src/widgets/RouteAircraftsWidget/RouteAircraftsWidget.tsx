@@ -1,13 +1,11 @@
+import { observer } from 'mobx-react-lite';
 import { Heading } from '@components/ui';
-import type { Route } from '@services';
-import { getAircraftSizeName } from './utils';
+import { createWidget } from '@core/di';
+import { RouteAircraftsModelProvider, useRouteAircraftsModel } from './model';
 
-interface RouteAircraftsProps {
-  route: Route;
-}
+const RouteAircraftsView = observer(function RouteAircraftsView() {
+  const { aircrafts, getAircraftSizeName } = useRouteAircraftsModel();
 
-export function RouteAircrafts({ route }: RouteAircraftsProps) {
-  const { aircrafts } = route;
   return (
     <div className="space-y-2">
       <Heading level={4} className="text-sm font-medium text-slate-700">
@@ -30,4 +28,6 @@ export function RouteAircrafts({ route }: RouteAircraftsProps) {
       )}
     </div>
   );
-}
+});
+
+export const RouteAircraftsWidget = createWidget(RouteAircraftsModelProvider, RouteAircraftsView);

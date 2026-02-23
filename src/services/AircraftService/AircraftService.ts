@@ -169,4 +169,16 @@ export class AircraftService {
 
     return [targetRotation.x, targetRotation.y, targetRotation.z];
   }
+
+  getAircraftSizeName(size: AircraftSize): string {
+    const sizeNames: Record<AircraftSize, string> = {
+      [AircraftSize.small]: 'Маленький',
+      [AircraftSize.medium]: 'Средний',
+      [AircraftSize.large]: 'Большой',
+      [AircraftSize.xlarge]: 'Очень большой',
+      [AircraftSize.xxlarge]: 'Гигантский',
+    };
+
+    return sizeNames[size];
+  };
 }

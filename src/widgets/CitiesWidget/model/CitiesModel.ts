@@ -4,7 +4,7 @@ import {
   type Cities,
   type City,
   CityService,
-  EntityTypeEnum,
+  SelectedEntityType,
   SelectionService,
 } from '@services';
 
@@ -34,7 +34,7 @@ export class CitiesModel {
 
   get selectedCity(): City | null {
     const { selectedEntity } = this.selectionService;
-    return selectedEntity?.type === EntityTypeEnum.city ? selectedEntity.data : null;
+    return selectedEntity?.type === SelectedEntityType.city ? selectedEntity.data : null;
   }
 
   selectCity = (city: City): void => {

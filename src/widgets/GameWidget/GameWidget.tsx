@@ -3,7 +3,6 @@ import { createWidget } from '@core/di';
 import { Canvas } from '@react-three/fiber';
 import { AircraftsWidget } from '@widgets/AircraftsWidget';
 import { CitiesWidget } from '@widgets/CitiesWidget';
-import { InfoPanelWidget } from '@widgets/InfoPanelWidget';
 import { RoutesWidget } from '@widgets/RoutesWidget';
 import { GameControls } from './components/GameControls';
 import { GlobeSphere } from './components/GlobeSphere/GlobeSphere';
@@ -24,7 +23,6 @@ const GameView = observer(function GameView() {
         </group>
         <GameControls />
       </Canvas>
-      <InfoPanelWidget />
     </div>
   );
 });

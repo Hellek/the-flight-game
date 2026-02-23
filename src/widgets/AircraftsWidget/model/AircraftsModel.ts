@@ -3,7 +3,7 @@ import { GameSettingsPlugin } from '@plugins';
 import {
   type Aircraft,
   AircraftService,
-  EntityTypeEnum,
+  SelectedEntityType,
   SelectionService,
 } from '@services';
 
@@ -32,7 +32,7 @@ export class AircraftsModel {
 
   get selectedAircraft(): Aircraft | null {
     const { selectedEntity } = this.selectionService;
-    return selectedEntity?.type === EntityTypeEnum.aircraft ? selectedEntity.data : null;
+    return selectedEntity?.type === SelectedEntityType.aircraft ? selectedEntity.data : null;
   }
 
   selectAircraft = (aircraft: Aircraft): void => {

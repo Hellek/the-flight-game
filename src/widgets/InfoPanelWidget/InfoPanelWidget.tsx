@@ -1,62 +1,48 @@
+import { Settings } from 'lucide-react';
 import { observer } from 'mobx-react-lite';
+import { Button } from '@components/ui';
 import { createWidget } from '@core/di';
-import { EntityTypeEnum } from '@services';
-import { AircraftInfo } from './components/AircraftInfo';
+import { SelectedEntityType } from '@services';
+import { AircraftInfoWidget } from '@widgets/AircraftInfoWidget';
+import { RouteInfoWidget } from '@widgets/RouteInfoWidget';
 import { ChangelogInfo } from './components/ChangelogInfo';
 import { CityInfo } from './components/CityInfo';
-import { PanelHeader } from './components/PanelHeader';
-import { RouteInfo } from './components/RouteInfo';
+import { InfoPanelModal } from './components/InfoPanelModal';
+import { MainMenu } from './components/MainMenu';
 import { InfoPanelModelProvider, useInfoPanelModel } from './model';
+import { InfoPanelInnerTypeKey } from './model/InfoPanelModel';
 
 const InfoPanelView = observer(function InfoPanelView() {
-  const { selectedEntity, clearSelection, getDirectDistance, createAircraft } =
-    useInfoPanelModel();
+  const { panelTitle, panelTypeKey, selectedEntity, openMainMenu, close } = useInfoPanelModel();
 
-  if (!selectedEntity) return null;
-
-  const getPanelConfig = () => {
-    switch (selectedEntity.type) {
-      case EntityTypeEnum.city:
-        return {
-          title: 'Город',
-          component: <CityInfo city={selectedEntity.data} />,
-        };
-      case EntityTypeEnum.route:
-        return {
-          title: 'Маршрут',
-          component: (
-            <RouteInfo
-              route={selectedEntity.data}
-              getDirectDistance={getDirectDistance}
-              onCreateAircraft={createAircraft}
-            />
-          ),
-        };
-      case EntityTypeEnum.aircraft:
-        return {
-          title: 'Самолет',
-          component: <AircraftInfo aircraft={selectedEntity.data} />,
-        };
-      case EntityTypeEnum.changelog:
-        return {
-          title: 'Изменения',
-          component: <ChangelogInfo />,
-        };
-      default:
-        return { title: '', component: null };
-    }
-  };
-
-  const { title, component } = getPanelConfig();
+  let content = null;
+  if (panelTypeKey === InfoPanelInnerTypeKey.mainMenu) content = <MainMenu />;
+  else if (selectedEntity?.type === SelectedEntityType.city) content = <CityInfo city={selectedEntity.data} />;
+  else if (selectedEntity?.type === SelectedEntityType.aircraft) {
+    content = <AircraftInfoWidget aircraft={selectedEntity.data} />;
+  } else if (selectedEntity?.type === SelectedEntityType.route) {
+    content = <RouteInfoWidget route={selectedEntity.data} />;
+  } else if (selectedEntity?.type === SelectedEntityType.changelog) content = <ChangelogInfo />;
 
   return (
-    <div className="
-      absolute top-4 right-4 flex max-h-[calc(100vh-6rem)] w-80 flex-col
-      overflow-hidden rounded-lg bg-white shadow-lg
-    ">
-      <PanelHeader title={title} onClose={clearSelection} />
-
-      <div className="flex-1 space-y-3 overflow-y-auto p-4">{component}</div>
+    <div className="absolute top-4 right-4 z-10 flex items-start gap-2">
+      {panelTypeKey ? (
+        <InfoPanelModal
+          title={panelTitle}
+          onClose={close}
+        >
+          {content}
+        </InfoPanelModal>
+      ) : (
+        <Button
+          variant="icon"
+          onClick={openMainMenu}
+          aria-label="Меню"
+          className="rounded-lg bg-white shadow-lg"
+        >
+          <Settings className="size-5 text-slate-500" />
+        </Button>
+      )}
     </div>
   );
 });

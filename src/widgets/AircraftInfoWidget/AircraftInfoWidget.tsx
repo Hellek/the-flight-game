@@ -1,29 +1,15 @@
 import { observer } from 'mobx-react-lite';
-import type { Aircraft } from '@services';
-import { formatDistance, getAircraftSizeName } from './utils';
+import { createWidget } from '@core/di';
+import { AircraftInfoModelProvider, useAircraftInfoModel } from './model';
 
-interface AircraftInfoProps {
-  aircraft: Aircraft;
-}
-
-export const AircraftInfo = observer(({ aircraft }: AircraftInfoProps) => {
-  const { route, progress, speed } = aircraft;
-
-  const progressPercent =
-    aircraft.direction === 'forward'
-      ? Math.round(progress * 100)
-      : 100 - Math.round(progress * 100);
-
-  const flight =
-    aircraft.direction === 'forward'
-      ? `${route.departureCity.name} → ${route.arrivalCity.name}`
-      : `${route.arrivalCity.name} → ${route.departureCity.name}`;
+const AircraftInfoView = observer(function AircraftInfoView() {
+  const { aircraftName, progressPercent, flight, routeDistance, speed } = useAircraftInfoModel();
 
   return (
     <>
       <div className="flex justify-between text-sm text-slate-600">
         <span>Тип:</span>
-        <span className="font-medium">{getAircraftSizeName(aircraft.type)}</span>
+        <span className="font-medium">{aircraftName}</span>
       </div>
 
       <div className="flex justify-between text-sm text-slate-600">
@@ -38,7 +24,7 @@ export const AircraftInfo = observer(({ aircraft }: AircraftInfoProps) => {
 
       <div className="flex justify-between text-sm text-slate-600">
         <span>Расстояние:</span>
-        <span className="font-medium">{formatDistance(route.distance)}</span>
+        <span className="font-medium">{routeDistance}</span>
       </div>
 
       <div className="flex justify-between text-sm text-slate-600">
@@ -48,3 +34,5 @@ export const AircraftInfo = observer(({ aircraft }: AircraftInfoProps) => {
     </>
   );
 });
+
+export const AircraftInfoWidget = createWidget(AircraftInfoModelProvider, AircraftInfoView);

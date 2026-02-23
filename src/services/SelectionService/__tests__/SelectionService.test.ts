@@ -4,7 +4,7 @@ import { type Aircraft, AircraftDirection, AircraftSize } from '../../AircraftSe
 import type { City } from '../../CityService/CityService.types';
 import type { Route } from '../../RouteService/RouteService.types';
 import { SelectionService } from '../SelectionService';
-import { EntityTypeEnum } from '../SelectionService.types';
+import { SelectedEntityType } from '../SelectionService.types';
 
 const createCity = (iata: string): City => ({
   name: iata,
@@ -40,7 +40,7 @@ describe('SelectionService', () => {
     const city = createCity('SVO');
     service.selectCity(city);
     expect(service.selectedEntity).not.toBeNull();
-    expect(service.selectedEntity!.type).toBe(EntityTypeEnum.city);
+    expect(service.selectedEntity!.type).toBe(SelectedEntityType.city);
     expect((service.selectedEntity as { data: City }).data).toStrictEqual(city);
   });
 
@@ -49,7 +49,7 @@ describe('SelectionService', () => {
     const route = createRoute();
     service.selectRoute(route);
     expect(service.selectedEntity).not.toBeNull();
-    expect(service.selectedEntity!.type).toBe(EntityTypeEnum.route);
+    expect(service.selectedEntity!.type).toBe(SelectedEntityType.route);
     expect((service.selectedEntity as { data: Route }).data).toStrictEqual(route);
   });
 
@@ -59,7 +59,7 @@ describe('SelectionService', () => {
     const aircraft = createAircraft(route);
     service.selectAircraft(aircraft);
     expect(service.selectedEntity).not.toBeNull();
-    expect(service.selectedEntity!.type).toBe(EntityTypeEnum.aircraft);
+    expect(service.selectedEntity!.type).toBe(SelectedEntityType.aircraft);
     expect((service.selectedEntity as { data: Aircraft }).data).toStrictEqual(aircraft);
   });
 
@@ -67,7 +67,7 @@ describe('SelectionService', () => {
     const service = new SelectionService();
     service.selectChangelog();
     expect(service.selectedEntity).not.toBeNull();
-    expect(service.selectedEntity!.type).toBe(EntityTypeEnum.changelog);
+    expect(service.selectedEntity!.type).toBe(SelectedEntityType.changelog);
     expect((service.selectedEntity as { data: null }).data).toBeNull();
   });
 

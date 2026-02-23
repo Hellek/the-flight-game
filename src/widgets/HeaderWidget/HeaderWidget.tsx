@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import { Button, Checkbox, Heading } from '@components/ui';
+import { Button, Checkbox } from '@components/ui';
 import { createWidget } from '@core/di';
 import { useFullscreen } from './hooks/useFullscreen';
 import { HeaderModelProvider, useHeaderModel } from './model';
@@ -17,7 +17,7 @@ const FullscreenIcon = ({ isFullscreen }: { isFullscreen: boolean }) =>
   );
 
 const HeaderView = observer(function HeaderView() {
-  const { formattedBalance, selectChangelog, showRoutes, toggleRoutes } = useHeaderModel();
+  const { selectChangelog, showRoutes, toggleRoutes } = useHeaderModel();
   const { isFullscreen, toggle, supported } = useFullscreen();
 
   return (
@@ -27,7 +27,6 @@ const HeaderView = observer(function HeaderView() {
           <div className="text-xl font-bold text-white">Flight Game</div>
         </div>
 
-        <Heading level={1}>{formattedBalance}</Heading>
         <nav className="ml-6 flex items-center space-x-4">
           <Link
             to="/"

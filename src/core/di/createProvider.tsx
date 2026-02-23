@@ -4,6 +4,7 @@ import {
   useContext,
   useEffect,
   useLayoutEffect,
+  useRef,
   useState,
 } from 'react';
 import { Props } from './Props';
@@ -30,8 +31,19 @@ export interface InitableModel<P = unknown> {
   updateProps?(props: P): void
 }
 
-/** Вывод типа props провайдера из сигнатуры [init](props) модели. */
-export type InferProviderProps<M> = M extends { [init]?(props: infer P): unknown } ? P : Record<string, unknown>;
+/** Вывод типа props провайдера из аргумента Props<P> в конструкторе модели. */
+export type InferProviderPropsFromConstructor<M> =
+  M extends new (...args: unknown[]) => unknown
+    ? Extract<ConstructorParameters<M>[number], Props<object>> extends Props<infer P>
+      ? P
+      : never
+    : never;
+
+/** Вывод типа props провайдера: из Props<P> в конструкторе или из [init](props). */
+export type InferProviderProps<M> =
+  InferProviderPropsFromConstructor<M> extends never
+    ? (M extends { [init]?(props: infer P): unknown } ? P : Record<string, unknown>)
+    : InferProviderPropsFromConstructor<M>;
 
 export type CreateProviderConfig = {
   /** Проверять, что модель задекорирована как scope.transient() (по умолчанию true). */
@@ -71,6 +83,7 @@ export function createProvider<M extends object>(
   const Provider = (props: PropsWithChildren<ModelProps>) => {
     const container = useContainer();
     const { children, ...restProps } = props;
+    const propsRef = useRef<{ set: (p: ModelProps) => void } | null>(null);
 
     const [instance] = useState<M>(() => {
       return container.resolveWithTransforms(ModelClass, (args: unknown[]) => {
@@ -84,6 +97,7 @@ export function createProvider<M extends object>(
 
         if (propsInstance?.set) {
           propsInstance.set(restProps as ModelProps);
+          propsRef.current = propsInstance;
         }
       }) as M;
     });
@@ -99,6 +113,7 @@ export function createProvider<M extends object>(
     }, []);
 
     useLayoutEffect(() => {
+      propsRef.current?.set(restProps as ModelProps);
       if ('updateProps' in instance && typeof instance.updateProps === 'function') {
         instance.updateProps(restProps as ModelProps);
       }

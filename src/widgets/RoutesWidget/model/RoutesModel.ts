@@ -1,10 +1,10 @@
 import { init, Props, scope } from '@core/di';
 import { GameSettingsPlugin } from '@plugins';
 import {
-  EntityTypeEnum,
   type Route,
   type Routes,
   RouteService,
+  SelectedEntityType,
   SelectionService,
 } from '@services';
 
@@ -38,7 +38,7 @@ export class RoutesModel {
 
   get selectedRoute(): Route | null {
     const { selectedEntity } = this.selectionService;
-    return selectedEntity?.type === EntityTypeEnum.route ? selectedEntity.data : null;
+    return selectedEntity?.type === SelectedEntityType.route ? selectedEntity.data : null;
   }
 
   selectRoute = (route: Route): void => {

@@ -5,7 +5,7 @@ import type { Route } from '../RouteService/RouteService.types';
 /**
  * enum сущностей
  */
-export enum EntityTypeEnum {
+export enum SelectedEntityType {
   city = 'city',
   route = 'route',
   aircraft = 'aircraft',
@@ -13,15 +13,15 @@ export enum EntityTypeEnum {
 }
 
 export type SelectedEntity = {
-  type: EntityTypeEnum.city
+  type: SelectedEntityType.city
   data: City
 } | {
-  type: EntityTypeEnum.route
+  type: SelectedEntityType.route
   data: Route
 } | {
-  type: EntityTypeEnum.aircraft
+  type: SelectedEntityType.aircraft
   data: Aircraft
 } | {
-  type: EntityTypeEnum.changelog
+  type: SelectedEntityType.changelog
   data: null
 };
