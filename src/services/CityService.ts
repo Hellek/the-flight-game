@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 import { scope } from '@core/di';
-import type { Cities } from './types';
+import { Cities } from './CityService.types';
 
 @scope.singleton()
 export class CityService {

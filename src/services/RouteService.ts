@@ -2,7 +2,7 @@ import { makeAutoObservable } from 'mobx';
 import { Vector3 } from 'three';
 import { scope } from '@core/di';
 import { GeometryPlugin } from '@plugins';
-import type { Route, Routes } from './types';
+import type { Route, Routes } from './RouteService.types';
 
 @scope.singleton()
 export class RouteService {

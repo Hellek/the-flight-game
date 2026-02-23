@@ -7,15 +7,15 @@ import {
 import { Euler, Matrix4, Vector3 } from 'three';
 import { scope } from '@core/di';
 import { GameSettingsPlugin } from '@plugins';
-import { RouteService } from './RouteService';
 import {
-  type Aircraft,
+  Aircraft,
   AircraftDirection,
-  type Aircrafts,
+  Aircrafts,
   AircraftSize,
   AircraftSpeed,
-  type Route,
-} from './types';
+} from './AircraftService.types';
+import { RouteService } from './RouteService';
+import type { Route } from './RouteService.types';
 
 @scope.singleton()
 export class AircraftService {
