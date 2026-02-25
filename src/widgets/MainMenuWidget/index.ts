@@ -1,0 +1,1 @@
+export { MainMenuWidget } from './MainMenuWidget';

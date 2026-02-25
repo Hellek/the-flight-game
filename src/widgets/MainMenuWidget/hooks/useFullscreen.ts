@@ -40,9 +40,9 @@ export function useFullscreen() {
   const toggle = useCallback(() => {
     const el = getFullscreenElement();
     if (el) {
-      exitFullscreen().catch(() => {});
+      exitFullscreen().catch(() => { });
     } else {
-      requestFullscreen(document.documentElement).catch(() => {});
+      requestFullscreen(document.documentElement).catch(() => { });
     }
   }, []);
 

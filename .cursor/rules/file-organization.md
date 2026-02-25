@@ -74,7 +74,7 @@ import { CityInfo } from './components/RouteInfo'
 src/widgets/
   GameWidget/           → export const GameWidget
   InfoPanelWidget/      → компоненты + model/
-  HeaderWidget/         → компоненты + model/
+  MainMenuWidget/       → компоненты + model/
 ```
 
 ### Группировка связанных файлов
@@ -90,8 +90,8 @@ src/widgets/
     AircraftInfo.tsx
     model/
       index.ts
-  HeaderWidget/
-    HeaderWidget.tsx
+  MainMenuWidget/
+    MainMenuWidget.tsx
     hooks/
     model/
       index.ts

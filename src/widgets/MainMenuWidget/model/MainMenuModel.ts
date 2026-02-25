@@ -3,10 +3,10 @@ import { GameSettingsPlugin } from '@plugins';
 import { SelectionService } from '@services';
 
 /**
- * Модель виджета шапки
+ * Модель виджета главного меню (внутри InfoPanelModal)
  */
 @scope.transient()
-export class HeaderModel {
+export class MainMenuModel {
   constructor(
     private readonly selection: SelectionService,
     private readonly gameSettings: GameSettingsPlugin,
