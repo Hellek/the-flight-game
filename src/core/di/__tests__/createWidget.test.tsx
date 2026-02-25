@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react-lite';
 import { describe, expect, it } from 'vitest';
 import { scope } from '@core/di';
 import { render, screen } from '@testing-library/react';
@@ -16,10 +17,12 @@ class DummyModel {
 
 const { Provider: DummyProvider, useModel: useDummyModel } = createProvider(DummyModel);
 
-function DummyView() {
+const DummyView = observer(function DummyView() {
   const model = useDummyModel();
   return <span data-testid="label">{model.label}</span>;
-}
+});
+
+DummyView.displayName = 'DummyView';
 
 const DummyWidget = createWidget(DummyProvider, DummyView);
 

@@ -1,4 +1,4 @@
-import { makeAutoObservable, observable } from 'mobx';
+import { makeAutoObservable, observable, runInAction } from 'mobx';
 import { scope } from './scopeDecorators';
 import { propsAttribute } from './symbols';
 
@@ -18,12 +18,14 @@ export class Props<PropsType extends object = object> {
 
   /** Внутренний метод: вызывается провайдером при resolveWithTransforms и при смене props. */
   set(props: Partial<PropsType>): void {
-    const cur = this.current as Record<string, unknown>;
-    Object.assign(cur, props);
-    for (const key of Object.keys(cur)) {
-      if (!Object.prototype.hasOwnProperty.call(props, key)) {
-        delete cur[key];
+    runInAction(() => {
+      const cur = this.current as Record<string, unknown>;
+      Object.assign(cur, props);
+      for (const key of Object.keys(cur)) {
+        if (!Object.prototype.hasOwnProperty.call(props, key)) {
+          delete cur[key];
+        }
       }
-    }
+    });
   }
 }
