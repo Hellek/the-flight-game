@@ -21,11 +21,17 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       injectRegister: 'script',
+      workbox: {
+        cleanupOutdatedCaches: true,
+        clientsClaim: true,
+        skipWaiting: true,
+      },
       manifest: {
         name: 'Авиа магнат',
         short_name: 'Авиа магнат',
         description: 'The Flight Game',
         start_url: '/',
+        scope: '/',
         display: 'standalone',
         orientation: 'any',
         background_color: '#0f172a',
