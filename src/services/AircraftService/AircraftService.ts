@@ -73,17 +73,17 @@ export class AircraftService {
   }
 
   private startAnimation() {
-    const { timeAccelerationFactor } = this.gameSettingsPlugin;
-
     const animate = (timestamp: number) => {
       if (!this.lastUpdateTime) this.lastUpdateTime = timestamp;
       const deltaTime = (timestamp - this.lastUpdateTime) / 1000;
       this.lastUpdateTime = timestamp;
 
+      const { timeAccelerationFactor, isPaused } = this.gameSettingsPlugin;
+      const effectiveDelta = isPaused ? 0 : deltaTime * timeAccelerationFactor;
+
       runInAction(() => {
         this.aircrafts.forEach(aircraft => {
-          const distanceTraveled =
-            (aircraft.speed * deltaTime * timeAccelerationFactor) / 3600;
+          const distanceTraveled = (aircraft.speed * effectiveDelta) / 3600;
 
           const routeDistance = aircraft.route.distance;
           const progressStep = distanceTraveled / routeDistance;

@@ -5,6 +5,7 @@ import { createWidget } from '@core/di';
 import { SelectedEntityType } from '@services';
 import { AircraftInfoWidget } from '@widgets/AircraftInfoWidget';
 import { MainMenuWidget } from '@widgets/MainMenuWidget';
+import { PauseWidget } from '@widgets/PauseWidget';
 import { RouteInfoWidget } from '@widgets/RouteInfoWidget';
 import { ChangelogInfo } from './components/ChangelogInfo';
 import { CityInfo } from './components/CityInfo';
@@ -26,6 +27,7 @@ const InfoPanelView = observer(function InfoPanelView() {
 
   return (
     <div className="absolute top-4 right-4 z-10 flex items-start gap-2">
+      <PauseWidget />
       {panelTypeKey ? (
         <InfoPanelModal
           title={panelTitle}

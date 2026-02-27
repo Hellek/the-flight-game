@@ -7,6 +7,10 @@ const isProdEnv = import.meta.env.PROD;
 @scope.singleton()
 export class GameSettingsPlugin {
   /**
+   * Игра на паузе — время остановлено
+   */
+  isPaused: boolean = false;
+  /**
    * Видимость маршрутов
   */
   routesVisible: boolean = true;
@@ -31,6 +35,12 @@ export class GameSettingsPlugin {
     makeAutoObservable(this);
   }
 
+  /**
+   * Переключение паузы (остановка/запуск времени)
+   */
+  togglePause = () => {
+    this.isPaused = !this.isPaused;
+  };
   /**
    * Переключение видимости маршрута
    */
