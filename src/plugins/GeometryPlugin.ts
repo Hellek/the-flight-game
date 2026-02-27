@@ -1,5 +1,18 @@
-import { Vector3 } from 'three';
+import {
+  Euler,
+  Matrix4,
+  Quaternion,
+  Vector3,
+} from 'three';
 import { scope } from '@core/di';
+
+/** Нулевой вектор (0, 0, 0). Заморожен — мутация приведёт к ошибке в strict mode. При необходимости клонировать. */
+export const ZERO_VECTOR: Readonly<Vector3> = Object.freeze(new Vector3(0, 0, 0));
+
+const ORIGIN = Object.freeze(new Vector3(0, 0, 0));
+const UP = Object.freeze(new Vector3(0, 1, 0));
+const rotationMatrixScratch = new Matrix4();
+const quaternionScratch = new Quaternion();
 
 @scope.singleton()
 export class GeometryPlugin {
@@ -47,5 +60,21 @@ export class GeometryPlugin {
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
     return earthRadiusKm * c;
+  }
+
+  /**
+   * Вычисляет углы Эйлера для ориентации объекта в точке на единичной сфере
+   * (взгляд «от центра сферы наружу»). Используется для меток городов на глобусе.
+   * @param position - точка на единичной сфере (нормаль от центра)
+   * @returns углы поворота (Euler)
+   */
+  positionOnSphereToEuler(position: Vector3): Euler {
+    const normal = position.clone().normalize();
+    rotationMatrixScratch.lookAt(ORIGIN, normal, UP);
+    quaternionScratch.setFromRotationMatrix(rotationMatrixScratch);
+    const euler = new Euler();
+    euler.setFromQuaternion(quaternionScratch);
+    euler.y += Math.PI;
+    return euler;
   }
 }

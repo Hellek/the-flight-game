@@ -14,7 +14,7 @@ export const InfoPanelModal = observer(function InfoPanelModal({
 }: InfoPanelModalProps) {
   return (
     <div className="
-      flex max-h-[calc(100vh-6rem)] w-80 flex-col overflow-hidden rounded-lg
+      flex max-h-[calc(100vh-2rem)] w-80 flex-col overflow-hidden rounded-lg
       bg-white shadow-lg
     ">
       <PanelHeader title={title} onClose={onClose} />

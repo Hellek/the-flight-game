@@ -127,9 +127,8 @@ describe('AircraftService', () => {
 
     const rotation = service.getAircraftRotation(aircraft);
 
-    expect(rotation).toHaveLength(3);
-    expect(rotation[0]).toBeDefined();
-    expect(rotation[1]).toBeDefined();
-    expect(rotation[2]).toBeDefined();
+    expect(rotation.x).toBeDefined();
+    expect(rotation.y).toBeDefined();
+    expect(rotation.z).toBeDefined();
   });
 });

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import type { Vector3 } from 'three';
+import { type Euler, Vector3 } from 'three';
 import type { ThreeEvent } from '@react-three/fiber';
 import type { Aircraft } from '@services';
 import { styleVars } from '@ui';
@@ -14,7 +14,7 @@ const AIRCRAFT = { SIZE: 0.0025 };
 interface AircraftViewProps {
   aircraft: Aircraft;
   getPosition: (aircraft: Aircraft) => Vector3;
-  getRotation: (aircraft: Aircraft) => [number, number, number];
+  getRotation: (aircraft: Aircraft) => Euler;
   isSelected: boolean;
   onSelect: (aircraft: Aircraft) => void;
 }
@@ -53,9 +53,9 @@ export const AircraftView = observer(function AircraftView({
   };
 
   return (
-    <group position={[currentPoint.x, currentPoint.y, currentPoint.z]} rotation={rotation}>
+    <group position={currentPoint} rotation={rotation}>
       <Airplane
-        position={[0, 0, 0]}
+        position={new Vector3(0, 0, 0)}
         scale={AIRCRAFT.SIZE}
         color={color}
         onClick={handleClick}

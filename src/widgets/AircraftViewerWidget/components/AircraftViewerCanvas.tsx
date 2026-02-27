@@ -1,5 +1,5 @@
 import { createElement, useRef } from 'react';
-import type { Group } from 'three';
+import { type Group, Vector3 } from 'three';
 import { Environment, OrbitControls } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
 import type { AircraftViewerModel } from '../model';
@@ -20,7 +20,7 @@ const RotatingAircraft = ({ model: AircraftComponent }: RotatingAircraftProps) =
   return (
     <group ref={groupRef}>
       {createElement(AircraftComponent, {
-        position: [0, 0, 0],
+        position: new Vector3(0, 0, 0),
         color: '#4F46E5',
       })}
     </group>

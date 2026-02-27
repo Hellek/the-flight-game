@@ -1,11 +1,11 @@
 import type { ComponentType, ForwardRefExoticComponent, RefAttributes } from 'react';
-import type { Mesh } from 'three';
+import type { Euler, Mesh, Vector3 } from 'three';
 import type { ThreeEvent } from '@react-three/fiber';
 import { Airplane } from '@widgets/AircraftsWidget';
 
 export interface AircraftModelProps {
-  position?: [number, number, number];
-  rotation?: [number, number, number];
+  position?: Vector3;
+  rotation?: Euler;
   scale?: number;
   color?: string;
   onClick?: (e: ThreeEvent<MouseEvent>) => void;

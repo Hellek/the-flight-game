@@ -26,7 +26,7 @@ export class AircraftsModel {
   getAircraftPosition = (aircraft: Aircraft) => {
     return this.aircraftService.getAircraftPosition(aircraft);
   };
-  getAircraftRotation = (aircraft: Aircraft): [number, number, number] => {
+  getAircraftRotation = (aircraft: Aircraft) => {
     return this.aircraftService.getAircraftRotation(aircraft);
   };
 

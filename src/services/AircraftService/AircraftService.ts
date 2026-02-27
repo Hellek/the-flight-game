@@ -133,7 +133,7 @@ export class AircraftService {
     return new Vector3().lerpVectors(startPoint, endPoint, segmentProgress);
   }
 
-  getAircraftRotation(aircraft: Aircraft): [number, number, number] {
+  getAircraftRotation(aircraft: Aircraft): Euler {
     const currentPoint = this.getAircraftPosition(aircraft);
     const routePoints = this.routeService.getRoutePoints(aircraft.route);
 
@@ -167,7 +167,7 @@ export class AircraftService {
     const targetRotation = new Euler();
     targetRotation.setFromRotationMatrix(rotationMatrix);
 
-    return [targetRotation.x, targetRotation.y, targetRotation.z];
+    return targetRotation;
   }
 
   getAircraftSizeName(size: AircraftSize): string {
