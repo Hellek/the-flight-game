@@ -1,5 +1,5 @@
 import { scope } from '@core/di';
-import { GameSettingsPlugin } from '@plugins';
+import { GeometryPlugin } from '@plugins';
 import {
   type Aircraft,
   AircraftService,
@@ -15,7 +15,7 @@ export class AircraftsModel {
   constructor(
     private readonly aircraftService: AircraftService,
     private readonly selectionService: SelectionService,
-    private readonly gameSettingsPlugin: GameSettingsPlugin,
+    private readonly geometry: GeometryPlugin,
   ) { }
 
   get aircrafts(): Aircraft[] {
@@ -40,6 +40,6 @@ export class AircraftsModel {
   };
 
   get globeInitialRotation() {
-    return this.gameSettingsPlugin.globeInitialRotation;
+    return this.geometry.globeInitialRotation;
   }
 }

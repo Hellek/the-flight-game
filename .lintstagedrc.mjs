@@ -11,7 +11,7 @@ const stylelintCommand = filenames =>
     .map(f => relative(cwd(), f))
     .join(' ')}`
 
-const typeCheckCommand = () => 'npm run check-types'
+const typeCheckCommand = () => 'npm run typecheck'
 
 const testCommand = () => 'npm run test:run'
 

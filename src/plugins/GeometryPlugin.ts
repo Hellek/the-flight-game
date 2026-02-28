@@ -3,6 +3,7 @@ import {
   Matrix4,
   Quaternion,
   Vector3,
+  Vector3Tuple,
 } from 'three';
 import { scope } from '@core/di';
 
@@ -16,6 +17,12 @@ const quaternionScratch = new Quaternion();
 
 @scope.singleton()
 export class GeometryPlugin {
+  /**
+   * Начальная ориентация глобуса в 3D-пространстве [x, y, z] в радианах (Euler).
+   * Определяет базовую систему координат для размещения объектов на сфере.
+   */
+  readonly globeInitialRotation: Vector3Tuple = [Math.PI / 4, Math.PI + (Math.PI / 18) * 3, 0];
+
   /**
    * Преобразует широту и долготу (в градусах) в точку на единичной сфере (Vector3).
    * Используется для размещения городов на глобусе.

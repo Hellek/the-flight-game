@@ -1,30 +1,30 @@
 import { makeAutoObservable } from 'mobx';
 import { init, scope } from '@core/di';
 import { GameSettingsPlugin, GeometryPlugin } from '@plugins';
-import type { Cities, Routes } from '@services';
+import {
+  type Cities,
+  CityService,
+  type Routes,
+  RouteService,
+} from '@services';
 import { federalRussiaAirports } from '../dataCitiesList';
-
-interface World {
-  cities: Cities;
-  routes: Routes;
-}
 
 /**
  * Модель виджета игры. Инкапсулирует генерацию предустановленного мира (города, маршруты).
  */
 @scope.transient()
 export class GameModel {
-  private _world: World | null = null;
-
   constructor(
     private readonly gameSettings: GameSettingsPlugin,
     private readonly geometry: GeometryPlugin,
+    private readonly cityService: CityService,
+    private readonly routeService: RouteService,
   ) {
     makeAutoObservable(this);
   }
 
-  get showRoutes() {
-    return this.gameSettings.routesVisible;
+  get globeInitialRotation() {
+    return this.geometry.globeInitialRotation;
   }
 
   [init]() {
@@ -71,10 +71,7 @@ export class GameModel {
     }));
 
     const routes: Routes = this.gameSettings.isProdEnv ? [] : this.getPredefinedRoutes(cities);
-    this._world = { cities, routes };
-  }
-
-  get world() {
-    return this._world;
+    this.cityService.setCities(cities);
+    this.routeService.initialSet(routes);
   }
 }

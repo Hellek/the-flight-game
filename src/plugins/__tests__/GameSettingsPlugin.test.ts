@@ -12,12 +12,13 @@ describe('GameSettingsPlugin', () => {
     expect(plugin.timeAccelerationFactor).toBe(1200);
   });
 
-  it('имеет globeInitialRotation из трёх чисел', () => {
+  it('togglePause переключает isPaused', () => {
     const plugin = new GameSettingsPlugin();
-    expect(plugin.globeInitialRotation).toHaveLength(3);
-    expect(plugin.globeInitialRotation[0]).toBeDefined();
-    expect(plugin.globeInitialRotation[1]).toBeDefined();
-    expect(plugin.globeInitialRotation[2]).toBeDefined();
+    expect(plugin.isPaused).toBe(false);
+    plugin.togglePause();
+    expect(plugin.isPaused).toBe(true);
+    plugin.togglePause();
+    expect(plugin.isPaused).toBe(false);
   });
 
   it('toggleRoutesVisible переключает routesVisible', () => {

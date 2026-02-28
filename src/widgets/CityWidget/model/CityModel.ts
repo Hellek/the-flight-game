@@ -2,7 +2,13 @@ import { makeAutoObservable } from 'mobx';
 import { Euler, Vector3 } from 'three';
 import { init, Props, scope } from '@core/di';
 import { GeometryPlugin, ZERO_VECTOR } from '@plugins';
-import { type City, SelectedEntityType, SelectionService } from '@services';
+import type { ThreeEvent } from '@react-three/fiber';
+import {
+  type City,
+  SelectedEntityType,
+  SelectionService,
+  UserEventsService,
+} from '@services';
 import { styleVars } from '@ui';
 
 export interface CityModelProps {
@@ -22,6 +28,7 @@ export class CityModel {
     public readonly props: Props<CityModelProps>,
     private readonly selectionService: SelectionService,
     private readonly geometry: GeometryPlugin,
+    private readonly userEventsService: UserEventsService,
   ) {
     makeAutoObservable(this);
   }
@@ -49,6 +56,25 @@ export class CityModel {
     const { selectedEntity } = this.selectionService;
     return selectedEntity?.type === SelectedEntityType.city && selectedEntity.data.iata === c.iata;
   }
+
+  get isRouteCreationActive(): boolean {
+    return this.userEventsService.isDragInProgress();
+  }
+
+  handlePointerDown = (e: ThreeEvent<PointerEvent>): void => {
+    const c = this.city;
+    if (c) this.userEventsService.recordPointerDown(e.nativeEvent, { city: c });
+  };
+  handlePointerUp = (e: ThreeEvent<PointerEvent>): void => {
+    this.userEventsService.recordPointerUp(e.nativeEvent);
+  };
+  handlePointerOver = (e: ThreeEvent<PointerEvent>): void => {
+    const c = this.city;
+    if (c) this.userEventsService.recordPointerOver(e.nativeEvent, { city: c });
+  };
+  handlePointerOut = (e: ThreeEvent<PointerEvent>): void => {
+    this.userEventsService.recordPointerOut(e.nativeEvent);
+  };
 
   get color(): string {
     const { isSelected, isHovered } = this;

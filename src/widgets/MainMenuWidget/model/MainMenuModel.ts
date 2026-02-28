@@ -12,11 +12,11 @@ export class MainMenuModel {
     private readonly gameSettings: GameSettingsPlugin,
   ) { }
 
-  get showRoutes() {
+  get routesVisible() {
     return this.gameSettings.routesVisible;
   }
 
-  toggleRoutes = (): void => {
+  toggleRoutesVisible = (): void => {
     this.gameSettings.toggleRoutesVisible();
   };
   selectChangelog = (): void => {

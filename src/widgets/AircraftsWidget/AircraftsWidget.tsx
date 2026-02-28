@@ -10,11 +10,10 @@ const AircraftsView = observer(function AircraftsView() {
     getAircraftRotation,
     selectedAircraft,
     selectAircraft,
-    globeInitialRotation,
   } = useAircraftsModel();
 
   return (
-    <group rotation={globeInitialRotation}>
+    <>
       {aircrafts.map(aircraft => (
         <AircraftView
           key={aircraft.id}
@@ -25,7 +24,7 @@ const AircraftsView = observer(function AircraftsView() {
           onSelect={selectAircraft}
         />
       ))}
-    </group>
+    </>
   );
 });
 

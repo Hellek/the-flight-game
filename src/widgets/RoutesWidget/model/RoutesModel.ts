@@ -1,32 +1,32 @@
-import { init, Props, scope } from '@core/di';
-import { GameSettingsPlugin } from '@plugins';
+import { makeAutoObservable } from 'mobx';
+import { scope } from '@core/di';
+import { GameSettingsPlugin, GeometryPlugin } from '@plugins';
 import {
   type Route,
-  type Routes,
   RouteService,
   SelectedEntityType,
   SelectionService,
 } from '@services';
-
-export interface RoutesModelProps {
-  routes: Routes;
-}
 
 /**
  * Виджет маршрутов
  */
 @scope.transient()
 export class RoutesModel {
+  hoveredRouteId: string | null = null;
+
   constructor(
-    public readonly props: Props<RoutesModelProps>,
     private readonly routeService: RouteService,
     private readonly selectionService: SelectionService,
     private readonly gameSettingsPlugin: GameSettingsPlugin,
-  ) { }
-
-  [init](props: RoutesModelProps): void {
-    this.routeService.initialSet(props.routes);
+    private readonly geometry: GeometryPlugin,
+  ) {
+    makeAutoObservable(this);
   }
+
+  setHoveredRoute = (routeId: string | null): void => {
+    this.hoveredRouteId = routeId;
+  };
 
   get routes(): Route[] {
     return this.routeService.routes;
@@ -46,6 +46,10 @@ export class RoutesModel {
   };
 
   get globeInitialRotation() {
-    return this.gameSettingsPlugin.globeInitialRotation;
+    return this.geometry.globeInitialRotation;
+  }
+
+  get routesVisible(): boolean {
+    return this.gameSettingsPlugin.routesVisible;
   }
 }

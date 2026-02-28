@@ -102,4 +102,28 @@ describe('RouteService', () => {
     const again = service.calculateRouteDistance(route);
     expect(again).toBe(distance);
   });
+
+  it('addRoute добавляет маршрут в список', () => {
+    const geometry = createMockGeometry();
+    const service = new RouteService(geometry as never);
+    const dep = createCity('A', new Vector3(1, 0, 0));
+    const arr = createCity('B', new Vector3(0, 1, 0));
+    const route = createRoute(dep, arr, 500);
+
+    service.addRoute(route);
+    expect(service.routes).toHaveLength(1);
+    expect(service.routes[0]).toStrictEqual(route);
+  });
+
+  it('getPreviewPoints возвращает точки дуги между start и end', () => {
+    const geometry = createMockGeometry();
+    const service = new RouteService(geometry as never);
+    const start = new Vector3(1, 0, 0).normalize();
+    const end = new Vector3(0, 1, 0).normalize();
+
+    const points = service.getPreviewPoints(start, end);
+    expect(points.length).toBeGreaterThan(1);
+    expect(points[0]).toBeInstanceOf(Vector3);
+    expect(points[points.length - 1]).toBeInstanceOf(Vector3);
+  });
 });

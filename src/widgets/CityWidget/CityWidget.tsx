@@ -20,6 +20,11 @@ const CityView = observer(function CityView() {
     eulerRotation,
     select,
     setHovered,
+    isRouteCreationActive,
+    handlePointerDown,
+    handlePointerUp,
+    handlePointerOver,
+    handlePointerOut,
   } = useCityModel();
 
   const hitZoneRadius = size * CITY_HIT_ZONE_MULTIPLIER;
@@ -33,17 +38,27 @@ const CityView = observer(function CityView() {
         args={[hitZoneRadius, 16]}
         onClick={(e: ThreeEvent<MouseEvent>) => {
           e.stopPropagation();
-          select();
+          if (!isRouteCreationActive) select();
+        }}
+        onPointerDown={(e: ThreeEvent<PointerEvent>) => {
+          e.stopPropagation();
+          handlePointerDown(e);
+        }}
+        onPointerUp={(e: ThreeEvent<PointerEvent>) => {
+          e.stopPropagation();
+          handlePointerUp(e);
         }}
         onPointerOver={(e: ThreeEvent<PointerEvent>) => {
           e.stopPropagation();
           document.body.style.cursor = 'pointer';
           setHovered(true);
+          if (isRouteCreationActive) handlePointerOver(e);
         }}
         onPointerOut={(e: ThreeEvent<PointerEvent>) => {
           e.stopPropagation();
           document.body.style.cursor = 'auto';
           setHovered(false);
+          if (isRouteCreationActive) handlePointerOut(e);
         }}
       >
         <meshBasicMaterial transparent opacity={0} depthWrite={false} />

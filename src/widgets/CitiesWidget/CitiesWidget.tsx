@@ -4,17 +4,17 @@ import { CityWidget } from '@widgets/CityWidget/CityWidget';
 import { CitiesModelProvider, useCitiesModel } from './model';
 
 const CitiesView = observer(function CitiesView() {
-  const { cities, globeInitialRotation } = useCitiesModel();
+  const { cities } = useCitiesModel();
 
   return (
-    <group rotation={globeInitialRotation}>
+    <>
       {cities.map((city, index) => (
         <CityWidget
           key={city.iata ?? index}
           city={city}
         />
       ))}
-    </group>
+    </>
   );
 });
 

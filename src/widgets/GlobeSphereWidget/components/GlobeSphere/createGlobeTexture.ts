@@ -1,6 +1,9 @@
 import { CanvasTexture, type Texture } from 'three';
 import type { Continent } from './types';
 
+/**
+ * TODO подумать над альтернативным способом рисования текстуры
+ */
 export const createGlobeTexture = ({
   continents,
   waterColor,

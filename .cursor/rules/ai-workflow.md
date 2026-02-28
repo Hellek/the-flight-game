@@ -43,7 +43,7 @@ npm run lint:styles:fix
 ### 3. Проверка типов TypeScript
 
 ```bash
-npm run check-types
+npm run typecheck
 ```
 
 Проверяет корректность типов во всех TypeScript файлах.

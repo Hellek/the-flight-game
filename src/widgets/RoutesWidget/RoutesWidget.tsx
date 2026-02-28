@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
 import { CatmullRomCurve3, TubeGeometry, type Vector3 } from 'three';
 import { createWidget } from '@core/di';
@@ -69,15 +69,24 @@ function RouteHitZone({ points, onSelect, onHover }: RouteHitZoneProps) {
 }
 
 const RoutesView = observer(function RoutesView() {
-  const { routes, getRoutePoints, selectedRoute, selectRoute, globeInitialRotation } = useRoutesModel();
-  const [hoveredRoute, setHoveredRoute] = useState<string | null>(null);
+  const {
+    routes,
+    getRoutePoints,
+    selectedRoute,
+    selectRoute,
+    routesVisible,
+    hoveredRouteId,
+    setHoveredRoute,
+  } = useRoutesModel();
+
+  if (!routesVisible) return null;
 
   return (
-    <group rotation={globeInitialRotation}>
+    <>
       {routes.map(route => {
         const points = getRoutePoints(route);
         const isSelected = selectedRoute?.id === route.id;
-        const isHovered = hoveredRoute === route.id;
+        const isHovered = hoveredRouteId === route.id;
 
         return (
           <group key={route.id}>
@@ -97,7 +106,7 @@ const RoutesView = observer(function RoutesView() {
           </group>
         );
       })}
-    </group>
+    </>
   );
 });
 

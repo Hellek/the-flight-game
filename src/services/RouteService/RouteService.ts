@@ -48,6 +48,14 @@ export class RouteService {
     this.routes = routes;
   }
 
+  addRoute(route: Route): void {
+    this.routes.push(route);
+  }
+
+  getPreviewPoints(start: Vector3, end: Vector3, cameraPosition?: Vector3): Vector3[] {
+    return this.getArcPoints(start, end, undefined, cameraPosition);
+  }
+
   selectRoute(route: Route | null) {
     this.selectedRoute = route;
   }
@@ -70,50 +78,45 @@ export class RouteService {
     start: Vector3,
     end: Vector3,
     segments?: number,
+    cameraPosition?: Vector3,
   ): Vector3[] => {
-    // Если количество сегментов не указано, вычисляем его на основе расстояния
     if (segments === undefined) {
       const distanceKm = this.geometry.calculateDistance(start, end);
       segments = this.calculateSegments(distanceKm);
     }
 
-    const points: Vector3[] = [];
-
-    // Вычисляем расстояние между точками
     const distance = start.distanceTo(end);
 
-    // Вычисляем высоту дуги в зависимости от расстояния
-    const getArcHeight = (): number => {
-      const { arcMaxHeight, arcMinHeight, arcMinDistance } = this.routeParams;
+    const { arcMaxHeight, arcMinHeight, arcMinDistance } = this.routeParams;
 
-      // Если расстояние меньше минимального, используем пропорциональную высоту
-      if (distance < arcMinDistance) {
-        // Линейная интерполяция между минимальной и максимальной высотой
-        return arcMinHeight + (distance / arcMinDistance) * (arcMaxHeight - arcMinHeight);
-      }
+    const arcHeight =
+      distance < arcMinDistance
+        ? arcMinHeight + (distance / arcMinDistance) * (arcMaxHeight - arcMinHeight)
+        : arcMaxHeight;
 
-      // Для больших расстояний используем максимальную высоту
-      return arcMaxHeight;
-    };
+    const sum = start.clone().add(end);
 
-    const arcHeight = getArcHeight();
+    const useLongArc =
+      cameraPosition !== undefined &&
+      sum.lengthSq() > 1e-10 &&
+      sum.normalize().dot(cameraPosition.clone().normalize()) < 0;
 
-    // Создаем точки маршрута
+    const mid = useLongArc ? sum.clone().multiplyScalar(-1) : null;
+
+    const points: Vector3[] = [];
+
     for (let i = 0; i <= segments; i++) {
       const progress = i / segments;
 
-      // Базовое положение точки на сфере
-      const point = new Vector3().lerpVectors(start, end, progress);
+      const point =
+        mid !== null
+          ? progress <= 0.5
+            ? new Vector3().lerpVectors(start, mid, progress * 2)
+            : new Vector3().lerpVectors(mid, end, (progress - 0.5) * 2)
+          : new Vector3().lerpVectors(start, end, progress);
 
-      // Нормализуем вектор, чтобы получить точку на поверхности сферы
       point.normalize();
-
-      // Вычисляем высоту дуги используя синусоиду
-      const height = Math.sin(progress * Math.PI) * arcHeight;
-
-      // Двигаем точку по нормали к поверхности сферы
-      point.multiplyScalar(1 + height);
-
+      point.multiplyScalar(1 + Math.sin(progress * Math.PI) * arcHeight);
       points.push(point);
     }
 

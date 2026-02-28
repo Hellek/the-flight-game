@@ -7,7 +7,7 @@ import { useFullscreen } from './hooks/useFullscreen';
 import { MainMenuModelProvider, useMainMenuModel } from './model';
 
 const MainMenuView = observer(function MainMenuView() {
-  const { selectChangelog, showRoutes, toggleRoutes } = useMainMenuModel();
+  const { selectChangelog, routesVisible, toggleRoutesVisible } = useMainMenuModel();
   const { isFullscreen, toggle, supported } = useFullscreen();
 
   return (
@@ -65,8 +65,8 @@ const MainMenuView = observer(function MainMenuView() {
           )}
           <div className="px-3 py-2">
             <Checkbox
-              checked={showRoutes}
-              onChange={toggleRoutes}
+              checked={routesVisible}
+              onChange={toggleRoutesVisible}
               label="Показать маршруты"
               className="text-slate-700"
             />

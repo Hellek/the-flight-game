@@ -1,9 +1,18 @@
-import { Vector3 } from 'three';
+import { Euler, Vector3 } from 'three';
 import { describe, expect, it } from 'vitest';
 import { GeometryPlugin } from '../GeometryPlugin';
 
 describe('GeometryPlugin', () => {
   const plugin = new GeometryPlugin();
+
+  describe('globeInitialRotation', () => {
+    it('имеет globeInitialRotation из трёх чисел', () => {
+      expect(plugin.globeInitialRotation).toHaveLength(3);
+      expect(plugin.globeInitialRotation[0]).toBeDefined();
+      expect(plugin.globeInitialRotation[1]).toBeDefined();
+      expect(plugin.globeInitialRotation[2]).toBeDefined();
+    });
+  });
 
   describe('latLonToVector3', () => {
     it('возвращает вектор на единичной сфере (длина ≈ 1)', () => {
@@ -30,6 +39,17 @@ describe('GeometryPlugin', () => {
       const v = plugin.latLonToVector3(0, 0);
       expect(v.y).toBeCloseTo(0, 10);
       expect(v.length()).toBeCloseTo(1, 10);
+    });
+  });
+
+  describe('positionOnSphereToEuler', () => {
+    it('возвращает Euler для точки на сфере', () => {
+      const p = plugin.latLonToVector3(90, 0);
+      const euler = plugin.positionOnSphereToEuler(p);
+      expect(euler).toBeInstanceOf(Euler);
+      expect(Number.isFinite(euler.x)).toBe(true);
+      expect(Number.isFinite(euler.y)).toBe(true);
+      expect(Number.isFinite(euler.z)).toBe(true);
     });
   });
 

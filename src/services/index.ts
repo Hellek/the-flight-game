@@ -3,3 +3,4 @@ export * from './CityService/index';
 export * from './FinanceService/index';
 export * from './RouteService/index';
 export * from './SelectionService/index';
+export * from './UserEventsService/index';
