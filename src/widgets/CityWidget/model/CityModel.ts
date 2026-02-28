@@ -1,3 +1,4 @@
+import { makeAutoObservable } from 'mobx';
 import { Euler, Vector3 } from 'three';
 import { init, Props, scope } from '@core/di';
 import { GeometryPlugin, ZERO_VECTOR } from '@plugins';
@@ -21,7 +22,9 @@ export class CityModel {
     public readonly props: Props<CityModelProps>,
     private readonly selectionService: SelectionService,
     private readonly geometry: GeometryPlugin,
-  ) { }
+  ) {
+    makeAutoObservable(this);
+  }
 
   [init](props: CityModelProps): void {
     this._city = props.city;

@@ -9,7 +9,11 @@ import { Airplane } from './Airplane';
 /**
  * Параметры воздушного судна (пока хардкод)
  */
-const AIRCRAFT = { SIZE: 0.0025 };
+const AIRCRAFT = {
+  SIZE: 0.0025,
+  /** Радиус прозрачной клик-зоны в мировых единицах */
+  HIT_ZONE_RADIUS: 0.012,
+};
 
 interface AircraftViewProps {
   aircraft: Aircraft;
@@ -54,14 +58,22 @@ export const AircraftView = observer(function AircraftView({
 
   return (
     <group position={currentPoint} rotation={rotation}>
-      <Airplane
-        position={new Vector3(0, 0, 0)}
-        scale={AIRCRAFT.SIZE}
-        color={color}
+      <group raycast={() => null}>
+        <Airplane
+          position={new Vector3(0, 0, 0)}
+          scale={AIRCRAFT.SIZE}
+          color={color}
+        />
+      </group>
+      <mesh
+        position={[0, 0, 0]}
         onClick={handleClick}
         onPointerOver={handlePointerOver}
         onPointerOut={handlePointerOut}
-      />
+      >
+        <sphereGeometry args={[AIRCRAFT.HIT_ZONE_RADIUS, 16, 16]} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+      </mesh>
     </group>
   );
 });
